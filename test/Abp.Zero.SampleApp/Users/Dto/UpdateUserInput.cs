@@ -6,7 +6,7 @@ namespace Abp.Zero.SampleApp.Users.Dto
     public class UpdateUserInput
     {
         [Required]
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public string Name { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Abp.Organizations;
@@ -9,7 +10,7 @@ namespace Abp.Authorization.Users
     /// Represents membership of a User to an OU.
     /// </summary>
     [Table("AbpUserOrganizationUnits")]
-    public class UserOrganizationUnit : CreationAuditedEntity<long>, IMayHaveTenant, ISoftDelete
+    public class UserOrganizationUnit : CreationAuditedEntity<Guid>, IMayHaveTenant, ISoftDelete
     {
         /// <summary>
         /// TenantId of this entity.
@@ -19,12 +20,12 @@ namespace Abp.Authorization.Users
         /// <summary>
         /// Id of the User.
         /// </summary>
-        public virtual long UserId { get; set; }
+        public virtual Guid UserId { get; set; }
 
         /// <summary>
         /// Id of the <see cref="OrganizationUnit"/>.
         /// </summary>
-        public virtual long OrganizationUnitId { get; set; }
+        public virtual Guid OrganizationUnitId { get; set; }
 
         /// <summary>
         /// Specifies if the organization is soft deleted or not.
@@ -45,7 +46,7 @@ namespace Abp.Authorization.Users
         /// <param name="tenantId">TenantId</param>
         /// <param name="userId">Id of the User.</param>
         /// <param name="organizationUnitId">Id of the <see cref="OrganizationUnit"/>.</param>
-        public UserOrganizationUnit(int? tenantId, long userId, long organizationUnitId)
+        public UserOrganizationUnit(int? tenantId, Guid userId, Guid organizationUnitId)
         {
             TenantId = tenantId;
             UserId = userId;

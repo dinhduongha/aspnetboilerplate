@@ -1,10 +1,11 @@
 using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.NHibernate.EntityMappings;
+using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class UserLoginAttemptMap : EntityMap<UserLoginAttempt, long>
+    public class UserLoginAttemptMap : EntityMap<UserLoginAttempt, Guid>
     {
         public UserLoginAttemptMap() 
             : base("AbpUserLoginAttempts")

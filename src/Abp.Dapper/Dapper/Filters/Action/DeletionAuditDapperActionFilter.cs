@@ -2,6 +2,7 @@
 using Abp.Domain.Entities.Auditing;
 using Abp.Extensions;
 using Abp.Timing;
+using System;
 
 namespace Abp.Dapper.Filters.Action
 {
@@ -26,7 +27,7 @@ namespace Abp.Dapper.Filters.Action
 
             if (entity is IDeletionAudited)
             {
-                long? userId = GetAuditUserId();
+                Guid? userId = GetAuditUserId();
                 var record = entity.As<IDeletionAudited>();
 
                 if (record.DeleterUserId != null)

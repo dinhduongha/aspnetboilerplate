@@ -15,7 +15,7 @@ namespace Abp.Authorization.Users
         /// <param name="manager">User manager</param>
         /// <param name="userId">User id</param>
         /// <param name="permissionName">Permission name</param>
-        public static bool IsGranted<TRole, TUser>(AbpUserManager<TRole, TUser> manager, long userId, string permissionName)
+        public static bool IsGranted<TRole, TUser>(AbpUserManager<TRole, TUser> manager, Guid userId, string permissionName)
             where TRole : AbpRole<TUser>, new()
             where TUser : AbpUser<TUser>
         {

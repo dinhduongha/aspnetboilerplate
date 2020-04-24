@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Abp.Organizations;
 using Abp.Zero.SampleApp.MultiTenancy;
 using NHibernate;
@@ -44,7 +45,7 @@ namespace Abp.Zero.SampleApp.NHibernate.TestDatas
             var ou21 = CreateOU("OU21", OrganizationUnit.CreateCode(2, 1), ou2.Id);
         }
 
-        private OrganizationUnit CreateOU(string displayName, string code, long? parentId = null)
+        private OrganizationUnit CreateOU(string displayName, string code, Guid? parentId = null)
         {
             var ou = new OrganizationUnit(_defaultTenant.Id, displayName, parentId) {Code = code};
             _session.Save(ou);

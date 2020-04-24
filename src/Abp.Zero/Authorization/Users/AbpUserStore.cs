@@ -18,18 +18,18 @@ namespace Abp.Authorization.Users
     /// Implements 'User Store' of ASP.NET Identity Framework.
     /// </summary>
     public abstract class AbpUserStore<TRole, TUser> :
-        IUserStore<TUser, long>,
-        IUserPasswordStore<TUser, long>,
-        IUserEmailStore<TUser, long>,
-        IUserLoginStore<TUser, long>,
-        IUserRoleStore<TUser, long>,
-        IQueryableUserStore<TUser, long>,
-        IUserLockoutStore<TUser, long>,
+        IUserStore<TUser, Guid>,
+        IUserPasswordStore<TUser, Guid>,
+        IUserEmailStore<TUser, Guid>,
+        IUserLoginStore<TUser, Guid>,
+        IUserRoleStore<TUser, Guid>,
+        IQueryableUserStore<TUser, Guid>,
+        IUserLockoutStore<TUser, Guid>,
         IUserPermissionStore<TUser>,
-        IUserPhoneNumberStore<TUser, long>,
-        IUserClaimStore<TUser, long>,
-        IUserSecurityStampStore<TUser, long>,
-        IUserTwoFactorStore<TUser, long>,
+        IUserPhoneNumberStore<TUser, Guid>,
+        IUserClaimStore<TUser, Guid>,
+        IUserSecurityStampStore<TUser, Guid>,
+        IUserTwoFactorStore<TUser, Guid>,
 
         ITransientDependency
 
@@ -38,29 +38,29 @@ namespace Abp.Authorization.Users
     {
         public IAsyncQueryableExecuter AsyncQueryableExecuter { get; set; }
 
-        private readonly IRepository<TUser, long> _userRepository;
-        private readonly IRepository<UserLogin, long> _userLoginRepository;
-        private readonly IRepository<UserRole, long> _userRoleRepository;
-        private readonly IRepository<UserClaim, long> _userClaimRepository;
-        private readonly IRepository<TRole> _roleRepository;
-        private readonly IRepository<UserPermissionSetting, long> _userPermissionSettingRepository;
+        private readonly IRepository<TUser, Guid> _userRepository;
+        private readonly IRepository<UserLogin, Guid> _userLoginRepository;
+        private readonly IRepository<UserRole, Guid> _userRoleRepository;
+        private readonly IRepository<UserClaim, Guid> _userClaimRepository;
+        private readonly IRepository<TRole,Guid> _roleRepository;
+        private readonly IRepository<UserPermissionSetting, Guid> _userPermissionSettingRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
-        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
-        private readonly IRepository<OrganizationUnitRole, long> _organizationUnitRoleRepository;
+        private readonly IRepository<UserOrganizationUnit, Guid> _userOrganizationUnitRepository;
+        private readonly IRepository<OrganizationUnitRole, Guid> _organizationUnitRoleRepository;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         protected AbpUserStore(
-            IRepository<TUser, long> userRepository,
-            IRepository<UserLogin, long> userLoginRepository,
-            IRepository<UserRole, long> userRoleRepository,
-            IRepository<TRole> roleRepository,
-            IRepository<UserPermissionSetting, long> userPermissionSettingRepository,
+            IRepository<TUser, Guid> userRepository,
+            IRepository<UserLogin, Guid> userLoginRepository,
+            IRepository<UserRole, Guid> userRoleRepository,
+            IRepository<TRole, Guid> roleRepository,
+            IRepository<UserPermissionSetting, Guid> userPermissionSettingRepository,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<UserClaim, long> userClaimRepository,
-            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
-            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
+            IRepository<UserClaim, Guid> userClaimRepository,
+            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository,
+            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository)
         {
             _userRepository = userRepository;
             _userLoginRepository = userLoginRepository;
@@ -98,12 +98,12 @@ namespace Abp.Authorization.Users
             await _userRepository.DeleteAsync(user.Id);
         }
 
-        public virtual async Task<TUser> FindByIdAsync(long userId)
+        public virtual async Task<TUser> FindByIdAsync(Guid userId)
         {
             return await _userRepository.FirstOrDefaultAsync(userId);
         }
 
-        public virtual TUser FindById(long userId)
+        public virtual TUser FindById(Guid userId)
         {
             return _userRepository.FirstOrDefault(userId);
         }
@@ -325,7 +325,7 @@ namespace Abp.Authorization.Users
         public virtual IList<string> GetRoles(TUser user) => GetRoles(user.Id);
 
         [UnitOfWork]
-        public virtual IList<string> GetRoles(long userId)
+        public virtual IList<string> GetRoles(Guid userId)
         {
             var userRoles = (
                 from userRole in _userRoleRepository.GetAll()
@@ -407,21 +407,21 @@ namespace Abp.Authorization.Users
             );
         }
 
-        public virtual async Task<IList<PermissionGrantInfo>> GetPermissionsAsync(long userId)
+        public virtual async Task<IList<PermissionGrantInfo>> GetPermissionsAsync(Guid userId)
         {
             return (await _userPermissionSettingRepository.GetAllListAsync(p => p.UserId == userId))
                 .Select(p => new PermissionGrantInfo(p.Name, p.IsGranted))
                 .ToList();
         }
 
-        public virtual IList<PermissionGrantInfo> GetPermissions(long userId)
+        public virtual IList<PermissionGrantInfo> GetPermissions(Guid userId)
         {
             return (_userPermissionSettingRepository.GetAllList(p => p.UserId == userId))
                 .Select(p => new PermissionGrantInfo(p.Name, p.IsGranted))
                 .ToList();
         }
 
-        public virtual async Task<bool> HasPermissionAsync(long userId, PermissionGrantInfo permissionGrant)
+        public virtual async Task<bool> HasPermissionAsync(Guid userId, PermissionGrantInfo permissionGrant)
         {
             return await _userPermissionSettingRepository.FirstOrDefaultAsync(
                        p => p.UserId == userId &&
@@ -430,7 +430,7 @@ namespace Abp.Authorization.Users
                    ) != null;
         }
 
-        public virtual bool HasPermission(long userId, PermissionGrantInfo permissionGrant)
+        public virtual bool HasPermission(Guid userId, PermissionGrantInfo permissionGrant)
         {
             return _userPermissionSettingRepository.FirstOrDefault(
                        p => p.UserId == userId &&
@@ -616,7 +616,7 @@ namespace Abp.Authorization.Users
             return Task.FromResult(user.IsTwoFactorEnabled);
         }
 
-        public async Task<string> GetUserNameFromDatabaseAsync(long userId)
+        public async Task<string> GetUserNameFromDatabaseAsync(Guid userId)
         {
             //note: This workaround will not be needed after fixing https://github.com/aspnetboilerplate/aspnetboilerplate/issues/1828
             var outerUow = _unitOfWorkManager.Current;

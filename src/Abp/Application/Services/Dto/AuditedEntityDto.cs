@@ -27,6 +27,6 @@ namespace Abp.Application.Services.Dto
         /// <summary>
         /// Last modifier user of this entity.
         /// </summary>
-        public long? LastModifierUserId { get; set; }
+        public Guid? LastModifierUserId { get; set; }
     }
 }

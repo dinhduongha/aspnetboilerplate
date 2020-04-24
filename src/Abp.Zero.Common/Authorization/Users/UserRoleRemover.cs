@@ -3,6 +3,7 @@ using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Events.Bus.Entities;
 using Abp.Events.Bus.Handlers;
+using System;
 
 namespace Abp.Authorization.Users
 {
@@ -13,12 +14,12 @@ namespace Abp.Authorization.Users
         IEventHandler<EntityDeletedEventData<AbpUserBase>>,
         ITransientDependency
     {
-        private readonly IRepository<UserRole, long> _userRoleRepository;
+        private readonly IRepository<UserRole, Guid> _userRoleRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public UserRoleRemover(
             IUnitOfWorkManager unitOfWorkManager, 
-            IRepository<UserRole, long> userRoleRepository)
+            IRepository<UserRole, Guid> userRoleRepository)
         {
             _unitOfWorkManager = unitOfWorkManager;
             _userRoleRepository = userRoleRepository;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
@@ -74,7 +75,7 @@ namespace Abp.TestBase.SampleApplication.Tests.People
         [Fact]
         public async Task Should_Set_Deletion_Audit_Informations()
         {
-            const long userId = 42;
+            Guid userId = new Guid("0171acb4-f54c-23a1-0983-3d39d5f98e00"); // 42;
             AbpSession.UserId = userId;
 
             var uowManager = Resolve<IUnitOfWorkManager>();

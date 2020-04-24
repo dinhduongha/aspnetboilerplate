@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Abp.Configuration;
 using Abp.Domain.Repositories;
 using Shouldly;
@@ -9,12 +10,12 @@ namespace Abp.Zero.SampleApp.Tests.Configuration
     public class Settings_Tests : SampleAppTestBase
     {
         private readonly ISettingManager _settingManager;
-        private readonly IRepository<Setting, long> _settingRepository;
+        private readonly IRepository<Setting, Guid> _settingRepository;
 
         public Settings_Tests()
         {
             _settingManager = LocalIocManager.Resolve<ISettingManager>();
-            _settingRepository = LocalIocManager.Resolve<IRepository<Setting, long>>();
+            _settingRepository = LocalIocManager.Resolve<IRepository<Setting, Guid>>();
         }
 
         [Fact]

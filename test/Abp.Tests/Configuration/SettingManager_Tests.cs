@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Configuration;
@@ -75,23 +76,23 @@ namespace Abp.Tests.Configuration
 
             //Inherited setting
 
-            session.UserId = 1;
+            session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"); // 1
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 1 stored value");
 
-            session.UserId = 2;
+            session.UserId = new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0"); // 2
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 2 stored value");
 
-            session.UserId = 3;
+            session.UserId = new Guid("0171ac9f-b101-10d1-0417-1152a6897d40"); // 3;
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("tenant 1 stored value"); //Because no user value in the store
 
             session.TenantId = 3;
-            session.UserId = 3;
+            session.UserId = new Guid("0171ac9f-b101-10d1-0417-1152a6897d40"); // 3;
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("application level stored value"); //Because no user and tenant value in the store
 
             //Not inherited setting
 
             session.TenantId = 1;
-            session.UserId = 1;
+            session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"); // 1;
 
             (await settingManager.GetSettingValueForApplicationAsync(MyNotInheritedSetting)).ShouldBe("application value");
             (await settingManager.GetSettingValueForTenantAsync(MyNotInheritedSetting, session.TenantId.Value)).ShouldBe("default-value");
@@ -114,9 +115,9 @@ namespace Abp.Tests.Configuration
             (await settingManager.GetAllSettingValuesForTenantAsync(2)).Count.ShouldBe(0);
             (await settingManager.GetAllSettingValuesForTenantAsync(3)).Count.ShouldBe(0);
 
-            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, 1))).Count.ShouldBe(1);
-            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, 2))).Count.ShouldBe(1);
-            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, 3))).Count.ShouldBe(0);
+            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00")))).Count.ShouldBe(1);
+            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0")))).Count.ShouldBe(1);
+            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, new Guid("0171ac9f-b101-10d1-0417-1152a6897d40")))).Count.ShouldBe(0);
         }
 
         [Fact]
@@ -147,8 +148,8 @@ namespace Abp.Tests.Configuration
 
             //User level changes
 
-            session.UserId = 1;
-            await settingManager.ChangeSettingForUserAsync(1, MyAllLevelsSetting, "user 1 changed value");
+            session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
+            await settingManager.ChangeSettingForUserAsync(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting, "user 1 changed value");
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 1 changed value");
         }
 
@@ -163,15 +164,15 @@ namespace Abp.Tests.Configuration
             settingManager.AbpSession = session;
 
             session.TenantId = 1;
-            session.UserId = 1;
+            session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             //We can get user's personal stored value
-            (await store.GetSettingOrNullAsync(1, 1, MyAllLevelsSetting)).ShouldNotBe(null);
+            (await store.GetSettingOrNullAsync(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldNotBe(null);
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 1 stored value");
 
             //This will delete setting for the user since it's same as tenant's setting value
-            await settingManager.ChangeSettingForUserAsync(1, MyAllLevelsSetting, "tenant 1 stored value");
-            (await store.GetSettingOrNullAsync(1, 1, MyAllLevelsSetting)).ShouldBe(null);
+            await settingManager.ChangeSettingForUserAsync(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting, "tenant 1 stored value");
+            (await store.GetSettingOrNullAsync(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
 
             //We can get tenant's setting value
             (await store.GetSettingOrNullAsync(1, null, MyAllLevelsSetting)).ShouldNotBe(null);
@@ -179,7 +180,7 @@ namespace Abp.Tests.Configuration
 
             //This will delete setting for tenant since it's same as application's setting value
             await settingManager.ChangeSettingForTenantAsync(1, MyAllLevelsSetting, "application level stored value");
-            (await store.GetSettingOrNullAsync(1, 1, MyAllLevelsSetting)).ShouldBe(null);
+            (await store.GetSettingOrNullAsync(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
 
             //We can get application's value
             (await store.GetSettingOrNullAsync(null, null, MyAllLevelsSetting)).ShouldNotBe(null);
@@ -293,19 +294,19 @@ namespace Abp.Tests.Configuration
                     new SettingInfo(null, null, MyAppLevelSetting, "48"),
                     new SettingInfo(null, null, MyAllLevelsSetting, "application level stored value"),
                     new SettingInfo(1, null, MyAllLevelsSetting, "tenant 1 stored value"),
-                    new SettingInfo(1, 1, MyAllLevelsSetting, "user 1 stored value"),
-                    new SettingInfo(1, 2, MyAllLevelsSetting, "user 2 stored value"),
+                    new SettingInfo(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting, "user 1 stored value"),
+                    new SettingInfo(1, new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0"), MyAllLevelsSetting, "user 2 stored value"),
                     new SettingInfo(null, null, MyNotInheritedSetting, "application value"),
                 };
             }
 
 
-            public Task<SettingInfo> GetSettingOrNullAsync(int? tenantId, long? userId, string name)
+            public Task<SettingInfo> GetSettingOrNullAsync(int? tenantId, Guid? userId, string name)
             {
                 return Task.FromResult(_settings.FirstOrDefault(s => s.TenantId == tenantId && s.UserId == userId && s.Name == name));
             }
 
-            public SettingInfo GetSettingOrNull(int? tenantId, long? userId, string name)
+            public SettingInfo GetSettingOrNull(int? tenantId, Guid? userId, string name)
             {
                 return _settings.FirstOrDefault(s => s.TenantId == tenantId && s.UserId == userId && s.Name == name);
             }
@@ -352,12 +353,12 @@ namespace Abp.Tests.Configuration
                 }
             }
 
-            public Task<List<SettingInfo>> GetAllListAsync(int? tenantId, long? userId)
+            public Task<List<SettingInfo>> GetAllListAsync(int? tenantId, Guid? userId)
             {
                 return Task.FromResult(_settings.Where(s => s.TenantId == tenantId && s.UserId == userId).ToList());
             }
 
-            public List<SettingInfo> GetAllList(int? tenantId, long? userId)
+            public List<SettingInfo> GetAllList(int? tenantId, Guid? userId)
             {
                 return _settings.Where(s => s.TenantId == tenantId && s.UserId == userId).ToList();
             }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
@@ -108,22 +109,22 @@ namespace Abp.Configuration
             return GetSettingValueInternal(name, tenantId, fallbackToDefault: fallbackToDefault);
         }
 
-        public Task<string> GetSettingValueForUserAsync(string name, int? tenantId, long userId)
+        public Task<string> GetSettingValueForUserAsync(string name, int? tenantId, Guid userId)
         {
             return GetSettingValueInternalAsync(name, tenantId, userId);
         }
 
-        public string GetSettingValueForUser(string name, int? tenantId, long userId)
+        public string GetSettingValueForUser(string name, int? tenantId, Guid userId)
         {
             return GetSettingValueInternal(name, tenantId, userId);
         }
 
-        public Task<string> GetSettingValueForUserAsync(string name, int? tenantId, long userId, bool fallbackToDefault)
+        public Task<string> GetSettingValueForUserAsync(string name, int? tenantId, Guid userId, bool fallbackToDefault)
         {
             return GetSettingValueInternalAsync(name, tenantId, userId, fallbackToDefault);
         }
 
-        public string GetSettingValueForUser(string name, int? tenantId, long userId, bool fallbackToDefault)
+        public string GetSettingValueForUser(string name, int? tenantId, Guid userId, bool fallbackToDefault)
         {
             return GetSettingValueInternal(name, tenantId, userId, fallbackToDefault);
         }
@@ -335,13 +336,13 @@ namespace Abp.Configuration
         }
 
         /// <inheritdoc/>
-        public Task<IReadOnlyList<ISettingValue>> GetAllSettingValuesForUserAsync(long userId)
+        public Task<IReadOnlyList<ISettingValue>> GetAllSettingValuesForUserAsync(Guid userId)
         {
             return GetAllSettingValuesForUserAsync(new UserIdentifier(AbpSession.TenantId, userId));
         }
 
         /// <inheritdoc/>
-        public IReadOnlyList<ISettingValue> GetAllSettingValuesForUser(long userId)
+        public IReadOnlyList<ISettingValue> GetAllSettingValuesForUser(Guid userId)
         {
             return GetAllSettingValuesForUser(new UserIdentifier(AbpSession.TenantId, userId));
         }
@@ -414,14 +415,14 @@ namespace Abp.Configuration
 
         /// <inheritdoc/>
         [UnitOfWork]
-        public virtual Task ChangeSettingForUserAsync(long userId, string name, string value)
+        public virtual Task ChangeSettingForUserAsync(Guid userId, string name, string value)
         {
             return ChangeSettingForUserAsync(new UserIdentifier(AbpSession.TenantId, userId), name, value);
         }
 
         /// <inheritdoc/>
         [UnitOfWork]
-        public virtual void ChangeSettingForUser(long userId, string name, string value)
+        public virtual void ChangeSettingForUser(Guid userId, string name, string value)
         {
             ChangeSettingForUser(new UserIdentifier(AbpSession.TenantId, userId), name, value);
         }
@@ -442,7 +443,7 @@ namespace Abp.Configuration
 
         #region Private methods
 
-        private async Task<string> GetSettingValueInternalAsync(string name, int? tenantId = null, long? userId = null, bool fallbackToDefault = true)
+        private async Task<string> GetSettingValueInternalAsync(string name, int? tenantId = null, Guid? userId = null, bool fallbackToDefault = true)
         {
             var settingDefinition = _settingDefinitionManager.GetSettingDefinition(name);
 
@@ -505,7 +506,7 @@ namespace Abp.Configuration
             return settingDefinition.DefaultValue;
         }
 
-        private string GetSettingValueInternal(string name, int? tenantId = null, long? userId = null, bool fallbackToDefault = true)
+        private string GetSettingValueInternal(string name, int? tenantId = null, Guid? userId = null, bool fallbackToDefault = true)
         {
             var settingDefinition = _settingDefinitionManager.GetSettingDefinition(name);
 
@@ -568,7 +569,7 @@ namespace Abp.Configuration
             return settingDefinition.DefaultValue;
         }
 
-        private async Task<SettingInfo> InsertOrUpdateOrDeleteSettingValueAsync(string name, string value, int? tenantId, long? userId)
+        private async Task<SettingInfo> InsertOrUpdateOrDeleteSettingValueAsync(string name, string value, int? tenantId, Guid? userId)
         {
             var settingDefinition = _settingDefinitionManager.GetSettingDefinition(name);
             var settingValue = await SettingStore.GetSettingOrNullAsync(tenantId, userId, name);
@@ -638,7 +639,7 @@ namespace Abp.Configuration
             return settingValue;
         }
 
-        private SettingInfo InsertOrUpdateOrDeleteSettingValue(string name, string value, int? tenantId, long? userId)
+        private SettingInfo InsertOrUpdateOrDeleteSettingValue(string name, string value, int? tenantId, Guid? userId)
         {
             var settingDefinition = _settingDefinitionManager.GetSettingDefinition(name);
             var settingValue = SettingStore.GetSettingOrNull(tenantId, userId, name);

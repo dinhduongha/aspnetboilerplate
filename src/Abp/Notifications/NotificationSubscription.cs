@@ -17,7 +17,7 @@ namespace Abp.Notifications
         /// <summary>
         /// User Id.
         /// </summary>
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Notification unique name.

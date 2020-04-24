@@ -5,6 +5,7 @@ using Abp.Events.Bus.Entities;
 using Abp.Events.Bus.Handlers;
 using Abp.Organizations;
 using Abp.Runtime.Caching;
+using System;
 
 namespace Abp.Authorization.Users
 {
@@ -17,12 +18,12 @@ namespace Abp.Authorization.Users
         ITransientDependency
     {
         private readonly ICacheManager _cacheManager;
-        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
+        private readonly IRepository<UserOrganizationUnit, Guid> _userOrganizationUnitRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public AbpUserPermissionCacheItemInvalidator(
             ICacheManager cacheManager, 
-            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository, 
+            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository, 
             IUnitOfWorkManager unitOfWorkManager)
         {
             _cacheManager = cacheManager;

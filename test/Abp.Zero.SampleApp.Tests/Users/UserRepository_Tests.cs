@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.Zero.SampleApp.Users;
 using Shouldly;
+using System;
 using Xunit;
 
 namespace Abp.Zero.SampleApp.Tests.Users
@@ -10,7 +11,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
         [Fact]
         public void Should_Insert_And_Retrieve_User()
         {
-            var userRepository = LocalIocManager.Resolve<IRepository<User, long>>();
+            var userRepository = LocalIocManager.Resolve<IRepository<User, Guid>>();
 
             userRepository.FirstOrDefault(u => u.EmailAddress == "admin@aspnetboilerplate.com").ShouldBe(null);
 

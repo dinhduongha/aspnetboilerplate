@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
@@ -10,11 +11,11 @@ namespace Abp.Zero.SampleApp.Tests.Repository
 {
     public class Repository_Hard_Delete_Test : SampleAppTestBase
     {
-        private readonly IRepository<User, long> _useRepository;
+        private readonly IRepository<User, Guid> _useRepository;
 
         public Repository_Hard_Delete_Test()
         {
-            _useRepository = LocalIocManager.Resolve<IRepository<User, long>>();
+            _useRepository = LocalIocManager.Resolve<IRepository<User, Guid>>();
         }
 
         [Fact]
@@ -76,7 +77,7 @@ namespace Abp.Zero.SampleApp.Tests.Repository
 
             using (var uow = uowManager.Begin())
             {
-                await _useRepository.HardDeleteAsync(u => u.Id > 0);
+                await _useRepository.HardDeleteAsync(u => u.Id != Guid.Empty);
 
                 uow.Complete();
             }

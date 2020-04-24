@@ -29,7 +29,7 @@ namespace Abp.RealTime
         /// <summary>
         /// User Id.
         /// </summary>
-        public long? UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         /// <summary>
         /// Connection establishment time for this client.
@@ -78,7 +78,7 @@ namespace Abp.RealTime
         /// <param name="ipAddress">The ip address.</param>
         /// <param name="tenantId">The tenant identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        public OnlineClient(string connectionId, string ipAddress, int? tenantId, long? userId)
+        public OnlineClient(string connectionId, string ipAddress, int? tenantId, Guid? userId)
             : this()
         {
             ConnectionId = connectionId;

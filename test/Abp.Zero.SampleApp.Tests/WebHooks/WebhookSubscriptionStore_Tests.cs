@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Domain.Entities;
@@ -19,7 +20,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             _webhookSubscriptionsStore = Resolve<IWebhookSubscriptionsStore>();
 
             AbpSession.TenantId = null;
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
         }
 
 

@@ -12,7 +12,7 @@ namespace Abp.Runtime.Session
         /// Gets current UserId or null.
         /// It can be null if no user logged in.
         /// </summary>
-        long? UserId { get; }
+        Guid? UserId { get; }
 
         /// <summary>
         /// Gets current TenantId or null.
@@ -30,7 +30,7 @@ namespace Abp.Runtime.Session
         /// UserId of the impersonator.
         /// This is filled if a user is performing actions behalf of the <see cref="UserId"/>.
         /// </summary>
-        long? ImpersonatorUserId { get; }
+        Guid? ImpersonatorUserId { get; }
 
         /// <summary>
         /// TenantId of the impersonator.
@@ -44,6 +44,6 @@ namespace Abp.Runtime.Session
         /// <param name="tenantId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        IDisposable Use(int? tenantId, long? userId);
+        IDisposable Use(int? tenantId, Guid? userId);
     }
 }

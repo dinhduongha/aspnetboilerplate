@@ -9,7 +9,7 @@ namespace Abp.TestBase.Runtime.Session
 {
     public class TestAbpSession : IAbpSession, ISingletonDependency
     {
-        public virtual long? UserId
+        public virtual Guid? UserId
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Abp.TestBase.Runtime.Session
 
         public virtual MultiTenancySides MultiTenancySide { get { return GetCurrentMultiTenancySide(); } }
         
-        public virtual long? ImpersonatorUserId { get; set; }
+        public virtual Guid? ImpersonatorUserId { get; set; }
         
         public virtual int? ImpersonatorTenantId { get; set; }
 
@@ -66,7 +66,7 @@ namespace Abp.TestBase.Runtime.Session
         private readonly IAmbientScopeProvider<SessionOverride> _sessionOverrideScopeProvider;
         private readonly ITenantResolver _tenantResolver;
         private int? _tenantId;
-        private long? _userId;
+        private Guid? _userId;
 
         public TestAbpSession(
             IMultiTenancyConfig multiTenancy, 
@@ -85,7 +85,7 @@ namespace Abp.TestBase.Runtime.Session
                 : MultiTenancySides.Tenant;
         }
 
-        public virtual IDisposable Use(int? tenantId, long? userId)
+        public virtual IDisposable Use(int? tenantId, Guid? userId)
         {
             return _sessionOverrideScopeProvider.BeginScope(AbpSessionBase.SessionOverrideContextKey, new SessionOverride(tenantId, userId));
         }

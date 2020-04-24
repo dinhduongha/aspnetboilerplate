@@ -9,6 +9,7 @@ using Abp.Zero.Configuration;
 using Abp.Zero.SampleApp.MultiTenancy;
 using Abp.Zero.SampleApp.Roles;
 using Abp.Zero.SampleApp.Users;
+using System;
 
 namespace Abp.Zero.SampleApp.Authorization
 {
@@ -20,7 +21,7 @@ namespace Abp.Zero.SampleApp.Authorization
             IRepository<Tenant> tenantRepository, 
             IUnitOfWorkManager unitOfWorkManager, 
             ISettingManager settingManager, 
-            IRepository<UserLoginAttempt, long> userLoginAttemptRepository, 
+            IRepository<UserLoginAttempt, Guid> userLoginAttemptRepository, 
             IUserManagementConfig userManagementConfig, IIocResolver iocResolver, 
             RoleManager roleManager) 
             : base(

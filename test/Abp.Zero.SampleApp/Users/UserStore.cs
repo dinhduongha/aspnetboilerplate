@@ -4,21 +4,22 @@ using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Organizations;
 using Abp.Zero.SampleApp.Roles;
+using System;
 
 namespace Abp.Zero.SampleApp.Users
 {
     public class UserStore : AbpUserStore<Role, User>
     {
         public UserStore(
-            IRepository<User, long> userRepository,
-            IRepository<UserLogin, long> userLoginRepository,
-            IRepository<UserRole, long> userRoleRepository,
-            IRepository<Role> roleRepository,
-            IRepository<UserPermissionSetting, long> userPermissionSettingRepository,
+            IRepository<User, Guid> userRepository,
+            IRepository<UserLogin, Guid> userLoginRepository,
+            IRepository<UserRole, Guid> userRoleRepository,
+            IRepository<Role, Guid> roleRepository,
+            IRepository<UserPermissionSetting, Guid> userPermissionSettingRepository,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<UserClaim, long> userClaimRepository,
-            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
-            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
+            IRepository<UserClaim, Guid> userClaimRepository,
+            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository,
+            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository)
             : base(
                 userRepository,
                 userLoginRepository,

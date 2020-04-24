@@ -1,14 +1,15 @@
 using Abp.MultiTenancy;
+using System;
 
 namespace Abp.Web.Models.AbpUserConfiguration
 {
     public class AbpUserSessionConfigDto
     {
-        public long? UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public int? TenantId { get; set; }
 
-        public long? ImpersonatorUserId { get; set; }
+        public Guid? ImpersonatorUserId { get; set; }
 
         public int? ImpersonatorTenantId { get; set; }
 

@@ -21,7 +21,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
         public WebhookPublisher_Tests()
         {
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
             AbpSession.TenantId = null;
 
             _backgroundJobManagerSubstitute = RegisterFake<IBackgroundJobManager>();

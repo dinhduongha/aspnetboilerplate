@@ -27,7 +27,7 @@ namespace Abp.Zero.SampleApp.Tests.DynamicEntityParameters
             DynamicParameterStore = Resolve<IDynamicParameterStore>();
             EntityDynamicParameterStore = Resolve<IEntityDynamicParameterStore>();
 
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
             AbpSession.TenantId = 1;
 
             var user = AsyncHelper.RunSync(() => UserManager.FindByIdAsync(AbpSession.UserId.Value));

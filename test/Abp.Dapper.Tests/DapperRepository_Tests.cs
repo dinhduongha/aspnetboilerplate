@@ -107,7 +107,7 @@ namespace Abp.Dapper.Tests
                     softDeletedProductFromDapperWhenFilterDisabled.ShouldNotBeNull();
                 }
 
-                using (AbpSession.Use(2, 266))
+                using (AbpSession.Use(2, new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0")))
                 {
                     int productWithTenant2Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant2"));
 

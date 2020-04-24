@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.SQLite;
@@ -22,7 +23,7 @@ namespace Abp.Dapper.Tests
 
             Resolve<IAbpStartupConfiguration>().DefaultNameOrConnectionString = "Data Source=:memory:";
 
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
             AbpSession.TenantId = 1;
         }
 

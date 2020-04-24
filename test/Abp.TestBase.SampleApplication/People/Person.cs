@@ -22,7 +22,7 @@ namespace Abp.TestBase.SampleApplication.People
 
         public virtual bool IsDeleted { get; set; }
 
-        public virtual long? DeleterUserId { get; set; }
+        public virtual Guid? DeleterUserId { get; set; }
 
         public virtual DateTime? DeletionTime { get; set; }
     }

@@ -32,7 +32,7 @@ namespace Abp.Authorization
         protected IUnitOfWorkManager UnitOfWorkManager { get; }
         protected AbpUserManager<TRole, TUser> UserManager { get; }
         protected ISettingManager SettingManager { get; }
-        protected IRepository<UserLoginAttempt, long> UserLoginAttemptRepository { get; }
+        protected IRepository<UserLoginAttempt, Guid> UserLoginAttemptRepository { get; }
         protected IUserManagementConfig UserManagementConfig { get; }
         protected IIocResolver IocResolver { get; }
         protected AbpRoleManager<TRole, TUser> RoleManager { get; }
@@ -43,7 +43,7 @@ namespace Abp.Authorization
             IRepository<TTenant> tenantRepository,
             IUnitOfWorkManager unitOfWorkManager,
             ISettingManager settingManager,
-            IRepository<UserLoginAttempt, long> userLoginAttemptRepository,
+            IRepository<UserLoginAttempt, Guid> userLoginAttemptRepository,
             IUserManagementConfig userManagementConfig,
             IIocResolver iocResolver,
             AbpRoleManager<TRole, TUser> roleManager)
@@ -239,7 +239,7 @@ namespace Abp.Authorization
                         TenantId = tenantId,
                         TenancyName = tenancyName,
 
-                        UserId = loginResult.User != null ? loginResult.User.Id : (long?)null,
+                        UserId = loginResult.User != null ? loginResult.User.Id : (Guid?)null,
                         UserNameOrEmailAddress = userNameOrEmailAddress,
 
                         Result = loginResult.Result,
@@ -257,7 +257,7 @@ namespace Abp.Authorization
             }
         }
 
-        protected virtual async Task<bool> TryLockOutAsync(int? tenantId, long userId)
+        protected virtual async Task<bool> TryLockOutAsync(int? tenantId, Guid userId)
         {
             using (var uow = UnitOfWorkManager.Begin(TransactionScopeOption.Suppress))
             {

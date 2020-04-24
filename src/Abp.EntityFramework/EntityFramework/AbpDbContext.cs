@@ -281,7 +281,7 @@ namespace Abp.EntityFramework
             }
         }
 
-        protected virtual void ApplyAbpConcepts(DbEntityEntry entry, long? userId, EntityChangeReport changeReport)
+        protected virtual void ApplyAbpConcepts(DbEntityEntry entry, Guid? userId, EntityChangeReport changeReport)
         {
             switch (entry.State)
             {
@@ -299,7 +299,7 @@ namespace Abp.EntityFramework
             AddDomainEvents(changeReport.DomainEvents, entry.Entity);
         }
 
-        protected virtual void ApplyAbpConceptsForAddedEntity(DbEntityEntry entry, long? userId, EntityChangeReport changeReport)
+        protected virtual void ApplyAbpConceptsForAddedEntity(DbEntityEntry entry, Guid? userId, EntityChangeReport changeReport)
         {
             CheckAndSetId(entry.Entity);
             CheckAndSetMustHaveTenantIdProperty(entry.Entity);
@@ -308,7 +308,7 @@ namespace Abp.EntityFramework
             changeReport.ChangedEntities.Add(new EntityChangeEntry(entry.Entity, EntityChangeType.Created));
         }
 
-        protected virtual void ApplyAbpConceptsForModifiedEntity(DbEntityEntry entry, long? userId, EntityChangeReport changeReport)
+        protected virtual void ApplyAbpConceptsForModifiedEntity(DbEntityEntry entry, Guid? userId, EntityChangeReport changeReport)
         {
             SetModificationAuditProperties(entry.Entity, userId);
 
@@ -323,7 +323,7 @@ namespace Abp.EntityFramework
             }
         }
 
-        protected virtual void ApplyAbpConceptsForDeletedEntity(DbEntityEntry entry, long? userId, EntityChangeReport changeReport)
+        protected virtual void ApplyAbpConceptsForDeletedEntity(DbEntityEntry entry, Guid? userId, EntityChangeReport changeReport)
         {
             if (IsHardDeleteEntity(entry))
             {
@@ -510,13 +510,13 @@ namespace Abp.EntityFramework
             entity.TenantId = GetCurrentTenantIdOrNull();
         }
 
-        protected virtual void SetCreationAuditProperties(object entityAsObj, long? userId)
+        protected virtual void SetCreationAuditProperties(object entityAsObj, Guid? userId)
         {
             EntityAuditingHelper.SetCreationAuditProperties(MultiTenancyConfig, entityAsObj, AbpSession.TenantId,
                 userId);
         }
 
-        protected virtual void SetModificationAuditProperties(object entityAsObj, long? userId)
+        protected virtual void SetModificationAuditProperties(object entityAsObj, Guid? userId)
         {
             EntityAuditingHelper.SetModificationAuditProperties(MultiTenancyConfig, entityAsObj, AbpSession.TenantId,
                 userId);
@@ -535,7 +535,7 @@ namespace Abp.EntityFramework
             softDeleteEntry.Entity.IsDeleted = true;
         }
 
-        protected virtual void SetDeletionAuditProperties(object entityAsObj, long? userId)
+        protected virtual void SetDeletionAuditProperties(object entityAsObj, Guid? userId)
         {
             if (entityAsObj is IHasDeletionTime)
             {
@@ -592,7 +592,7 @@ namespace Abp.EntityFramework
             }
         }
 
-        protected virtual long? GetAuditUserId()
+        protected virtual Guid? GetAuditUserId()
         {
             if (AbpSession.UserId.HasValue &&
                 CurrentUnitOfWorkProvider != null &&

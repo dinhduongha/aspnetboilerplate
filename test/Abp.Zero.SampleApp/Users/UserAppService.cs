@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Extensions;
@@ -10,12 +11,12 @@ namespace Abp.Zero.SampleApp.Users
 {
     public class UserAppService : IUserAppService
     {
-        private readonly IRepository<User, long> _userRepository;
+        private readonly IRepository<User, Guid> _userRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly UserManager _userManager;
 
         public UserAppService(
-            IRepository<User, long> userRepository,
+            IRepository<User, Guid> userRepository,
             IUnitOfWorkManager unitOfWorkManager,
             UserManager userManager)
         {
@@ -53,7 +54,7 @@ namespace Abp.Zero.SampleApp.Users
             _userRepository.Update(user);
         }
 
-        public void DeleteUser(long userId)
+        public void DeleteUser(Guid userId)
         {
             _userRepository.Delete(userId);
         }

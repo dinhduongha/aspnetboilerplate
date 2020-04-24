@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Abp.Configuration.Startup;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
@@ -23,7 +24,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
         [Fact]
         public void MustHaveTenant_Filter_Tests()
         {
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             //A tenant can reach its own data
             AbpSession.TenantId = 1;
@@ -100,7 +101,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
         public void MustHaveTenant_Should_Work_In_AppService()
         {
             AbpSession.TenantId = 3;
-            AbpSession.UserId = 3;
+            AbpSession.UserId = new Guid("0171ac9f-b101-10d1-0417-1152a6897d40");
 
             var lists = _contactListAppService.GetContactLists();
             lists.Count.ShouldBeGreaterThan(0);

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Abp.Organizations;
 using Abp.Zero.SampleApp.EntityFramework;
 using Abp.Zero.SampleApp.MultiTenancy;
@@ -43,7 +44,7 @@ namespace Abp.Zero.SampleApp.Tests.TestDatas
             var ou21 = CreateOU("OU21", OrganizationUnit.CreateCode(2, 1), ou2.Id);
         }
 
-        private OrganizationUnit CreateOU(string displayName, string code, long? parentId = null)
+        private OrganizationUnit CreateOU(string displayName, string code, Guid? parentId = null)
         {
             var ou = _context.OrganizationUnits.Add(new OrganizationUnit(_defaultTenant.Id, displayName, parentId) { Code = code });
             _context.SaveChanges();

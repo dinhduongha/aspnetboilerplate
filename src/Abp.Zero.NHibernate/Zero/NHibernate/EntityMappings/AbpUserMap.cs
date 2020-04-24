@@ -1,9 +1,10 @@
 ﻿using Abp.Authorization.Users;
 using Abp.NHibernate.EntityMappings;
+using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public abstract class AbpUserMap<TUser> : EntityMap<TUser, long>
+    public abstract class AbpUserMap<TUser> : EntityMap<TUser, Guid>
         where TUser : AbpUser<TUser>
     {
         protected AbpUserMap()

@@ -15,7 +15,7 @@ namespace Abp.Timing.Timezone
         /// <param name="tenantId">TenantId of user</param>
         /// <param name="userId">UserId to convert date for</param>
         /// <returns></returns>
-        DateTime? Convert(DateTime? date, int? tenantId, long userId);
+        DateTime? Convert(DateTime? date, int? tenantId, Guid userId);
 
         /// <summary>
         /// Converts given date to tenant's time zone. 

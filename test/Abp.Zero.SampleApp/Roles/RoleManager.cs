@@ -6,6 +6,7 @@ using Abp.Organizations;
 using Abp.Runtime.Caching;
 using Abp.Zero.Configuration;
 using Abp.Zero.SampleApp.Users;
+using System;
 
 namespace Abp.Zero.SampleApp.Roles
 {
@@ -17,8 +18,8 @@ namespace Abp.Zero.SampleApp.Roles
             IRoleManagementConfig roleManagementConfig,
             ICacheManager cacheManager,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<OrganizationUnit, long> organizationUnitRepository,
-            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
+            IRepository<OrganizationUnit, Guid> organizationUnitRepository,
+            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository)
             : base(
             store,
             permissionManager,

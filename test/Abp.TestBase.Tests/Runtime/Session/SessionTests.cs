@@ -1,6 +1,7 @@
 ﻿using Abp.Configuration.Startup;
 using Abp.Runtime.Session;
 using Shouldly;
+using System;
 using Xunit;
 
 namespace Abp.TestBase.Tests.Runtime.Session
@@ -26,17 +27,17 @@ namespace Abp.TestBase.Tests.Runtime.Session
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
 
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
             AbpSession.TenantId = 42;
 
             var resolvedAbpSession = LocalIocManager.Resolve<IAbpSession>();
 
-            resolvedAbpSession.UserId.ShouldBe(1);
+            resolvedAbpSession.UserId.ShouldBe(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
             resolvedAbpSession.TenantId.ShouldBe(42);
 
             Resolve<IMultiTenancyConfig>().IsEnabled = false;
 
-            AbpSession.UserId.ShouldBe(1);
+            AbpSession.UserId.ShouldBe(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
             AbpSession.TenantId.ShouldBe(1);
         }
     }

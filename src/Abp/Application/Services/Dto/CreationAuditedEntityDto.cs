@@ -28,7 +28,7 @@ namespace Abp.Application.Services.Dto
         /// <summary>
         /// Creator user's id for this entity.
         /// </summary>
-        public long? CreatorUserId { get; set; }
+        public Guid? CreatorUserId { get; set; }
 
         /// <summary>
         /// Constructor.

@@ -23,11 +23,11 @@ namespace Abp.Tests.RealTime
         {
             int tenantId = 1;
 
-            Dictionary<string, int> connections = new Dictionary<string, int>();
+            Dictionary<string, Guid> connections = new Dictionary<string, Guid>();
 
             for (int i = 0; i < 100; i++)
             {
-                connections.Add(MakeNewConnectionId(), i + 1);
+                connections.Add(MakeNewConnectionId(), Guid.NewGuid());
             }
 
             foreach (var pair in connections)

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Authorization.Roles;
 using Abp.Authorization.Users;
 using Abp.Dependency;
@@ -48,12 +49,12 @@ namespace Abp.Authorization
             return AbpSession.UserId.HasValue && _userManager.IsGranted(AbpSession.UserId.Value, permissionName);
         }
 
-        public virtual async Task<bool> IsGrantedAsync(long userId, string permissionName)
+        public virtual async Task<bool> IsGrantedAsync(Guid userId, string permissionName)
         {
             return await _userManager.IsGrantedAsync(userId, permissionName);
         }
 
-        public virtual bool IsGranted(long userId, string permissionName)
+        public virtual bool IsGranted(Guid userId, string permissionName)
         {
             return _userManager.IsGranted(userId, permissionName);
         }

@@ -18,7 +18,7 @@ namespace Abp.Dapper.Filters.Action
 
         public void ExecuteFilter<TEntity, TPrimaryKey>(TEntity entity) where TEntity : class, IEntity<TPrimaryKey>
         {
-            long? userId = GetAuditUserId();
+            Guid? userId = GetAuditUserId();
 
             CheckAndSetId(entity);
 

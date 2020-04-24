@@ -14,7 +14,7 @@ namespace Abp.Organizations
     /// Represents an organization unit (OU).
     /// </summary>
     [Table("AbpOrganizationUnits")]
-    public class OrganizationUnit : FullAuditedEntity<long>, IMayHaveTenant
+    public class OrganizationUnit : FullAuditedEntity<Guid>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="DisplayName"/> property.
@@ -52,7 +52,7 @@ namespace Abp.Organizations
         /// Parent <see cref="OrganizationUnit"/> Id.
         /// Null, if this OU is root.
         /// </summary>
-        public virtual long? ParentId { get; set; }
+        public virtual Guid? ParentId { get; set; }
 
         /// <summary>
         /// Hierarchical Code of this organization unit.
@@ -90,7 +90,7 @@ namespace Abp.Organizations
         /// <param name="tenantId">Tenant's Id or null for host.</param>
         /// <param name="displayName">Display name.</param>
         /// <param name="parentId">Parent's Id or null if OU is a root.</param>
-        public OrganizationUnit(int? tenantId, string displayName, long? parentId = null)
+        public OrganizationUnit(int? tenantId, string displayName, Guid? parentId = null)
         {
             TenantId = tenantId;
             DisplayName = displayName;

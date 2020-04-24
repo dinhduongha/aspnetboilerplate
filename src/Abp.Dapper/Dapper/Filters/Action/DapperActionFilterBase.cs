@@ -23,7 +23,7 @@ namespace Abp.Dapper.Filters.Action
 
         public IGuidGenerator GuidGenerator { get; set; }
 
-        protected virtual long? GetAuditUserId()
+        protected virtual Guid? GetAuditUserId()
         {
             if (AbpSession.UserId.HasValue && CurrentUnitOfWorkProvider?.Current != null)
             {

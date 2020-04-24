@@ -67,7 +67,7 @@ namespace Abp.Auditing
         /// <summary>
         /// UserId.
         /// </summary>
-        public virtual long? UserId { get; set; }
+        public virtual Guid? UserId { get; set; }
 
         /// <summary>
         /// Service (class/interface) name.
@@ -122,7 +122,7 @@ namespace Abp.Auditing
         /// <summary>
         /// <see cref="AuditInfo.ImpersonatorUserId"/>.
         /// </summary>
-        public virtual long? ImpersonatorUserId { get; set; }
+        public virtual Guid? ImpersonatorUserId { get; set; }
 
         /// <summary>
         /// <see cref="AuditInfo.ImpersonatorTenantId"/>.

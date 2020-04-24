@@ -19,7 +19,7 @@ namespace Abp
         /// <summary>
         /// Id of the user.
         /// </summary>
-        public long UserId { get; protected set; }
+        public Guid UserId { get; protected set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserIdentifier"/> class.
@@ -34,7 +34,7 @@ namespace Abp
         /// </summary>
         /// <param name="tenantId">Tenant Id of the user.</param>
         /// <param name="userId">Id of the user.</param>
-        public UserIdentifier(int? tenantId, long userId)
+        public UserIdentifier(int? tenantId, Guid userId)
         {
             TenantId = tenantId;
             UserId = userId;
@@ -59,13 +59,13 @@ namespace Abp
             var splitted = userIdentifierString.Split('@');
             if (splitted.Length == 1)
             {
-                return new UserIdentifier(null, splitted[0].To<long>());
+                return new UserIdentifier(null, Guid.Parse(splitted[0]));
 
             }
 
             if (splitted.Length == 2)
             {
-                return new UserIdentifier(splitted[1].To<int>(), splitted[0].To<long>());
+                return new UserIdentifier(splitted[1].To<int>(), Guid.Parse(splitted[0]));
             }
 
             throw new ArgumentException("userAtTenant is not properly formatted", nameof(userIdentifierString));

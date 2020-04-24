@@ -12,7 +12,7 @@ namespace Abp.Authorization.Roles
     /// Base class for role.
     /// </summary>
     [Table("AbpRoles")]
-    public abstract class AbpRoleBase : FullAuditedEntity<int>, IMayHaveTenant
+    public abstract class AbpRoleBase : FullAuditedEntity<Guid>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="DisplayName"/> property.

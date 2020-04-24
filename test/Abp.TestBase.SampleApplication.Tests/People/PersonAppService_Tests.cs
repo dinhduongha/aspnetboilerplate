@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
@@ -125,7 +126,7 @@ namespace Abp.TestBase.SampleApplication.Tests.People
 
             var personAppService = Resolve<IPersonAppService>();
 
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             var halil = await UsingDbContextAsync(async context => await context.People.SingleAsync(p => p.Name == "halil"));
 
@@ -157,7 +158,7 @@ namespace Abp.TestBase.SampleApplication.Tests.People
 
             var personAppService = Resolve<IPersonAppService>();
 
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
             
             var halil = await UsingDbContextAsync(async context => await context.People.SingleAsync(p => p.Name == "halil"));
 

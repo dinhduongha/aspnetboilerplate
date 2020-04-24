@@ -16,7 +16,7 @@ using Microsoft.Owin.Security;
 
 namespace Abp.Authorization
 {
-    public abstract class AbpSignInManager<TTenant, TRole, TUser> : SignInManager<TUser, long>, ITransientDependency
+    public abstract class AbpSignInManager<TTenant, TRole, TUser> : SignInManager<TUser, Guid>, ITransientDependency
         where TTenant : AbpTenant<TUser>
         where TRole : AbpRole<TUser>, new()
         where TUser : AbpUser<TUser>

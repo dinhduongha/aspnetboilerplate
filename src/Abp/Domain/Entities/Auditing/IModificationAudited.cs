@@ -1,3 +1,5 @@
+using System;
+
 namespace Abp.Domain.Entities.Auditing
 {
     /// <summary>
@@ -9,7 +11,7 @@ namespace Abp.Domain.Entities.Auditing
         /// <summary>
         /// Last modifier user for this entity.
         /// </summary>
-        long? LastModifierUserId { get; set; }
+        Guid? LastModifierUserId { get; set; }
     }
 
     /// <summary>
@@ -17,7 +19,7 @@ namespace Abp.Domain.Entities.Auditing
     /// </summary>
     /// <typeparam name="TUser">Type of the user</typeparam>
     public interface IModificationAudited<TUser> : IModificationAudited
-        where TUser : IEntity<long>
+        where TUser : IEntity<Guid>
     {
         /// <summary>
         /// Reference to the last modifier user of this entity.

@@ -2,13 +2,14 @@ using Abp.Authorization.Roles;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
 using Abp.NHibernate.EntityMappings;
+using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
     /// <summary>
     /// Base class for role mapping.
     /// </summary>
-    public abstract class AbpRoleMap<TRole, TUser> : EntityMap<TRole>
+    public abstract class AbpRoleMap<TRole, TUser> : EntityMap<TRole, Guid>
         where TRole : AbpRole<TUser>
         where TUser : AbpUser<TUser>
     {

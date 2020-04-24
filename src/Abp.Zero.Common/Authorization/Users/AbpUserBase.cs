@@ -13,7 +13,7 @@ namespace Abp.Authorization.Users
     /// Base class for user.
     /// </summary>
     [Table("AbpUsers")]
-    public abstract class AbpUserBase : FullAuditedEntity<long>, IMayHaveTenant, IPassivable
+    public abstract class AbpUserBase : FullAuditedEntity<Guid>, IMayHaveTenant, IPassivable
     {
         /// <summary>
         /// Maximum length of the <see cref="UserName"/> property.

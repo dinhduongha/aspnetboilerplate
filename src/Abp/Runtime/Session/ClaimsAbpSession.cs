@@ -12,7 +12,7 @@ namespace Abp.Runtime.Session
     /// </summary>
     public class ClaimsAbpSession : AbpSessionBase, ISingletonDependency
     {
-        public override long? UserId
+        public override Guid? UserId
         {
             get
             {
@@ -27,8 +27,8 @@ namespace Abp.Runtime.Session
                     return null;
                 }
 
-                long userId;
-                if (!long.TryParse(userIdClaim.Value, out userId))
+                Guid userId;
+                if (!Guid.TryParse(userIdClaim.Value, out userId))
                 {
                     return null;
                 }
@@ -67,7 +67,7 @@ namespace Abp.Runtime.Session
             }
         }
 
-        public override long? ImpersonatorUserId
+        public override Guid? ImpersonatorUserId
         {
             get
             {
@@ -76,8 +76,7 @@ namespace Abp.Runtime.Session
                 {
                     return null;
                 }
-
-                return Convert.ToInt64(impersonatorUserIdClaim.Value);
+                return Guid.Parse(impersonatorUserIdClaim.Value);
             }
         }
 

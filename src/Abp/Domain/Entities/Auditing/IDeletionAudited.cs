@@ -1,3 +1,5 @@
+using System;
+
 namespace Abp.Domain.Entities.Auditing
 {
     /// <summary>
@@ -8,7 +10,7 @@ namespace Abp.Domain.Entities.Auditing
         /// <summary>
         /// Which user deleted this entity?
         /// </summary>
-        long? DeleterUserId { get; set; }
+        Guid? DeleterUserId { get; set; }
     }
 
     /// <summary>
@@ -16,7 +18,7 @@ namespace Abp.Domain.Entities.Auditing
     /// </summary>
     /// <typeparam name="TUser">Type of the user</typeparam>
     public interface IDeletionAudited<TUser> : IDeletionAudited
-        where TUser : IEntity<long>
+        where TUser : IEntity<Guid>
     {
         /// <summary>
         /// Reference to the deleter user of this entity.

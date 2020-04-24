@@ -26,7 +26,7 @@ namespace Abp.NHibernate.Tests
         [Fact]
         public void Should_Set_CreatorUserId_When_DynamicInsert_Is_Enabled()
         {
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             using (var uow = _unitOfWorkManager.Begin())
             {
@@ -44,7 +44,7 @@ namespace Abp.NHibernate.Tests
         [Fact]
         public async Task Should_Set_CreatorUserId_When_DynamicInsert_Is_Enabled_Async()
         {
-            AbpSession.UserId = 1;
+            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             using (var uow = _unitOfWorkManager.Begin())
             {

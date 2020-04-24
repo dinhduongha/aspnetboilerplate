@@ -8,6 +8,7 @@ using Abp.Localization;
 using Abp.Organizations;
 using Abp.Runtime.Caching;
 using Abp.Zero.SampleApp.Roles;
+using System;
 
 namespace Abp.Zero.SampleApp.Users
 {
@@ -19,8 +20,8 @@ namespace Abp.Zero.SampleApp.Users
             IPermissionManager permissionManager, 
             IUnitOfWorkManager unitOfWorkManager, 
             ICacheManager cacheManager, 
-            IRepository<OrganizationUnit, long> organizationUnitRepository, 
-            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository, 
+            IRepository<OrganizationUnit, Guid> organizationUnitRepository, 
+            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository, 
             IOrganizationUnitSettings organizationUnitSettings,
             ILocalizationManager localizationManager,
             ISettingManager settingManager,

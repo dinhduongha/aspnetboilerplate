@@ -16,13 +16,13 @@ namespace Abp.Authorization.Users
         where TTenant : AbpTenant<TUser>
         where TUser : AbpUserBase
     {
-        private readonly IRepository<UserToken, long> _userTokenRepository;
+        private readonly IRepository<UserToken, Guid> _userTokenRepository;
         private readonly IRepository<TTenant> _tenantRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public UserTokenExpirationWorker(
             AbpTimer timer,
-            IRepository<UserToken, long> userTokenRepository,
+            IRepository<UserToken, Guid> userTokenRepository,
             IBackgroundJobConfiguration backgroundJobConfiguration,
             IUnitOfWorkManager unitOfWorkManager,
             IRepository<TTenant> tenantRepository)

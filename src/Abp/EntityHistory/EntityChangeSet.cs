@@ -66,7 +66,7 @@ namespace Abp.EntityHistory
         /// <summary>
         /// ImpersonatorUserId.
         /// </summary>
-        public virtual long? ImpersonatorUserId { get; set; }
+        public virtual Guid? ImpersonatorUserId { get; set; }
 
         /// <summary>
         /// Reason for this change set.
@@ -82,7 +82,7 @@ namespace Abp.EntityHistory
         /// <summary>
         /// UserId.
         /// </summary>
-        public virtual long? UserId { get; set; }
+        public virtual Guid? UserId { get; set; }
 
         /// <summary>
         /// Entity changes grouped in this change set.

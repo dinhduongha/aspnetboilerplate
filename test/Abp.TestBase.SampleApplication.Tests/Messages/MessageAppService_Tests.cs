@@ -98,7 +98,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Messages
         [Fact]
         public async Task Should_Get_All_Messages_With_Filtering_Async()
         {
-            AbpSession.UserId = 42;
+            AbpSession.UserId = new Guid("0171acb0-bd2b-3b81-0bd0-1e5a1fb21300"); // 42
 
             //Act
 

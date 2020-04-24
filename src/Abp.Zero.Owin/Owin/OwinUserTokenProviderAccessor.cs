@@ -3,6 +3,7 @@ using Castle.Core.Logging;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
+using System;
 
 namespace Abp.Owin
 {
@@ -17,7 +18,7 @@ namespace Abp.Owin
             Logger = NullLogger.Instance;
         }
 
-        public IUserTokenProvider<TUser, long> GetUserTokenProviderOrNull<TUser>()
+        public IUserTokenProvider<TUser, Guid> GetUserTokenProviderOrNull<TUser>()
             where TUser : AbpUser<TUser>
         {
             if (DataProtectionProvider == null)
@@ -26,7 +27,7 @@ namespace Abp.Owin
                 return null;
             }
 
-            return new DataProtectorTokenProvider<TUser, long>(DataProtectionProvider.Create("ASP.NET Identity"));
+            return new DataProtectorTokenProvider<TUser, Guid>(DataProtectionProvider.Create("ASP.NET Identity"));
         }
     }
 }

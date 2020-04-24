@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Abp.Domain.Entities.Auditing;
 using Microsoft.AspNet.Identity;
@@ -7,7 +8,7 @@ namespace Abp.Authorization.Users
     /// <summary>
     /// Represents a user.
     /// </summary>
-    public abstract class AbpUser<TUser> : AbpUserBase, IUser<long>, IFullAudited<TUser>
+    public abstract class AbpUser<TUser> : AbpUserBase, IUser<Guid>, IFullAudited<TUser>
         where TUser : AbpUser<TUser>
     {
         /// <summary>

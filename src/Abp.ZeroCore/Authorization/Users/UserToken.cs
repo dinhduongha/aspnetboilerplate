@@ -10,7 +10,7 @@ namespace Abp.Authorization.Users
     /// Represents an authentication token for a user.
     /// </summary>
     [Table("AbpUserTokens")]
-    public class UserToken : Entity<long>, IMayHaveTenant
+    public class UserToken : Entity<Guid>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="LoginProvider"/> property.
@@ -32,7 +32,7 @@ namespace Abp.Authorization.Users
         /// <summary>
         /// Gets or sets the primary key of the user that the token belongs to.
         /// </summary>
-        public virtual long UserId { get; set; }
+        public virtual Guid UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the LoginProvider this token is from.

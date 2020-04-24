@@ -4,6 +4,7 @@ using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Events.Bus.Entities;
 using Abp.Events.Bus.Handlers;
+using System;
 
 namespace Abp.Organizations
 {
@@ -14,11 +15,11 @@ namespace Abp.Organizations
         IEventHandler<EntityDeletedEventData<AbpRoleBase>>, 
         ITransientDependency
     {
-        private readonly IRepository<OrganizationUnitRole, long> _organizationUnitRoleRepository;
+        private readonly IRepository<OrganizationUnitRole, Guid> _organizationUnitRoleRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public OrganizationUnitRoleRemover(
-            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository, 
+            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository, 
             IUnitOfWorkManager unitOfWorkManager)
         {
             _organizationUnitRoleRepository = organizationUnitRoleRepository;

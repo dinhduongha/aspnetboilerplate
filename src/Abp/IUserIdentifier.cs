@@ -1,4 +1,6 @@
-﻿namespace Abp
+﻿using System;
+
+namespace Abp
 {
     /// <summary>
     /// Interface to get a user identifier.
@@ -13,6 +15,6 @@
         /// <summary>
         /// Id of the user.
         /// </summary>
-        long UserId { get; }
+        Guid UserId { get; }
     }
 }

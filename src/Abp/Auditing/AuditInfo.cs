@@ -15,12 +15,12 @@ namespace Abp.Auditing
         /// <summary>
         /// UserId.
         /// </summary>
-        public long? UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         /// <summary>
         /// ImpersonatorUserId.
         /// </summary>
-        public long? ImpersonatorUserId { get; set; }
+        public Guid? ImpersonatorUserId { get; set; }
 
         /// <summary>
         /// ImpersonatorTenantId.

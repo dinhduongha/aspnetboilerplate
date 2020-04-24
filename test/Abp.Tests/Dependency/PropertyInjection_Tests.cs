@@ -19,7 +19,7 @@ namespace Abp.Tests.Dependency
         {
             var session = Substitute.For<IAbpSession>();
             session.TenantId.Returns(1);
-            session.UserId.Returns(42);
+            session.UserId.Returns(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
 
             LocalIocManager.Register<MyApplicationService>();
             LocalIocManager.IocContainer.Register(
@@ -36,7 +36,7 @@ namespace Abp.Tests.Dependency
             {
                 AbpSession.ShouldNotBe(null);
                 AbpSession.TenantId.ShouldBe(1);
-                AbpSession.UserId.ShouldBe(42);
+                AbpSession.UserId.ShouldBe(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
             }
         }
     }
