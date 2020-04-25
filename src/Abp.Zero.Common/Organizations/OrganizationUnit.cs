@@ -81,7 +81,7 @@ namespace Abp.Organizations
         /// </summary>
         public OrganizationUnit()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -92,6 +92,7 @@ namespace Abp.Organizations
         /// <param name="parentId">Parent's Id or null if OU is a root.</param>
         public OrganizationUnit(int? tenantId, string displayName, Guid? parentId = null)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             DisplayName = displayName;
             ParentId = parentId;

@@ -63,7 +63,7 @@ namespace Abp.Notifications
 
         public TenantNotificationInfo()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public TenantNotificationInfo(Guid id, int? tenantId, NotificationInfo notification)

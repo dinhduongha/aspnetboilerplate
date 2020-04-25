@@ -36,7 +36,7 @@ namespace Abp.Organizations
         /// </summary>
         public OrganizationUnitRole()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -47,6 +47,7 @@ namespace Abp.Organizations
         /// <param name="organizationUnitId">Id of the <see cref="OrganizationUnit"/>.</param>
         public OrganizationUnitRole(int? tenantId, Guid roleId, Guid organizationUnitId)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             RoleId = roleId;
             OrganizationUnitId = organizationUnitId;

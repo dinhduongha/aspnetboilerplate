@@ -37,7 +37,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public UserOrganizationUnit()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -48,6 +48,7 @@ namespace Abp.Authorization.Users
         /// <param name="organizationUnitId">Id of the <see cref="OrganizationUnit"/>.</param>
         public UserOrganizationUnit(int? tenantId, Guid userId, Guid organizationUnitId)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             UserId = userId;
             OrganizationUnitId = organizationUnitId;

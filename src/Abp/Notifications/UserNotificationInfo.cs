@@ -39,7 +39,7 @@ namespace Abp.Notifications
 
         public UserNotificationInfo()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>

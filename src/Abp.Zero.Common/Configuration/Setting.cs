@@ -46,7 +46,7 @@ namespace Abp.Configuration
         /// </summary>
         public Setting()
         {
-
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -58,6 +58,7 @@ namespace Abp.Configuration
         /// <param name="value">Value of the setting</param>
         public Setting(int? tenantId, Guid? userId, string name, string value)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             UserId = userId;
             Name = name;

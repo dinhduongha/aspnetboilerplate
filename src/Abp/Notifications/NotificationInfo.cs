@@ -140,7 +140,7 @@ namespace Abp.Notifications
 
         public NotificationInfo()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>

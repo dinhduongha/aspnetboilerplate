@@ -63,12 +63,14 @@ namespace Abp.Authorization.Roles
 
         protected AbpRoleBase()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             Name = Guid.NewGuid().ToString("N");
         }
 
         protected AbpRoleBase(int? tenantId, string displayName)
             : this()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             DisplayName = displayName;
         }
@@ -76,6 +78,7 @@ namespace Abp.Authorization.Roles
         protected AbpRoleBase(int? tenantId, string name, string displayName)
             : this(tenantId, displayName)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             Name = name;
         }
 

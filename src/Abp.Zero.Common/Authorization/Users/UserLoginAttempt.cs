@@ -91,6 +91,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public UserLoginAttempt()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             CreationTime = Clock.Now;
         }
     }

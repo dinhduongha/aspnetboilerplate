@@ -28,7 +28,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public UserRole()
         {
-
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -39,6 +39,7 @@ namespace Abp.Authorization.Users
         /// <param name="roleId">Role id</param>
         public UserRole(int? tenantId, Guid userId, Guid roleId)
         {
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             UserId = userId;
             RoleId = roleId;

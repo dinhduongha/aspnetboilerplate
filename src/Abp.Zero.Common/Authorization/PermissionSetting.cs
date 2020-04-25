@@ -37,6 +37,7 @@ namespace Abp.Authorization
         /// </summary>
         protected PermissionSetting()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             IsGranted = true;
         }
     }

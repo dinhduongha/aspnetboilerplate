@@ -44,11 +44,12 @@ namespace Abp.Authorization.Users
 
         public UserLogin()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public UserLogin(int? tenantId, Guid userId, string loginProvider, string providerKey)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             UserId = userId;
             LoginProvider = loginProvider;

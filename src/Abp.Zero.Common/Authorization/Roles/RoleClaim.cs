@@ -26,11 +26,12 @@ namespace Abp.Authorization.Roles
 
         public RoleClaim()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public RoleClaim(AbpRoleBase role, Claim claim)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = role.TenantId;
             RoleId = role.Id;
             ClaimType = claim.Type;

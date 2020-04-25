@@ -59,6 +59,7 @@ namespace Abp.Webhooks
 
         public WebhookSubscriptionInfo()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             IsActive = true;
         }
     }

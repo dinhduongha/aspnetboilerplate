@@ -226,6 +226,7 @@ namespace Abp.Authorization.Users
         
         protected AbpUserBase()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             IsActive = true;
             SecurityStamp = SequentialGuidGenerator.Instance.Create().ToString();
         }

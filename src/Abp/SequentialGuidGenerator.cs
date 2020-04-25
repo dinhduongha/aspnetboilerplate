@@ -16,7 +16,7 @@ namespace Abp
         public static SequentialGuidGenerator Instance { get; } = new SequentialGuidGenerator();
 
         private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
-
+        private const long UNIXEPOCHMICROSECONDS = 62135596800000000;
         public SequentialGuidDatabaseType DatabaseType { get; set; }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Abp
         /// </summary>
         private SequentialGuidGenerator()
         {
-            DatabaseType = SequentialGuidDatabaseType.SqlServer;
+            DatabaseType = SequentialGuidDatabaseType.PostgreSql;
         }
 
         public Guid Create()
@@ -75,16 +75,17 @@ namespace Abp
             // Using millisecond resolution for our 48-bit timestamp gives us
             // about 5900 years before the timestamp overflows and cycles.
             // Hopefully this should be sufficient for most purposes. :)
-            long timestamp = DateTime.UtcNow.Ticks / 10000L;
+            long timestamp = DateTime.UtcNow.Ticks / 10L - UNIXEPOCHMICROSECONDS;
 
             // Then get the bytes
-            byte[] timestampBytes = BitConverter.GetBytes(timestamp);
-
+            byte[] timestampBytes = BitConverter.GetBytes(timestamp/1000);
+            byte[] microsecBytes = BitConverter.GetBytes(timestamp % 1000);
             // Since we're converting from an Int64, we have to reverse on
             // little-endian systems.
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(timestampBytes);
+                Array.Reverse(microsecBytes);
             }
 
             byte[] guidBytes = new byte[16];
@@ -97,7 +98,8 @@ namespace Abp
                     // For string and byte-array version, we copy the timestamp first, followed
                     // by the random data.
                     Buffer.BlockCopy(timestampBytes, 2, guidBytes, 0, 6);
-                    Buffer.BlockCopy(randomBytes, 0, guidBytes, 6, 10);
+                    Buffer.BlockCopy(microsecBytes, 6, guidBytes, 6, 2);
+                    Buffer.BlockCopy(randomBytes, 0, guidBytes, 8, 8);
 
                     // If formatting as a string, we have to compensate for the fact
                     // that .NET regards the Data1 and Data2 block as an Int32 and an Int16,
@@ -107,6 +109,7 @@ namespace Abp
                     {
                         Array.Reverse(guidBytes, 0, 4);
                         Array.Reverse(guidBytes, 4, 2);
+                        Array.Reverse(guidBytes, 6, 2);
                     }
 
                     break;
@@ -115,7 +118,8 @@ namespace Abp
 
                     // For sequential-at-the-end versions, we copy the random data first,
                     // followed by the timestamp.
-                    Buffer.BlockCopy(randomBytes, 0, guidBytes, 0, 10);
+                    Buffer.BlockCopy(randomBytes, 0, guidBytes, 0, 8);
+                    Buffer.BlockCopy(microsecBytes, 6, guidBytes, 8, 2);
                     Buffer.BlockCopy(timestampBytes, 2, guidBytes, 10, 6);
                     break;
             }

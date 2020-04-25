@@ -46,5 +46,10 @@ namespace Abp.Webhooks
         /// </summary>
         [ForeignKey("WebhookEventId")]
         public virtual WebhookEvent WebhookEvent { get; set; }
+
+        public WebhookSendAttempt()
+        {
+            Id = SequentialGuidGenerator.Instance.Create();
+        }
     }
 }

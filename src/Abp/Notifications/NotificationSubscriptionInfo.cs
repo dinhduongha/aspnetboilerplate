@@ -53,6 +53,7 @@ namespace Abp.Notifications
         /// </summary>
         public NotificationSubscriptionInfo()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>

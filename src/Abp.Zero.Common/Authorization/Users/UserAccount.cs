@@ -34,5 +34,9 @@ namespace Abp.Authorization.Users
 
         [StringLength(MaxEmailAddressLength)]
         public virtual string EmailAddress { get; set; }
+        public UserAccount()
+        {
+            Id = SequentialGuidGenerator.Instance.Create();
+        }
     }
 }

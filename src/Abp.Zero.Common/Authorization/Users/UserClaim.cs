@@ -26,11 +26,12 @@ namespace Abp.Authorization.Users
 
         public UserClaim()
         {
-            
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public UserClaim(AbpUserBase user, Claim claim)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             TenantId = user.TenantId;
             UserId = user.Id;
             ClaimType = claim.Type;

@@ -30,5 +30,9 @@ namespace Abp.Webhooks
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletionTime { get; set; }
+        public WebhookEvent()
+        {
+            Id = SequentialGuidGenerator.Instance.Create();
+        }
     }
 }
