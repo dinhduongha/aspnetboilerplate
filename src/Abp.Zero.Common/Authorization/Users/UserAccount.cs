@@ -27,7 +27,7 @@ namespace Abp.Authorization.Users
 
         public virtual Guid UserId { get; set; }
 
-        public virtual long? UserLinkId { get; set; }
+        public virtual Guid? UserLinkId { get; set; }
 
         [StringLength(MaxUserNameLength)]
         public virtual string UserName { get; set; }

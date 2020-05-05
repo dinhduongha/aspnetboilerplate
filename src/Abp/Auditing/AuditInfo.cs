@@ -85,7 +85,7 @@ namespace Abp.Auditing
         public override string ToString()
         {
             var loggedUserId = UserId.HasValue
-                                   ? "user " + UserId.Value
+                                   ? $"user {UserId.Value}"
                                    : "an anonymous user";
 
             var exceptionOrSuccessMessage = Exception != null

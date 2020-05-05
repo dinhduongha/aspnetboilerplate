@@ -28,6 +28,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public UserRole()
         {
+            /// TODO: cause run test case failure.
             //Id = SequentialGuidGenerator.Instance.Create();
         }
 
