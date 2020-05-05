@@ -1,15 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Abp.DynamicEntityParameters
 {
     public interface IDynamicParameterPermissionChecker
     {
-        void CheckPermission(int dynamicParameterId);
+        void CheckPermission(Guid dynamicParameterId);
 
-        Task CheckPermissionAsync(int dynamicParameterId);
+        Task CheckPermissionAsync(Guid dynamicParameterId);
 
-        bool IsGranted(int dynamicParameterId);
+        bool IsGranted(Guid dynamicParameterId);
 
-        Task<bool> IsGrantedAsync(int dynamicParameterId);
+        Task<bool> IsGrantedAsync(Guid dynamicParameterId);
     }
 }

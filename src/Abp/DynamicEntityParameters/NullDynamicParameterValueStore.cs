@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Abp.DynamicEntityParameters
@@ -7,22 +8,22 @@ namespace Abp.DynamicEntityParameters
     {
         public static NullDynamicParameterValueStore Instance = new NullDynamicParameterValueStore();
 
-        public DynamicParameterValue Get(int id)
+        public DynamicParameterValue Get(Guid id)
         {
             return default;
         }
 
-        public Task<DynamicParameterValue> GetAsync(int id)
+        public Task<DynamicParameterValue> GetAsync(Guid id)
         {
             return Task.FromResult<DynamicParameterValue>(default);
         }
 
-        public List<DynamicParameterValue> GetAllValuesOfDynamicParameter(int dynamicParameterId)
+        public List<DynamicParameterValue> GetAllValuesOfDynamicParameter(Guid dynamicParameterId)
         {
             return new List<DynamicParameterValue>();
         }
 
-        public Task<List<DynamicParameterValue>> GetAllValuesOfDynamicParameterAsync(int dynamicParameterId)
+        public Task<List<DynamicParameterValue>> GetAllValuesOfDynamicParameterAsync(Guid dynamicParameterId)
         {
             return Task.FromResult(new List<DynamicParameterValue>());
         }
@@ -45,20 +46,20 @@ namespace Abp.DynamicEntityParameters
             return Task.CompletedTask;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(Guid id)
         {
             return Task.CompletedTask;
         }
 
-        public void CleanValues(int dynamicParameterId)
+        public void CleanValues(Guid dynamicParameterId)
         {
         }
 
-        public Task CleanValuesAsync(int dynamicParameterId)
+        public Task CleanValuesAsync(Guid dynamicParameterId)
         {
             return Task.CompletedTask;
         }

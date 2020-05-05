@@ -85,7 +85,7 @@ namespace Abp.Zero.SampleApp.Tests.DynamicEntityParameters
 
             var entityDynamicParameter = new EntityDynamicParameter()
             {
-                Id = -1,
+                Id = Guid.Empty,
                 DynamicParameterId = dynamicParameter.Id,
                 EntityFullName = TestEntityFullName,
                 TenantId = AbpSession.TenantId

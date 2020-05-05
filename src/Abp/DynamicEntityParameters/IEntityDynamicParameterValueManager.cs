@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Abp.DynamicEntityParameters
 {
     public interface IEntityDynamicParameterValueManager
     {
-        EntityDynamicParameterValue Get(int id);
+        EntityDynamicParameterValue Get(Guid id);
 
-        Task<EntityDynamicParameterValue> GetAsync(int id);
+        Task<EntityDynamicParameterValue> GetAsync(Guid id);
 
         void Add(EntityDynamicParameterValue entityDynamicParameterValue);
 
@@ -17,28 +18,28 @@ namespace Abp.DynamicEntityParameters
 
         Task UpdateAsync(EntityDynamicParameterValue entityDynamicParameterValue);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
 
-        List<EntityDynamicParameterValue> GetValues(int entityDynamicParameterId, string entityId);
+        List<EntityDynamicParameterValue> GetValues(Guid entityDynamicParameterId, string entityId);
 
-        Task<List<EntityDynamicParameterValue>> GetValuesAsync(int entityDynamicParameterId, string entityId);
+        Task<List<EntityDynamicParameterValue>> GetValuesAsync(Guid entityDynamicParameterId, string entityId);
 
         List<EntityDynamicParameterValue> GetValues(string entityFullName, string entityId);
 
         Task<List<EntityDynamicParameterValue>> GetValuesAsync(string entityFullName, string entityId);
 
-        List<EntityDynamicParameterValue> GetValues(string entityFullName, string entityId, int dynamicParameterId);
+        List<EntityDynamicParameterValue> GetValues(string entityFullName, string entityId, Guid dynamicParameterId);
 
-        Task<List<EntityDynamicParameterValue>> GetValuesAsync(string entityFullName, string entityId, int dynamicParameterId);
+        Task<List<EntityDynamicParameterValue>> GetValuesAsync(string entityFullName, string entityId, Guid dynamicParameterId);
 
         List<EntityDynamicParameterValue> GetValues(string entityFullName, string entityId, string parameterName);
 
         Task<List<EntityDynamicParameterValue>> GetValuesAsync(string entityFullName, string entityId, string parameterName);
 
-        void CleanValues(int entityDynamicParameterId, string entityId);
+        void CleanValues(Guid entityDynamicParameterId, string entityId);
 
-        Task CleanValuesAsync(int entityDynamicParameterId, string entityId);
+        Task CleanValuesAsync(Guid entityDynamicParameterId, string entityId);
     }
 }

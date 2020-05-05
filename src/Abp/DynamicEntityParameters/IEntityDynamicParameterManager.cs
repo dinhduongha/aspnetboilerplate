@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Abp.DynamicEntityParameters
 {
     public interface IEntityDynamicParameterManager
     {
-        EntityDynamicParameter Get(int id);
+        EntityDynamicParameter Get(Guid id);
 
-        Task<EntityDynamicParameter> GetAsync(int id);
+        Task<EntityDynamicParameter> GetAsync(Guid id);
 
         List<EntityDynamicParameter> GetAll(string entityFullName);
 
@@ -25,8 +26,8 @@ namespace Abp.DynamicEntityParameters
 
         Task UpdateAsync(EntityDynamicParameter entityDynamicParameter);
 
-        void Delete(int id);
+        void Delete(Guid id);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
     }
 }

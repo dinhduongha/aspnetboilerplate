@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Domain.Repositories;
@@ -7,19 +8,19 @@ namespace Abp.DynamicEntityParameters
 {
     public class DynamicParameterStore : IDynamicParameterStore, ITransientDependency
     {
-        private readonly IRepository<DynamicParameter> _dynamicParameterRepository;
+        private readonly IRepository<DynamicParameter, Guid> _dynamicParameterRepository;
 
-        public DynamicParameterStore(IRepository<DynamicParameter> dynamicParameterRepository)
+        public DynamicParameterStore(IRepository<DynamicParameter, Guid> dynamicParameterRepository)
         {
             _dynamicParameterRepository = dynamicParameterRepository;
         }
 
-        public virtual DynamicParameter Get(int id)
+        public virtual DynamicParameter Get(Guid id)
         {
             return _dynamicParameterRepository.Get(id);
         }
 
-        public virtual Task<DynamicParameter> GetAsync(int id)
+        public virtual Task<DynamicParameter> GetAsync(Guid id)
         {
             return _dynamicParameterRepository.GetAsync(id);
         }
@@ -64,12 +65,12 @@ namespace Abp.DynamicEntityParameters
             return _dynamicParameterRepository.UpdateAsync(dynamicParameter);
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             _dynamicParameterRepository.Delete(id);
         }
 
-        public virtual Task DeleteAsync(int id)
+        public virtual Task DeleteAsync(Guid id)
         {
             return _dynamicParameterRepository.DeleteAsync(id);
         }

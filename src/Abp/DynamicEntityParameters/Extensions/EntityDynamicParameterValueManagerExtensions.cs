@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Domain.Entities;
 
@@ -25,30 +26,30 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetValuesAsync<TEntity, int>(entityId: entityId);
+            return manager.GetValuesAsync<TEntity, Guid>(entityId: entityId);
         }
 
-        public static List<EntityDynamicParameterValue> GetValues<TEntity, TPrimaryKey>(this IEntityDynamicParameterValueManager manager, string entityId, int dynamicParameterId)
+        public static List<EntityDynamicParameterValue> GetValues<TEntity, TPrimaryKey>(this IEntityDynamicParameterValueManager manager, string entityId, Guid dynamicParameterId)
             where TEntity : IEntity<TPrimaryKey>
         {
             return manager.GetValues(entityFullName: typeof(TEntity).FullName, entityId: entityId, dynamicParameterId: dynamicParameterId);
         }
 
-        public static List<EntityDynamicParameterValue> GetValues<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, int dynamicParameterId)
-            where TEntity : IEntity<int>
+        public static List<EntityDynamicParameterValue> GetValues<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, Guid dynamicParameterId)
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetValues<TEntity, int>(entityId: entityId, dynamicParameterId: dynamicParameterId);
+            return manager.GetValues<TEntity, Guid>(entityId: entityId, dynamicParameterId: dynamicParameterId);
         }
 
-        public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity, TPrimaryKey>(this IEntityDynamicParameterValueManager manager, string entityId, int dynamicParameterId)
+        public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity, TPrimaryKey>(this IEntityDynamicParameterValueManager manager, string entityId, Guid dynamicParameterId)
             where TEntity : IEntity<TPrimaryKey>
         {
             return manager.GetValuesAsync(entityFullName: typeof(TEntity).FullName, entityId: entityId, dynamicParameterId: dynamicParameterId);
         }
 
-        public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, int dynamicParameterId)
+        public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, Guid dynamicParameterId)
             where TEntity : IEntity<int>
         {
             return manager.GetValuesAsync<TEntity, int>(entityId: entityId, dynamicParameterId: dynamicParameterId);
@@ -61,7 +62,7 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static List<EntityDynamicParameterValue> GetValues<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, DynamicParameter dynamicParameter)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
             return manager.GetValues<TEntity>(entityId: entityId, dynamicParameterId: dynamicParameter.Id);
         }
@@ -73,9 +74,9 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, DynamicParameter dynamicParameter)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetValuesAsync<TEntity>(entityId: entityId, dynamicParameterId: dynamicParameter.Id);
+            return manager.GetValuesAsync<TEntity, Guid>(entityId: entityId, dynamicParameterId: dynamicParameter.Id);
         }
 
         public static List<EntityDynamicParameterValue> GetValues<TEntity, TPrimaryKey>(this IEntityDynamicParameterValueManager manager, string entityId, string parameterName)
@@ -85,9 +86,9 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static List<EntityDynamicParameterValue> GetValues<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, string parameterName)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetValues<TEntity, int>(entityId: entityId, parameterName: parameterName);
+            return manager.GetValues<TEntity, Guid>(entityId: entityId, parameterName: parameterName);
         }
 
         public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity, TPrimaryKey>(this IEntityDynamicParameterValueManager manager, string entityId, string parameterName)
@@ -97,9 +98,9 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static Task<List<EntityDynamicParameterValue>> GetValuesAsync<TEntity>(this IEntityDynamicParameterValueManager manager, string entityId, string parameterName)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetValuesAsync<TEntity, int>(entityId: entityId, parameterName: parameterName);
+            return manager.GetValuesAsync<TEntity, Guid>(entityId: entityId, parameterName: parameterName);
         }
     }
 }

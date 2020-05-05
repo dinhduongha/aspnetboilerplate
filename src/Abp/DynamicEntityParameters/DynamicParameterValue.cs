@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 
 namespace Abp.DynamicEntityParameters
 {
     [Table("AbpDynamicParameterValues")]
-    public class DynamicParameterValue : Entity, IMayHaveTenant
+    public class DynamicParameterValue : Entity<Guid>, IMayHaveTenant
     {
         /// <summary>
         /// Value.
@@ -15,17 +16,19 @@ namespace Abp.DynamicEntityParameters
 
         public int? TenantId { get; set; }
 
-        public int DynamicParameterId { get; set; }
+        public Guid DynamicParameterId { get; set; }
 
         [ForeignKey("DynamicParameterId")]
         public virtual DynamicParameter DynamicParameter { get; set; }
 
         public DynamicParameterValue()
         {
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public DynamicParameterValue(DynamicParameter dynamicParameter, string value, int? tenantId)
         {
+            Id = SequentialGuidGenerator.Instance.Create();
             Value = value;
             TenantId = tenantId;
             DynamicParameterId = dynamicParameter.Id;

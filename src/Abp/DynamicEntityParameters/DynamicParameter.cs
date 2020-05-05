@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 
 namespace Abp.DynamicEntityParameters
 {
     [Table("AbpDynamicParameters")]
-    public class DynamicParameter : Entity, IMayHaveTenant
+    public class DynamicParameter : Entity<Guid>, IMayHaveTenant
     {
         public string ParameterName { get; set; }
 
@@ -16,5 +17,9 @@ namespace Abp.DynamicEntityParameters
         public virtual ICollection<DynamicParameterValue> DynamicParameterValues { get; set; }
 
         public int? TenantId { get; set; }
+        public DynamicParameter()
+        {
+            Id = SequentialGuidGenerator.Instance.Create();
+        }
     }
 }

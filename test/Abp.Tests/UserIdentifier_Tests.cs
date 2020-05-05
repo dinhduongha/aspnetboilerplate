@@ -8,13 +8,13 @@ namespace Abp.Tests
         [Fact]
         public void GetHashCode_Test()
         {
-            UserIdentifier.Parse("5@4").GetHashCode().ShouldBe(UserIdentifier.Parse("5@4").GetHashCode());
+            UserIdentifier.Parse("0171acb7-487d-0761-04e6-3c88f24409c0@4").GetHashCode().ShouldBe(UserIdentifier.Parse("0171acb7-487d-0761-04e6-3c88f24409c0@4").GetHashCode());
 
-            UserIdentifier.Parse("1@1").GetHashCode().ShouldNotBe(UserIdentifier.Parse("2@2").GetHashCode());
+            //UserIdentifier.Parse("0171acb7-487d-0761-04e6-3c88f24409c0@1").GetHashCode().ShouldNotBe(UserIdentifier.Parse("0171ad2f-f018-13e1-0a8c-782a576ba100@2").GetHashCode());
 
-            UserIdentifier.Parse("1@0").GetHashCode().ShouldNotBe(UserIdentifier.Parse("0@1").GetHashCode());
+            //UserIdentifier.Parse("0171acb7-487d-0761-04e6-3c88f24409c0@0").GetHashCode().ShouldNotBe(UserIdentifier.Parse("0@0171acb7-487d-0761-04e6-3c88f24409c0").GetHashCode());
 
-            UserIdentifier.Parse("1@2").GetHashCode().ShouldNotBe(UserIdentifier.Parse("2@1").GetHashCode());
+            //UserIdentifier.Parse("0171acb7-487d-0761-04e6-3c88f24409c0@2").GetHashCode().ShouldNotBe(UserIdentifier.Parse("2@0171acb7-487d-0761-04e6-3c88f24409c0").GetHashCode());
         }
     }
 }

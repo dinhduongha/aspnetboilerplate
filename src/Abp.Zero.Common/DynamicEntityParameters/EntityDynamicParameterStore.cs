@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Dependency;
@@ -9,21 +10,21 @@ namespace Abp.DynamicEntityParameters
 {
     public class EntityDynamicParameterStore : IEntityDynamicParameterStore, ITransientDependency
     {
-        private readonly IRepository<EntityDynamicParameter> _entityDynamicParameterRepository;
+        private readonly IRepository<EntityDynamicParameter, Guid> _entityDynamicParameterRepository;
         private readonly IAsyncQueryableExecuter _asyncQueryableExecuter;
 
-        public EntityDynamicParameterStore(IRepository<EntityDynamicParameter> entityDynamicParameterRepository, IAsyncQueryableExecuter asyncQueryableExecuter)
+        public EntityDynamicParameterStore(IRepository<EntityDynamicParameter, Guid> entityDynamicParameterRepository, IAsyncQueryableExecuter asyncQueryableExecuter)
         {
             _entityDynamicParameterRepository = entityDynamicParameterRepository;
             _asyncQueryableExecuter = asyncQueryableExecuter;
         }
 
-        public virtual EntityDynamicParameter Get(int id)
+        public virtual EntityDynamicParameter Get(Guid id)
         {
             return _entityDynamicParameterRepository.Get(id);
         }
 
-        public virtual Task<EntityDynamicParameter> GetAsync(int id)
+        public virtual Task<EntityDynamicParameter> GetAsync(Guid id)
         {
             return _entityDynamicParameterRepository.GetAsync(id);
         }
@@ -75,12 +76,12 @@ namespace Abp.DynamicEntityParameters
             return _entityDynamicParameterRepository.UpdateAsync(entityDynamicParameter);
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             _entityDynamicParameterRepository.Delete(id);
         }
 
-        public virtual Task DeleteAsync(int id)
+        public virtual Task DeleteAsync(Guid id)
         {
             return _entityDynamicParameterRepository.DeleteAsync(id);
         }

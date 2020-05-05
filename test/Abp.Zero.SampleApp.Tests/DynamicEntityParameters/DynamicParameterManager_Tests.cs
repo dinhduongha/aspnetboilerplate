@@ -38,7 +38,7 @@ namespace Abp.Zero.SampleApp.Tests.DynamicEntityParameters
 
             var testDynamicParameter = new DynamicParameter
             {
-                Id = -1,
+                Id = Guid.Empty,
                 ParameterName = "Test123",
                 InputType = "TestType"
             };
@@ -212,7 +212,7 @@ namespace Abp.Zero.SampleApp.Tests.DynamicEntityParameters
 
             var testDynamicParameter = new DynamicParameter
             {
-                Id = -1,
+                Id = Guid.Empty,
                 ParameterName = "Test123",
                 InputType = "TestType"
             };

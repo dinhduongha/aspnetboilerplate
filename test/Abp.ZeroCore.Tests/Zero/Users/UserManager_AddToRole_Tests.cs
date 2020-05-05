@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Domain.Uow;
 using Abp.ZeroCore.SampleApp.Core;
 using Shouldly;
@@ -15,6 +16,7 @@ namespace Abp.Zero.Users
             {
                 var user = new User
                 {
+                    Id = SequentialGuidGenerator.Instance.Create(),
                     TenantId = AbpSession.TenantId,
                     UserName = "user1",
                     Name = "John",
@@ -31,7 +33,15 @@ namespace Abp.Zero.Users
 
                 user.Roles.Count.ShouldBe(1);
 
-                await uow.CompleteAsync();
+                //await uow.CompleteAsync();
+                try
+                {
+                    uow.Complete();
+                }
+                catch(Exception e)
+                {
+                    throw;
+                }
             }
         }
     }

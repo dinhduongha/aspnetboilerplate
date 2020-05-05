@@ -4,6 +4,7 @@ using Abp.Domain.Uow;
 using Abp.Notifications;
 using NSubstitute;
 using Xunit;
+using static Abp.SequentialGuidGenerator;
 
 namespace Abp.Tests.Notifications
 {
@@ -20,6 +21,11 @@ namespace Abp.Tests.Notifications
             _publisher = new NotificationPublisher(_store, _backgroundJobManager, Substitute.For<INotificationConfiguration>(), SequentialGuidGenerator.Instance, LocalIocManager);
             _publisher.UnitOfWorkManager = Substitute.For<IUnitOfWorkManager>();
             _publisher.UnitOfWorkManager.Current.Returns(Substitute.For<IActiveUnitOfWork>());
+            for (int i = 0; i < 10; i++)
+            {
+                var guid = SequentialGuidGenerator.Instance.Create(SequentialGuidDatabaseType.PostgreSql);
+                var str = guid.ToString();
+            }
         }
 
         [Fact]

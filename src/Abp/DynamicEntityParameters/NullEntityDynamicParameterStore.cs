@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Abp.DynamicEntityParameters
@@ -7,12 +8,12 @@ namespace Abp.DynamicEntityParameters
     {
         public static NullEntityDynamicParameterStore Instance = new NullEntityDynamicParameterStore();
 
-        public EntityDynamicParameter Get(int id)
+        public EntityDynamicParameter Get(Guid id)
         {
             return default;
         }
 
-        public Task<EntityDynamicParameter> GetAsync(int id)
+        public Task<EntityDynamicParameter> GetAsync(Guid id)
         {
             return Task.FromResult<EntityDynamicParameter>(default);
         }
@@ -55,11 +56,11 @@ namespace Abp.DynamicEntityParameters
             return Task.CompletedTask;
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(Guid id)
         {
             return Task.CompletedTask;
         }

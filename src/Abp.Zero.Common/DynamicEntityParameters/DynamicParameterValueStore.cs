@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Dependency;
@@ -9,31 +10,31 @@ namespace Abp.DynamicEntityParameters
 {
     public class DynamicParameterValueStore : IDynamicParameterValueStore, ITransientDependency
     {
-        private readonly IRepository<DynamicParameterValue> _dynamicParameterValuesRepository;
+        private readonly IRepository<DynamicParameterValue, Guid> _dynamicParameterValuesRepository;
         private readonly IAsyncQueryableExecuter _asyncQueryableExecuter;
 
-        public DynamicParameterValueStore(IRepository<DynamicParameterValue> dynamicParameterValuesRepository, IAsyncQueryableExecuter asyncQueryableExecuter)
+        public DynamicParameterValueStore(IRepository<DynamicParameterValue,Guid> dynamicParameterValuesRepository, IAsyncQueryableExecuter asyncQueryableExecuter)
         {
             _dynamicParameterValuesRepository = dynamicParameterValuesRepository;
             _asyncQueryableExecuter = asyncQueryableExecuter;
         }
-        public virtual DynamicParameterValue Get(int id)
+        public virtual DynamicParameterValue Get(Guid id)
         {
             return _dynamicParameterValuesRepository.Get(id);
         }
 
-        public virtual Task<DynamicParameterValue> GetAsync(int id)
+        public virtual Task<DynamicParameterValue> GetAsync(Guid id)
         {
             return _dynamicParameterValuesRepository.GetAsync(id);
         }
 
-        public virtual List<DynamicParameterValue> GetAllValuesOfDynamicParameter(int dynamicParameterId)
+        public virtual List<DynamicParameterValue> GetAllValuesOfDynamicParameter(Guid dynamicParameterId)
         {
             return _dynamicParameterValuesRepository.GetAll()
                 .Where(parameterValue => parameterValue.DynamicParameterId == dynamicParameterId).ToList();
         }
 
-        public virtual Task<List<DynamicParameterValue>> GetAllValuesOfDynamicParameterAsync(int dynamicParameterId)
+        public virtual Task<List<DynamicParameterValue>> GetAllValuesOfDynamicParameterAsync(Guid dynamicParameterId)
         {
             return _asyncQueryableExecuter.ToListAsync(_dynamicParameterValuesRepository.GetAll()
                 .Where(parameterValue => parameterValue.DynamicParameterId == dynamicParameterId));
@@ -59,22 +60,22 @@ namespace Abp.DynamicEntityParameters
             return _dynamicParameterValuesRepository.UpdateAsync(dynamicParameterValue);
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             _dynamicParameterValuesRepository.Delete(id);
         }
 
-        public virtual Task DeleteAsync(int id)
+        public virtual Task DeleteAsync(Guid id)
         {
             return _dynamicParameterValuesRepository.DeleteAsync(id);
         }
 
-        public virtual void CleanValues(int dynamicParameterId)
+        public virtual void CleanValues(Guid dynamicParameterId)
         {
             _dynamicParameterValuesRepository.Delete(value => value.DynamicParameterId == dynamicParameterId);
         }
 
-        public virtual Task CleanValuesAsync(int dynamicParameterId)
+        public virtual Task CleanValuesAsync(Guid dynamicParameterId)
         {
             return _dynamicParameterValuesRepository.DeleteAsync(value => value.DynamicParameterId == dynamicParameterId);
         }

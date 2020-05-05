@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Domain.Entities;
 
@@ -13,9 +14,9 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static List<EntityDynamicParameter> GetAll<TEntity>(this IEntityDynamicParameterManager manager)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetAll<TEntity, int>();
+            return manager.GetAll<TEntity, Guid>();
         }
 
         public static Task<List<EntityDynamicParameter>> GetAllAsync<TEntity, TPrimaryKey>(this IEntityDynamicParameterManager manager)
@@ -25,18 +26,18 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static Task<List<EntityDynamicParameter>> GetAllAsync<TEntity>(this IEntityDynamicParameterManager manager)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
-            return manager.GetAllAsync<TEntity, int>();
+            return manager.GetAllAsync<TEntity, Guid>();
         }
 
-        public static EntityDynamicParameter Add<TEntity>(this IEntityDynamicParameterManager manager, int dynamicParameterId, int? tenantId)
-            where TEntity : IEntity<int>
+        public static EntityDynamicParameter Add<TEntity>(this IEntityDynamicParameterManager manager, Guid dynamicParameterId, int? tenantId)
+            where TEntity : IEntity<Guid>
         {
-            return manager.Add<TEntity, int>(dynamicParameterId, tenantId);
+            return manager.Add<TEntity, Guid>(dynamicParameterId, tenantId);
         }
 
-        public static EntityDynamicParameter Add<TEntity, TPrimaryKey>(this IEntityDynamicParameterManager manager, int dynamicParameterId, int? tenantId)
+        public static EntityDynamicParameter Add<TEntity, TPrimaryKey>(this IEntityDynamicParameterManager manager, Guid dynamicParameterId, int? tenantId)
             where TEntity : IEntity<TPrimaryKey>
         {
             var entity = new EntityDynamicParameter()
@@ -49,13 +50,13 @@ namespace Abp.DynamicEntityParameters.Extensions
             return entity;
         }
 
-        public static Task<EntityDynamicParameter> AddAsync<TEntity>(this IEntityDynamicParameterManager manager, int dynamicParameterId, int? tenantId)
-            where TEntity : IEntity<int>
+        public static Task<EntityDynamicParameter> AddAsync<TEntity>(this IEntityDynamicParameterManager manager, Guid dynamicParameterId, int? tenantId)
+            where TEntity : IEntity<Guid>
         {
-            return manager.AddAsync<TEntity, int>(dynamicParameterId, tenantId);
+            return manager.AddAsync<TEntity, Guid>(dynamicParameterId, tenantId);
         }
 
-        public static async Task<EntityDynamicParameter> AddAsync<TEntity, TPrimaryKey>(this IEntityDynamicParameterManager manager, int dynamicParameterId, int? tenantId)
+        public static async Task<EntityDynamicParameter> AddAsync<TEntity, TPrimaryKey>(this IEntityDynamicParameterManager manager, Guid dynamicParameterId, int? tenantId)
             where TEntity : IEntity<TPrimaryKey>
         {
             var entity = new EntityDynamicParameter()
@@ -69,7 +70,7 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static EntityDynamicParameter Add<TEntity>(this IEntityDynamicParameterManager manager, DynamicParameter dynamicParameter, int? tenantId)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
             return manager.Add<TEntity>(dynamicParameter.Id, tenantId);
         }
@@ -81,7 +82,7 @@ namespace Abp.DynamicEntityParameters.Extensions
         }
 
         public static Task<EntityDynamicParameter> AddAsync<TEntity>(this IEntityDynamicParameterManager manager, DynamicParameter dynamicParameter, int? tenantId)
-            where TEntity : IEntity<int>
+            where TEntity : IEntity<Guid>
         {
             return manager.AddAsync<TEntity>(dynamicParameter.Id, tenantId);
         }
