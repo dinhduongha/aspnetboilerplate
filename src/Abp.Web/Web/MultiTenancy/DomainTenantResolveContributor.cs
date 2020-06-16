@@ -21,7 +21,7 @@ namespace Abp.Web.MultiTenancy
             _tenantStore = tenantStore;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             if (_multiTenancyConfiguration.DomainFormat.IsNullOrEmpty())
             {

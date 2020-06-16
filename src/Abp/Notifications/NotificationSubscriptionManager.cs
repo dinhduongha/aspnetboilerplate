@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -139,7 +140,7 @@ namespace Abp.Notifications
                 .ToList();
         }
 
-        public async Task<List<NotificationSubscription>> GetSubscriptionsAsync(int? tenantId, string notificationName, EntityIdentifier entityIdentifier = null)
+        public async Task<List<NotificationSubscription>> GetSubscriptionsAsync(Guid? tenantId, string notificationName, EntityIdentifier entityIdentifier = null)
         {
             var notificationSubscriptionInfos = await _store.GetSubscriptionsAsync(
                 new[] { tenantId },
@@ -153,7 +154,7 @@ namespace Abp.Notifications
                 .ToList();
         }
 
-        public List<NotificationSubscription> GetSubscriptions(int? tenantId, string notificationName, EntityIdentifier entityIdentifier = null)
+        public List<NotificationSubscription> GetSubscriptions(Guid? tenantId, string notificationName, EntityIdentifier entityIdentifier = null)
         {
             var notificationSubscriptionInfos =  _store.GetSubscriptions(
                 new[] { tenantId },

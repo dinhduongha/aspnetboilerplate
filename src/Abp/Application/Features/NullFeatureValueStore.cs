@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Abp.Application.Features
 {
@@ -15,13 +16,13 @@ namespace Abp.Application.Features
         public static NullFeatureValueStore Instance { get; } = new NullFeatureValueStore();
 
         /// <inheritdoc/>
-        public Task<string> GetValueOrNullAsync(int tenantId, Feature feature)
+        public Task<string> GetValueOrNullAsync(Guid tenantId, Feature feature)
         {
             return Task.FromResult((string)null);
         }
 
         /// <inheritdoc/>
-        public string GetValueOrNull(int tenantId, Feature feature)
+        public string GetValueOrNull(Guid tenantId, Feature feature)
         {
             return (string)null;
         }

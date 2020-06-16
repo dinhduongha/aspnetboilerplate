@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Domain.Entities;
 
@@ -77,7 +78,7 @@ namespace Abp.Notifications
         /// <param name="tenantId">Tenant id. Null for the host.</param>
         /// <param name="notificationName">Name of the notification.</param>
         /// <param name="entityIdentifier">entity identifier</param>
-        Task<List<NotificationSubscription>> GetSubscriptionsAsync(int? tenantId, string notificationName, EntityIdentifier entityIdentifier = null);
+        Task<List<NotificationSubscription>> GetSubscriptionsAsync(Guid? tenantId, string notificationName, EntityIdentifier entityIdentifier = null);
 
         /// <summary>
         /// Gets all subscribtions for given notification.
@@ -85,7 +86,7 @@ namespace Abp.Notifications
         /// <param name="tenantId">Tenant id. Null for the host.</param>
         /// <param name="notificationName">Name of the notification.</param>
         /// <param name="entityIdentifier">entity identifier</param>
-        List<NotificationSubscription> GetSubscriptions(int? tenantId, string notificationName, EntityIdentifier entityIdentifier = null);
+        List<NotificationSubscription> GetSubscriptions(Guid? tenantId, string notificationName, EntityIdentifier entityIdentifier = null);
 
         /// <summary>
         /// Gets subscribed notifications for a user.

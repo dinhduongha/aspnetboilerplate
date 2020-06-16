@@ -39,7 +39,7 @@ namespace Abp.Organizations
         /// <summary>
         /// TenantId of this entity.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// Parent <see cref="OrganizationUnit"/>.
@@ -90,7 +90,7 @@ namespace Abp.Organizations
         /// <param name="tenantId">Tenant's Id or null for host.</param>
         /// <param name="displayName">Display name.</param>
         /// <param name="parentId">Parent's Id or null if OU is a root.</param>
-        public OrganizationUnit(int? tenantId, string displayName, Guid? parentId = null)
+        public OrganizationUnit(Guid? tenantId, string displayName, Guid? parentId = null)
         {
             Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;

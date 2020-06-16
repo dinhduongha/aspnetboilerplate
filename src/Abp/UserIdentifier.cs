@@ -14,7 +14,7 @@ namespace Abp
         /// Tenant Id of the user.
         /// Can be null for host users in a multi tenant application.
         /// </summary>
-        public int? TenantId { get; protected set; }
+        public Guid? TenantId { get; protected set; }
 
         /// <summary>
         /// Id of the user.
@@ -34,7 +34,7 @@ namespace Abp
         /// </summary>
         /// <param name="tenantId">Tenant Id of the user.</param>
         /// <param name="userId">Id of the user.</param>
-        public UserIdentifier(int? tenantId, Guid userId)
+        public UserIdentifier(Guid? tenantId, Guid userId)
         {
             TenantId = tenantId;
             UserId = userId;
@@ -65,7 +65,8 @@ namespace Abp
 
             if (splitted.Length == 2)
             {
-                return new UserIdentifier(splitted[1].To<int>(), Guid.Parse(splitted[0]));
+                return new UserIdentifier(Guid.Parse(splitted[1]), Guid.Parse(splitted[0]));
+                //return new UserIdentifier(splitted[1].To<int>(), Guid.Parse(splitted[0]));
             }
 
             throw new ArgumentException("userAtTenant is not properly formatted", nameof(userIdentifierString));

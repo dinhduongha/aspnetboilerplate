@@ -17,7 +17,7 @@ namespace Abp.Authorization
         /// </summary>
         public const int MaxNameLength = 128;
 
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// Unique name of the permission.

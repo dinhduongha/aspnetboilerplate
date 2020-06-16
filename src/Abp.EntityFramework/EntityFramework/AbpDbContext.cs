@@ -189,7 +189,7 @@ namespace Abp.EntityFramework
         {
             Database.Initialize(false);
             this.SetFilterScopedParameterValue(AbpDataFilters.MustHaveTenant, AbpDataFilters.Parameters.TenantId,
-                AbpSession.TenantId ?? 0);
+                AbpSession.TenantId ?? Guid.Empty);
             this.SetFilterScopedParameterValue(AbpDataFilters.MayHaveTenant, AbpDataFilters.Parameters.TenantId,
                 AbpSession.TenantId);
         }
@@ -204,10 +204,10 @@ namespace Abp.EntityFramework
         {
             modelBuilder.Filter(AbpDataFilters.SoftDelete, (ISoftDelete d) => d.IsDeleted, false);
             modelBuilder.Filter(AbpDataFilters.MustHaveTenant,
-                (IMustHaveTenant t, int tenantId) => t.TenantId == tenantId || (int?)t.TenantId == null,
-                0); //While "(int?)t.TenantId == null" seems wrong, it's needed. See https://github.com/jcachat/EntityFramework.DynamicFilters/issues/62#issuecomment-208198058
+                (IMustHaveTenant t, Guid tenantId) => t.TenantId == tenantId || (Guid?)t.TenantId == null,
+                Guid.Empty); //While "(int?)t.TenantId == null" seems wrong, it's needed. See https://github.com/jcachat/EntityFramework.DynamicFilters/issues/62#issuecomment-208198058
             modelBuilder.Filter(AbpDataFilters.MayHaveTenant,
-                (IMayHaveTenant t, int? tenantId) => t.TenantId == tenantId, 0);
+                (IMayHaveTenant t, Guid? tenantId) => t.TenantId == tenantId, Guid.Empty);
         }
 
         public override int SaveChanges()
@@ -457,7 +457,7 @@ namespace Abp.EntityFramework
             var entity = entityAsObj.As<IMustHaveTenant>();
 
             //Don't set if it's already set
-            if (entity.TenantId != 0)
+            if (entity.TenantId != Guid.Empty)
             {
                 return;
             }
@@ -605,7 +605,7 @@ namespace Abp.EntityFramework
             return null;
         }
 
-        protected virtual int? GetCurrentTenantIdOrNull()
+        protected virtual Guid? GetCurrentTenantIdOrNull()
         {
             if (CurrentUnitOfWorkProvider?.Current != null)
             {

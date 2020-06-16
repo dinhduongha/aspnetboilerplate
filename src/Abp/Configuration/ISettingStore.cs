@@ -16,7 +16,7 @@ namespace Abp.Configuration
         /// <param name="userId">UserId or null</param>
         /// <param name="name">Name of the setting</param>
         /// <returns>Setting object</returns>
-        Task<SettingInfo> GetSettingOrNullAsync(int? tenantId, Guid? userId, string name);
+        Task<SettingInfo> GetSettingOrNullAsync(Guid? tenantId, Guid? userId, string name);
 
         /// <summary>
         /// Gets a setting or null.
@@ -25,7 +25,7 @@ namespace Abp.Configuration
         /// <param name="userId">UserId or null</param>
         /// <param name="name">Name of the setting</param>
         /// <returns>Setting object</returns>
-        SettingInfo GetSettingOrNull(int? tenantId, Guid? userId, string name);
+        SettingInfo GetSettingOrNull(Guid? tenantId, Guid? userId, string name);
 
         /// <summary>
         /// Deletes a setting.
@@ -69,7 +69,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">TenantId or null</param>
         /// <param name="userId">UserId or null</param>
         /// <returns>List of settings</returns>
-        Task<List<SettingInfo>> GetAllListAsync(int? tenantId, Guid? userId);
+        Task<List<SettingInfo>> GetAllListAsync(Guid? tenantId, Guid? userId);
 
         /// <summary>
         /// Gets a list of setting.
@@ -77,6 +77,6 @@ namespace Abp.Configuration
         /// <param name="tenantId">TenantId or null</param>
         /// <param name="userId">UserId or null</param>
         /// <returns>List of settings</returns>
-        List<SettingInfo> GetAllList(int? tenantId, Guid? userId);
+        List<SettingInfo> GetAllList(Guid? tenantId, Guid? userId);
     }
 }

@@ -7,11 +7,11 @@ namespace Abp.Web.Models.AbpUserConfiguration
     {
         public Guid? UserId { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         public Guid? ImpersonatorUserId { get; set; }
 
-        public int? ImpersonatorTenantId { get; set; }
+        public Guid? ImpersonatorTenantId { get; set; }
 
         public MultiTenancySides MultiTenancySide { get; set; }
     }

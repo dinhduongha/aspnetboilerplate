@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Abp.Application.Features;
@@ -80,7 +81,7 @@ namespace Abp.Webhooks
             return _webhookDefinitions.ContainsKey(name);
         }
 
-        public async Task<bool> IsAvailableAsync(int? tenantId, string name)
+        public async Task<bool> IsAvailableAsync(Guid? tenantId, string name)
         {
             if (tenantId == null) // host allowed to subscribe all webhooks
             {
@@ -112,7 +113,7 @@ namespace Abp.Webhooks
             return true;
         }
 
-        public bool IsAvailable(int? tenantId, string name)
+        public bool IsAvailable(Guid? tenantId, string name)
         {
             if (tenantId == null) // host allowed to subscribe all webhooks
             {

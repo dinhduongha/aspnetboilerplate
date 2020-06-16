@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Events.Bus.Entities;
@@ -50,7 +51,7 @@ namespace Abp.Domain.Entities.Caching
             InternalCache.Remove(GetCacheKey(eventData.Entity));
         }
 
-        protected virtual int? GetCurrentTenantId()
+        protected virtual Guid? GetCurrentTenantId()
         {
             if (_unitOfWorkManager.Current != null)
             {
@@ -65,9 +66,9 @@ namespace Abp.Domain.Entities.Caching
             return GetCacheKey(id, GetCurrentTenantId());
         }
 
-        public virtual string GetCacheKey(TPrimaryKey id, int? tenantId)
+        public virtual string GetCacheKey(TPrimaryKey id, Guid? tenantId)
         {
-            return id + "@" + (tenantId ?? 0);
+            return id + "@" + (tenantId ?? Guid.Empty);
         }
 
         protected abstract string GetCacheKey(TEntity entity);

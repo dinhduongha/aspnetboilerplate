@@ -21,7 +21,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public const int MaxProviderKeyLength = 256;
 
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// Id of the User.
@@ -47,7 +47,7 @@ namespace Abp.Authorization.Users
             Id = SequentialGuidGenerator.Instance.Create();
         }
 
-        public UserLogin(int? tenantId, Guid userId, string loginProvider, string providerKey)
+        public UserLogin(Guid? tenantId, Guid userId, string loginProvider, string providerKey)
         {
             Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;

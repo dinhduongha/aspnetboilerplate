@@ -1,8 +1,9 @@
 using Abp.Runtime.Caching;
+using System;
 
 namespace Abp.Domain.Entities.Caching
 {
-    public interface IMultiTenancyEntityCache<TCacheItem> : IMultiTenancyEntityCache<TCacheItem, int>
+    public interface IMultiTenancyEntityCache<TCacheItem> : IMultiTenancyEntityCache<TCacheItem, Guid>
     {
     }
 
@@ -12,6 +13,6 @@ namespace Abp.Domain.Entities.Caching
 
         string GetCacheKey(TPrimaryKey id);
 
-        string GetCacheKey(TPrimaryKey id, int? tenantId);
+        string GetCacheKey(TPrimaryKey id, Guid? tenantId);
     }
 }

@@ -16,7 +16,7 @@ namespace Abp.DynamicEntityParameters
 
         public virtual ICollection<DynamicParameterValue> DynamicParameterValues { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         public DynamicParameter()
         {
             Id = SequentialGuidGenerator.Instance.Create();

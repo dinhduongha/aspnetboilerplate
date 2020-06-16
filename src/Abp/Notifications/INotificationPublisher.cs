@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Abp.Domain.Entities;
 using Abp.Runtime.Session;
@@ -41,7 +42,7 @@ namespace Abp.Notifications
             NotificationSeverity severity = NotificationSeverity.Info,
             UserIdentifier[] userIds = null,
             UserIdentifier[] excludedUserIds = null,
-            int?[] tenantIds = null);
+            Guid?[] tenantIds = null);
 
 
         /// <summary>
@@ -76,6 +77,6 @@ namespace Abp.Notifications
             NotificationSeverity severity = NotificationSeverity.Info,
             UserIdentifier[] userIds = null,
             UserIdentifier[] excludedUserIds = null,
-            int?[] tenantIds = null);
+            Guid?[] tenantIds = null);
     }
 }

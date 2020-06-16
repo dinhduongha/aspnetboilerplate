@@ -5,6 +5,7 @@ using Abp.Events.Bus.Entities;
 using Abp.Events.Bus.Handlers;
 using Abp.Runtime.Caching;
 using Abp.Runtime.Security;
+using System;
 
 namespace Abp.MultiTenancy
 {
@@ -13,12 +14,12 @@ namespace Abp.MultiTenancy
         where TUser : AbpUserBase
     {
         private readonly ICacheManager _cacheManager;
-        private readonly IRepository<TTenant> _tenantRepository;
+        private readonly IRepository<TTenant, Guid> _tenantRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public TenantCache(
             ICacheManager cacheManager,
-            IRepository<TTenant> tenantRepository,
+            IRepository<TTenant, Guid> tenantRepository,
             IUnitOfWorkManager unitOfWorkManager)
         {
             _cacheManager = cacheManager;
@@ -26,7 +27,7 @@ namespace Abp.MultiTenancy
             _unitOfWorkManager = unitOfWorkManager;
         }
 
-        public virtual TenantCacheItem Get(int tenantId)
+        public virtual TenantCacheItem Get(Guid tenantId)
         {
             var cacheItem = GetOrNull(tenantId);
 
@@ -67,7 +68,7 @@ namespace Abp.MultiTenancy
             return Get(tenantId.Value);
         }
 
-        public TenantCacheItem GetOrNull(int tenantId)
+        public TenantCacheItem GetOrNull(Guid tenantId)
         {
             return _cacheManager
                 .GetTenantCache()
@@ -100,7 +101,7 @@ namespace Abp.MultiTenancy
         }
 
         [UnitOfWork]
-        protected virtual TTenant GetTenantOrNull(int tenantId)
+        protected virtual TTenant GetTenantOrNull(Guid tenantId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(null))
             {

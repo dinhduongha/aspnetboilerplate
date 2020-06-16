@@ -21,7 +21,7 @@ namespace Abp.Timing.Timezone
         }
 
         /// <inheritdoc/>
-        public DateTime? Convert(DateTime? date, int? tenantId, Guid userId)
+        public DateTime? Convert(DateTime? date, Guid? tenantId, Guid userId)
         {
             if (!date.HasValue)
             {
@@ -43,7 +43,7 @@ namespace Abp.Timing.Timezone
         }
 
         /// <inheritdoc/>
-        public DateTime? Convert(DateTime? date, int tenantId)
+        public DateTime? Convert(DateTime? date, Guid tenantId)
         {
             if (!date.HasValue)
             {

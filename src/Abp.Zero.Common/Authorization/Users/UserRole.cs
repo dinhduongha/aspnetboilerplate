@@ -11,7 +11,7 @@ namespace Abp.Authorization.Users
     [Table("AbpUserRoles")]
     public class UserRole : CreationAuditedEntity<Guid>, IMayHaveTenant
     {
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// User id.
@@ -38,7 +38,7 @@ namespace Abp.Authorization.Users
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <param name="roleId">Role id</param>
-        public UserRole(int? tenantId, Guid userId, Guid roleId)
+        public UserRole(Guid? tenantId, Guid userId, Guid roleId)
         {
             //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;

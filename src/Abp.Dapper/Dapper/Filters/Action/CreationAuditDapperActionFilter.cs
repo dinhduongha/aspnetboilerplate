@@ -78,12 +78,12 @@ namespace Abp.Dapper.Filters.Action
             var entity = entityAsObj.As<IMustHaveTenant>();
 
             //Don't set if it's already set
-            if (entity.TenantId != 0)
+            if (entity.TenantId != Guid.Empty)
             {
                 return;
             }
 
-            int? currentTenantId = GetCurrentTenantIdOrNull();
+            Guid? currentTenantId = GetCurrentTenantIdOrNull();
 
             if (currentTenantId != null)
             {

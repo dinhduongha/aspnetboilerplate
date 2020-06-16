@@ -102,7 +102,8 @@ namespace Abp.Notifications
                 List<NotificationSubscriptionInfo> subscriptions;
 
                 if (tenantIds.IsNullOrEmpty() ||
-                    (tenantIds.Length == 1 && tenantIds[0] == NotificationInfo.AllTenantIds.To<int>()))
+                    //(tenantIds.Length == 1 && tenantIds[0] == NotificationInfo.AllTenantIds.To<int>()))
+                    (tenantIds.Length == 1 && tenantIds[0] == Guid.Empty))
                 {
                     //Get all subscribed users of all tenants
                     subscriptions = await _notificationStore.GetSubscriptionsAsync(
@@ -185,7 +186,8 @@ namespace Abp.Notifications
                 List<NotificationSubscriptionInfo> subscriptions;
 
                 if (tenantIds.IsNullOrEmpty() ||
-                    (tenantIds.Length == 1 && tenantIds[0] == NotificationInfo.AllTenantIds.To<int>()))
+                    //(tenantIds.Length == 1 && tenantIds[0] == NotificationInfo.AllTenantIds.To<int>()))
+                    (tenantIds.Length == 1 && tenantIds[0] == Guid.Empty))
                 {
                     //Get all subscribed users of all tenants
                     subscriptions = _notificationStore.GetSubscriptions(
@@ -244,7 +246,7 @@ namespace Abp.Notifications
             return userIds.ToArray();
         }
 
-        private static int?[] GetTenantIds(NotificationInfo notificationInfo)
+        private static Guid?[] GetTenantIds(NotificationInfo notificationInfo)
         {
             if (notificationInfo.TenantIds.IsNullOrEmpty())
             {
@@ -254,7 +256,8 @@ namespace Abp.Notifications
             return notificationInfo
                 .TenantIds
                 .Split(",")
-                .Select(tenantIdAsStr => tenantIdAsStr == "null" ? (int?)null : (int?)tenantIdAsStr.To<int>())
+                //.Select(tenantIdAsStr => tenantIdAsStr == "null" ? (Guid?)null : (Guid?)tenantIdAsStr.To<int>())
+                .Select(tenantIdAsStr => tenantIdAsStr == "null" ? (Guid?)null : (Guid?)Guid.Parse(tenantIdAsStr))
                 .ToArray();
         }
 

@@ -1,8 +1,10 @@
+using System;
+
 namespace Abp.MultiTenancy
 {
     public class NullTenantStore : ITenantStore
     {
-        public TenantInfo Find(int tenantId)
+        public TenantInfo Find(Guid tenantId)
         {
             return null;
         }

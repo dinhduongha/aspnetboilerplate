@@ -14,7 +14,7 @@ namespace Abp.DynamicEntityParameters
         [Required(AllowEmptyStrings = false)]
         public string Value { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         public Guid DynamicParameterId { get; set; }
 
@@ -26,7 +26,7 @@ namespace Abp.DynamicEntityParameters
             Id = SequentialGuidGenerator.Instance.Create();
         }
 
-        public DynamicParameterValue(DynamicParameter dynamicParameter, string value, int? tenantId)
+        public DynamicParameterValue(DynamicParameter dynamicParameter, string value, Guid? tenantId)
         {
             Id = SequentialGuidGenerator.Instance.Create();
             Value = value;

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Authorization;
@@ -96,7 +97,7 @@ namespace Abp.Application.Features
         /// <param name="tenantId">Tenant id</param>
         /// <param name="requiresAll">True, to require that all the given features are enabled. False, to require one or more.</param>
         /// <param name="featureNames">Names of the features</param>
-        public static async Task<bool> IsEnabledAsync(this IFeatureChecker featureChecker, int tenantId, bool requiresAll, params string[] featureNames)
+        public static async Task<bool> IsEnabledAsync(this IFeatureChecker featureChecker, Guid tenantId, bool requiresAll, params string[] featureNames)
         {
             if (featureNames.IsNullOrEmpty())
             {
@@ -134,7 +135,7 @@ namespace Abp.Application.Features
         /// <param name="tenantId">Tenant id</param>
         /// <param name="requiresAll">True, to require that all the given features are enabled. False, to require one or more.</param>
         /// <param name="featureNames">Names of the features</param>
-        public static bool IsEnabled(this IFeatureChecker featureChecker, int tenantId, bool requiresAll, params string[] featureNames)
+        public static bool IsEnabled(this IFeatureChecker featureChecker, Guid tenantId, bool requiresAll, params string[] featureNames)
         {
             if (featureNames.IsNullOrEmpty())
             {
@@ -330,7 +331,7 @@ namespace Abp.Application.Features
         /// <param name="tenantId">Tenant id</param>
         /// <param name="requiresAll">True, to require that all the given features are enabled. False, to require one or more.</param>
         /// <param name="featureNames">Names of the features</param>
-        public static async Task CheckEnabledAsync(this IFeatureChecker featureChecker, int tenantId, bool requiresAll, params string[] featureNames)
+        public static async Task CheckEnabledAsync(this IFeatureChecker featureChecker, Guid tenantId, bool requiresAll, params string[] featureNames)
         {
             if (featureNames.IsNullOrEmpty())
             {
@@ -386,7 +387,7 @@ namespace Abp.Application.Features
         /// <param name="tenantId">Tenant id</param>
         /// <param name="requiresAll">True, to require that all the given features are enabled. False, to require one or more.</param>
         /// <param name="featureNames">Names of the features</param>
-        public static void CheckEnabled(this IFeatureChecker featureChecker, int tenantId, bool requiresAll, params string[] featureNames)
+        public static void CheckEnabled(this IFeatureChecker featureChecker, Guid tenantId, bool requiresAll, params string[] featureNames)
         {
             if (featureNames.IsNullOrEmpty())
             {

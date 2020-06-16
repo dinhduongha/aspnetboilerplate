@@ -6,9 +6,9 @@ namespace Abp.Runtime.Session
     {
         public Guid? UserId { get; }
 
-        public int? TenantId { get; }
+        public Guid? TenantId { get; }
 
-        public SessionOverride(int? tenantId, Guid? userId)
+        public SessionOverride(Guid? tenantId, Guid? userId)
         {
             TenantId = tenantId;
             UserId = userId;

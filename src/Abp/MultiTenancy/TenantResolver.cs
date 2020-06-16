@@ -35,7 +35,7 @@ namespace Abp.MultiTenancy
             Logger = NullLogger.Instance;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             if (!_multiTenancy.Resolvers.Any())
             {
@@ -62,13 +62,13 @@ namespace Abp.MultiTenancy
             }
         }
 
-        private int? GetTenantIdFromContributors()
+        private Guid? GetTenantIdFromContributors()
         {
             foreach (var resolverType in _multiTenancy.Resolvers)
             {
                 using (var resolver = _iocResolver.ResolveAsDisposable<ITenantResolveContributor>(resolverType))
                 {
-                    int? tenantId;
+                    Guid? tenantId;
 
                     try
                     {

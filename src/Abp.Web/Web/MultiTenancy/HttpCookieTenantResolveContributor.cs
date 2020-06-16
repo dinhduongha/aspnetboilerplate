@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using Abp.Configuration.Startup;
 using Abp.Dependency;
@@ -15,15 +16,15 @@ namespace Abp.Web.MultiTenancy
             _multiTenancyConfig = multiTenancyConfig;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             var cookie = HttpContext.Current?.Request.Cookies[_multiTenancyConfig.TenantIdResolveKey];
             if (cookie == null || cookie.Value.IsNullOrEmpty())
             {
                 return null;
             }
-
-            return int.TryParse(cookie.Value, out var tenantId) ? tenantId : (int?) null;
+            return Guid.TryParse(cookie.Value, out var tenantId) ? tenantId : (Guid?)null;
+            //return int.TryParse(cookie.Value, out var tenantId) ? tenantId : (int?) null;
         }
     }
 }

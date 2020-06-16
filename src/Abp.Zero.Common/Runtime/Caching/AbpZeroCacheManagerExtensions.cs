@@ -2,6 +2,7 @@
 using Abp.Authorization.Roles;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
+using System;
 
 namespace Abp.Runtime.Caching
 {
@@ -17,9 +18,9 @@ namespace Abp.Runtime.Caching
             return cacheManager.GetCache<string, RolePermissionCacheItem>(RolePermissionCacheItem.CacheStoreName);
         }
 
-        public static ITypedCache<int, TenantFeatureCacheItem> GetTenantFeatureCache(this ICacheManager cacheManager)
+        public static ITypedCache<Guid, TenantFeatureCacheItem> GetTenantFeatureCache(this ICacheManager cacheManager)
         {
-            return cacheManager.GetCache<int, TenantFeatureCacheItem>(TenantFeatureCacheItem.CacheStoreName);
+            return cacheManager.GetCache<Guid, TenantFeatureCacheItem>(TenantFeatureCacheItem.CacheStoreName);
         }
 
         public static ITypedCache<int, EditionfeatureCacheItem> GetEditionFeatureCache(this ICacheManager cacheManager)

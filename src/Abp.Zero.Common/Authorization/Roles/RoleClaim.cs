@@ -15,7 +15,7 @@ namespace Abp.Authorization.Roles
         /// </summary>
         public const int MaxClaimTypeLength = 256;
 
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         public virtual Guid RoleId { get; set; }
 

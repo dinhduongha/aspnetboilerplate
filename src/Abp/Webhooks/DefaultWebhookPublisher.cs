@@ -5,6 +5,7 @@ using Abp.BackgroundJobs;
 using Abp.Json;
 using Abp.Webhooks.BackgroundWorker;
 using Abp.Collections.Extensions;
+using System;
 
 namespace Abp.Webhooks
 {
@@ -37,13 +38,13 @@ namespace Abp.Webhooks
             await PublishAsync(AbpSession.TenantId, webhookName, data, subscriptions, sendExactSameData);
         }
 
-        public async Task PublishAsync(string webhookName, object data, int? tenantId, bool sendExactSameData = false)
+        public async Task PublishAsync(string webhookName, object data, Guid? tenantId, bool sendExactSameData = false)
         {
             var subscriptions = await _webhookSubscriptionManager.GetAllSubscriptionsIfFeaturesGrantedAsync(tenantId, webhookName);
             await PublishAsync(tenantId, webhookName, data, subscriptions, sendExactSameData);
         }
 
-        private async Task PublishAsync(int? tenantId, string webhookName, object data, List<WebhookSubscription> webhookSubscriptions, bool sendExactSameData = false)
+        private async Task PublishAsync(Guid? tenantId, string webhookName, object data, List<WebhookSubscription> webhookSubscriptions, bool sendExactSameData = false)
         {
             if (webhookSubscriptions.IsNullOrEmpty())
             {
@@ -75,13 +76,13 @@ namespace Abp.Webhooks
             Publish(AbpSession.TenantId, webhookName, data, subscriptions, sendExactSameData);
         }
 
-        public void Publish(string webhookName, object data, int? tenantId, bool sendExactSameData = false)
+        public void Publish(string webhookName, object data, Guid? tenantId, bool sendExactSameData = false)
         {
             var subscriptions = _webhookSubscriptionManager.GetAllSubscriptionsIfFeaturesGranted(tenantId, webhookName);
             Publish(tenantId, webhookName, data, subscriptions, sendExactSameData);
         }
 
-        private void Publish(int? tenantId, string webhookName, object data, List<WebhookSubscription> webhookSubscriptions, bool sendExactSameData = false)
+        private void Publish(Guid? tenantId, string webhookName, object data, List<WebhookSubscription> webhookSubscriptions, bool sendExactSameData = false)
         {
             if (webhookSubscriptions.IsNullOrEmpty())
             {
@@ -107,7 +108,7 @@ namespace Abp.Webhooks
             }
         }
 
-        protected virtual async Task<WebhookEvent> SaveAndGetWebhookAsync(int? tenantId, string webhookName, object data)
+        protected virtual async Task<WebhookEvent> SaveAndGetWebhookAsync(Guid? tenantId, string webhookName, object data)
         {
             var webhookInfo = new WebhookEvent
             {
@@ -123,7 +124,7 @@ namespace Abp.Webhooks
             return webhookInfo;
         }
 
-        protected virtual WebhookEvent SaveAndGetWebhook(int? tenantId, string webhookName, object data)
+        protected virtual WebhookEvent SaveAndGetWebhook(Guid? tenantId, string webhookName, object data)
         {
             var webhookInfo = new WebhookEvent
             {

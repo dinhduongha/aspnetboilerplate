@@ -15,7 +15,7 @@ namespace Abp.Notifications
         /// <summary>
         /// Tenant id of the subscribed user.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// Unique notification name.
@@ -66,7 +66,7 @@ namespace Abp.Notifications
             Id = SequentialGuidGenerator.Instance.Create();
         }
 
-        public TenantNotificationInfo(Guid id, int? tenantId, NotificationInfo notification)
+        public TenantNotificationInfo(Guid id, Guid? tenantId, NotificationInfo notification)
         {
             Id = id;
             TenantId = tenantId;

@@ -7,7 +7,7 @@ namespace Abp.AspNetCore.SignalR.Hubs
 {
     public static class HubCallerContextExtensions
     {
-        public static int? GetTenantId(this HubCallerContext context)
+        public static Guid? GetTenantId(this HubCallerContext context)
         {
             if (context?.User == null)
             {
@@ -19,8 +19,8 @@ namespace Abp.AspNetCore.SignalR.Hubs
             {
                 return null;
             }
-
-            return Convert.ToInt32(tenantIdClaim.Value);
+            return Guid.Parse(tenantIdClaim.Value);
+            //return Convert.ToInt32(tenantIdClaim.Value);
         }
 
         public static Guid? GetUserIdOrNull(this HubCallerContext context)

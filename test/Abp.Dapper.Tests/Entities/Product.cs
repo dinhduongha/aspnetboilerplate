@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Abp.Domain.Entities;
@@ -23,7 +24,7 @@ namespace Abp.Dapper.Tests.Entities
         
         public Status Status { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 
     public enum Status

@@ -1,4 +1,6 @@
-﻿namespace Abp.MultiTenancy
+﻿using System;
+
+namespace Abp.MultiTenancy
 {
     public class TenantStore : ITenantStore
     {
@@ -9,7 +11,7 @@
             _tenantCache = tenantCache;
         }
 
-        public TenantInfo Find(int tenantId)
+        public TenantInfo Find(Guid tenantId)
         {
             var tenant = _tenantCache.GetOrNull(tenantId);
             if (tenant == null)

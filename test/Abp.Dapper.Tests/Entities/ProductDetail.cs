@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Abp.Domain.Entities;
@@ -21,6 +22,6 @@ namespace Abp.Dapper.Tests.Entities
         [Required]
         public string Gender { get; set; }
 
-        public int TenantId { get; set; }
+        public Guid TenantId { get; set; }
     }
 }

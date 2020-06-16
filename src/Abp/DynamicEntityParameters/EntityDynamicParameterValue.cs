@@ -17,14 +17,14 @@ namespace Abp.DynamicEntityParameters
 
         public virtual EntityDynamicParameter EntityDynamicParameter { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         public EntityDynamicParameterValue()
         {
             Id = SequentialGuidGenerator.Instance.Create();
         }
 
-        public EntityDynamicParameterValue(EntityDynamicParameter entityDynamicParameter, string entityId, string value, int? tenantId)
+        public EntityDynamicParameterValue(EntityDynamicParameter entityDynamicParameter, string entityId, string value, Guid? tenantId)
         {
             Id = SequentialGuidGenerator.Instance.Create();
             EntityDynamicParameterId = entityDynamicParameter.Id;

@@ -15,7 +15,7 @@ namespace Abp.Authorization.Users
         /// <summary>
         /// TenantId of this entity.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// Id of the User.
@@ -46,7 +46,7 @@ namespace Abp.Authorization.Users
         /// <param name="tenantId">TenantId</param>
         /// <param name="userId">Id of the User.</param>
         /// <param name="organizationUnitId">Id of the <see cref="OrganizationUnit"/>.</param>
-        public UserOrganizationUnit(int? tenantId, Guid userId, Guid organizationUnitId)
+        public UserOrganizationUnit(Guid? tenantId, Guid userId, Guid organizationUnitId)
         {
             Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;

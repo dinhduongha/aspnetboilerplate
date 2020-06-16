@@ -128,7 +128,7 @@ namespace Abp.Authorization
             return new ClaimsPrincipal(identity);
         }
 
-        public async Task<int?> GetVerifiedTenantIdAsync()
+        public async Task<Guid?> GetVerifiedTenantIdAsync()
         {
             var result = await Context.AuthenticateAsync(IdentityConstants.TwoFactorUserIdScheme);
 
@@ -165,7 +165,7 @@ namespace Abp.Authorization
                 new Microsoft.AspNetCore.Authentication.AuthenticationProperties { IsPersistent = true });
         }
 
-        private bool IsTrue(string settingName, int? tenantId)
+        private bool IsTrue(string settingName, Guid? tenantId)
         {
             return tenantId == null
                 ? _settingManager.GetSettingValueForApplication<bool>(settingName)

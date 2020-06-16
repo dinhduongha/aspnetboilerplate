@@ -22,7 +22,7 @@ namespace Abp.Webhooks
         /// Returns all subscriptions of tenant
         /// </summary>
         /// <returns></returns>
-        Task<List<WebhookSubscription>> GetAllSubscriptionsAsync(int? tenantId);
+        Task<List<WebhookSubscription>> GetAllSubscriptionsAsync(Guid? tenantId);
 
         /// <summary>
         /// Returns all subscriptions of tenant
@@ -30,7 +30,7 @@ namespace Abp.Webhooks
         /// <param name="tenantId">
         /// Target tenant id(s).
         /// </param>
-        List<WebhookSubscription> GetAllSubscriptions(int? tenantId);
+        List<WebhookSubscription> GetAllSubscriptions(Guid? tenantId);
 
         /// <summary>
         /// Returns all subscriptions for given webhook.
@@ -39,7 +39,7 @@ namespace Abp.Webhooks
         /// <param name="tenantId">
         /// Target tenant id(s).
         /// </param>
-        Task<List<WebhookSubscription>> GetAllSubscriptionsIfFeaturesGrantedAsync(int? tenantId, string webhookName);
+        Task<List<WebhookSubscription>> GetAllSubscriptionsIfFeaturesGrantedAsync(Guid? tenantId, string webhookName);
 
         /// <summary>
         /// Returns all subscriptions for given webhook.
@@ -48,7 +48,7 @@ namespace Abp.Webhooks
         /// Target tenant id(s).
         /// </param>
         /// <param name="webhookName"><see cref="WebhookDefinition.Name"/></param>
-        List<WebhookSubscription> GetAllSubscriptionsIfFeaturesGranted(int? tenantId, string webhookName);
+        List<WebhookSubscription> GetAllSubscriptionsIfFeaturesGranted(Guid? tenantId, string webhookName);
 
         /// <summary>
         /// Checks if tenant subscribed for a webhook. (Checks if webhook features are granted)
@@ -57,7 +57,7 @@ namespace Abp.Webhooks
         /// Target tenant id(s).
         /// </param>
         /// <param name="webhookName"><see cref="WebhookDefinition.Name"/></param>
-        Task<bool> IsSubscribedAsync(int? tenantId, string webhookName);
+        Task<bool> IsSubscribedAsync(Guid? tenantId, string webhookName);
 
         /// <summary>
         /// Checks if tenant subscribed for a webhook. (Checks if webhook features are granted)
@@ -66,7 +66,7 @@ namespace Abp.Webhooks
         /// Target tenant id(s).
         /// </param>
         /// <param name="webhookName"><see cref="WebhookDefinition.Name"/></param>
-        bool IsSubscribed(int? tenantId, string webhookName);
+        bool IsSubscribed(Guid? tenantId, string webhookName);
 
         /// <summary>
         /// If id is the default(Guid) adds new subscription, else updates current one. (Checks if webhook features are granted)

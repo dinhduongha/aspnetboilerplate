@@ -1,7 +1,9 @@
-﻿namespace Abp.MultiTenancy
+﻿using System;
+
+namespace Abp.MultiTenancy
 {
     public interface ITenantResolveContributor
     {
-        int? ResolveTenantId();
+        Guid? ResolveTenantId();
     }
 }

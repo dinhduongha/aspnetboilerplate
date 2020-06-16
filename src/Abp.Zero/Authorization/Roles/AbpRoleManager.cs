@@ -432,7 +432,7 @@ namespace Abp.Authorization.Roles
         }
 
         [UnitOfWork]
-        public virtual async Task<IdentityResult> CreateStaticRoles(int tenantId)
+        public virtual async Task<IdentityResult> CreateStaticRoles(Guid tenantId)
         {
             var staticRoleDefinitions = RoleManagementConfig.StaticRoles.Where(sr => sr.Side == MultiTenancySides.Tenant);
 
@@ -605,8 +605,8 @@ namespace Abp.Authorization.Roles
 
         private async Task<RolePermissionCacheItem> GetRolePermissionCacheItemAsync(Guid roleId)
         {
-            var cacheKey = roleId + "@" + (GetCurrentTenantId() ?? 0);
-
+            //var cacheKey = roleId + "@" + (GetCurrentTenantId() ?? 0);
+            var cacheKey = $"{roleId}@{GetCurrentTenantId()}";
             return await CacheManager.GetRolePermissionCache().GetAsync(cacheKey, async () =>
             {
                 var newCacheItem = new RolePermissionCacheItem(roleId);
@@ -649,8 +649,8 @@ namespace Abp.Authorization.Roles
 
         private RolePermissionCacheItem GetRolePermissionCacheItem(Guid roleId)
         {
-            var cacheKey = roleId + "@" + (GetCurrentTenantId() ?? 0);
-
+            //var cacheKey = roleId + "@" + (GetCurrentTenantId() ?? 0);
+            var cacheKey = $"{roleId}@{GetCurrentTenantId()}";
             return CacheManager.GetRolePermissionCache().Get(cacheKey, () =>
             {
                 var newCacheItem = new RolePermissionCacheItem(roleId);
@@ -701,7 +701,7 @@ namespace Abp.Authorization.Roles
             return LocalizationManager.GetString(LocalizationSourceName, name, cultureInfo);
         }
 
-        private int? GetCurrentTenantId()
+        private Guid? GetCurrentTenantId()
         {
             if (UnitOfWorkManager.Current != null)
             {

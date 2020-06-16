@@ -428,22 +428,22 @@ namespace Abp.Authorization.Users
             return AbpUserStore.FindAll(login);
         }
 
-        public virtual Task<TUser> FindAsync(int? tenantId, UserLoginInfo login)
+        public virtual Task<TUser> FindAsync(Guid? tenantId, UserLoginInfo login)
         {
             return AbpUserStore.FindAsync(tenantId, login);
         }
 
-        public virtual TUser Find(int? tenantId, UserLoginInfo login)
+        public virtual TUser Find(Guid? tenantId, UserLoginInfo login)
         {
             return AbpUserStore.Find(tenantId, login);
         }
 
-        public virtual Task<TUser> FindByNameOrEmailAsync(int? tenantId, string userNameOrEmailAddress)
+        public virtual Task<TUser> FindByNameOrEmailAsync(Guid? tenantId, string userNameOrEmailAddress)
         {
             return AbpUserStore.FindByNameOrEmailAsync(tenantId, userNameOrEmailAddress);
         }
 
-        public virtual TUser FindByNameOrEmail(int? tenantId, string userNameOrEmailAddress)
+        public virtual TUser FindByNameOrEmail(Guid? tenantId, string userNameOrEmailAddress)
         {
             return AbpUserStore.FindByNameOrEmail(tenantId, userNameOrEmailAddress);
         }
@@ -796,7 +796,7 @@ namespace Abp.Authorization.Users
                 );
         }
 
-        private async Task CheckMaxUserOrganizationUnitMembershipCountAsync(int? tenantId, int requestedCount)
+        private async Task CheckMaxUserOrganizationUnitMembershipCountAsync(Guid? tenantId, int requestedCount)
         {
             var maxCount = await _organizationUnitSettings.GetMaxUserMembershipCountAsync(tenantId);
             if (requestedCount > maxCount)
@@ -805,7 +805,7 @@ namespace Abp.Authorization.Users
             }
         }
 
-        private void CheckMaxUserOrganizationUnitMembershipCount(int? tenantId, int requestedCount)
+        private void CheckMaxUserOrganizationUnitMembershipCount(Guid? tenantId, int requestedCount)
         {
             var maxCount = _organizationUnitSettings.GetMaxUserMembershipCount(tenantId);
             if (requestedCount > maxCount)
@@ -953,7 +953,7 @@ namespace Abp.Authorization.Users
             }
         }
 
-        public virtual async Task InitializeOptionsAsync(int? tenantId)
+        public virtual async Task InitializeOptionsAsync(Guid? tenantId)
         {
             Options = JsonConvert.DeserializeObject<IdentityOptions>(_optionsAccessor.Value.ToJsonString());
 
@@ -970,7 +970,7 @@ namespace Abp.Authorization.Users
             Options.Password.RequiredLength = await GetSettingValueAsync<int>(AbpZeroSettingNames.UserManagement.PasswordComplexity.RequiredLength, tenantId);
         }
 
-        public virtual void InitializeOptions(int? tenantId)
+        public virtual void InitializeOptions(Guid? tenantId)
         {
             Options = JsonConvert.DeserializeObject<IdentityOptions>(_optionsAccessor.Value.ToJsonString());
 
@@ -999,7 +999,8 @@ namespace Abp.Authorization.Users
 
         private async Task<UserPermissionCacheItem> GetUserPermissionCacheItemAsync(Guid userId)
         {
-            var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            //var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            var cacheKey = $"{userId}@{GetCurrentTenantId()}";
             return await _cacheManager.GetUserPermissionCache().GetAsync(cacheKey, async () =>
             {
                 var user = await FindByIdAsync(userId.ToString());
@@ -1033,7 +1034,8 @@ namespace Abp.Authorization.Users
 
         private UserPermissionCacheItem GetUserPermissionCacheItem(Guid userId)
         {
-            var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            //var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            var cacheKey = $"{userId}@{GetCurrentTenantId()}";
             return _cacheManager.GetUserPermissionCache().Get(cacheKey, () =>
             {
                 var user = AbpUserStore.FindById(userId.ToString());
@@ -1114,24 +1116,24 @@ namespace Abp.Authorization.Users
         //    return providers;
         //}
 
-        private bool IsTrue(string settingName, int? tenantId)
+        private bool IsTrue(string settingName, Guid? tenantId)
         {
             return GetSettingValue<bool>(settingName, tenantId);
         }
 
-        private Task<bool> IsTrueAsync(string settingName, int? tenantId)
+        private Task<bool> IsTrueAsync(string settingName, Guid? tenantId)
         {
             return GetSettingValueAsync<bool>(settingName, tenantId);
         }
 
-        private T GetSettingValue<T>(string settingName, int? tenantId) where T : struct
+        private T GetSettingValue<T>(string settingName, Guid? tenantId) where T : struct
         {
             return tenantId == null
                 ? _settingManager.GetSettingValueForApplication<T>(settingName)
                 : _settingManager.GetSettingValueForTenant<T>(settingName, tenantId.Value);
         }
 
-        private Task<T> GetSettingValueAsync<T>(string settingName, int? tenantId) where T : struct
+        private Task<T> GetSettingValueAsync<T>(string settingName, Guid? tenantId) where T : struct
         {
             return tenantId == null
                 ? _settingManager.GetSettingValueForApplicationAsync<T>(settingName)
@@ -1148,7 +1150,7 @@ namespace Abp.Authorization.Users
             return LocalizationManager.GetString(LocalizationSourceName, name, cultureInfo);
         }
 
-        private int? GetCurrentTenantId()
+        private Guid? GetCurrentTenantId()
         {
             if (_unitOfWorkManager.Current != null)
             {

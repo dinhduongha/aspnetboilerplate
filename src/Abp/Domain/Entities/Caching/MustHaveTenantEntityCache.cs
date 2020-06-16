@@ -1,17 +1,18 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.Runtime.Caching;
+using System;
 
 namespace Abp.Domain.Entities.Caching
 {
-    public class MustHaveTenantEntityCache<TEntity, TCacheItem> : MustHaveTenantEntityCache<TEntity, TCacheItem, int>,
+    public class MustHaveTenantEntityCache<TEntity, TCacheItem> : MustHaveTenantEntityCache<TEntity, TCacheItem, Guid>,
         IMultiTenancyEntityCache<TCacheItem>
-        where TEntity : class, IEntity<int>, IMustHaveTenant
+        where TEntity : class, IEntity<Guid>, IMustHaveTenant
     {
         public MustHaveTenantEntityCache(
             ICacheManager cacheManager,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<TEntity, int> repository,
+            IRepository<TEntity, Guid> repository,
             string cacheName = null)
             : base(
                 cacheManager,

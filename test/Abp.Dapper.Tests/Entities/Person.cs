@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Abp.Dapper.Tests.Entities
@@ -17,6 +18,6 @@ namespace Abp.Dapper.Tests.Entities
 
         public virtual string Name { get; set; }
 
-        public int TenantId { get; set; }
+        public Guid TenantId { get; set; }
     }
 }

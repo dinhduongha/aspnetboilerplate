@@ -434,7 +434,7 @@ namespace Abp.Authorization.Users
             var identity = await base.CreateIdentityAsync(user, authenticationType);
             if (user.TenantId.HasValue)
             {
-                identity.AddClaim(new Claim(AbpClaimTypes.TenantId, user.TenantId.Value.ToString(CultureInfo.InvariantCulture)));
+                identity.AddClaim(new Claim(AbpClaimTypes.TenantId, user.TenantId.Value.ToString()));
             }
 
             return identity;
@@ -595,7 +595,7 @@ namespace Abp.Authorization.Users
                 );
         }
 
-        private async Task CheckMaxUserOrganizationUnitMembershipCountAsync(int? tenantId, int requestedCount)
+        private async Task CheckMaxUserOrganizationUnitMembershipCountAsync(Guid? tenantId, int requestedCount)
         {
             var maxCount = await _organizationUnitSettings.GetMaxUserMembershipCountAsync(tenantId);
             if (requestedCount > maxCount)
@@ -675,7 +675,7 @@ namespace Abp.Authorization.Users
             }
         }
 
-        public virtual void RegisterTwoFactorProviders(int? tenantId)
+        public virtual void RegisterTwoFactorProviders(Guid? tenantId)
         {
             TwoFactorProviders.Clear();
 
@@ -710,7 +710,7 @@ namespace Abp.Authorization.Users
             }
         }
 
-        public virtual void InitializeLockoutSettings(int? tenantId)
+        public virtual void InitializeLockoutSettings(Guid? tenantId)
         {
             UserLockoutEnabledByDefault = IsTrue(AbpZeroSettingNames.UserManagement.UserLockOut.IsEnabled, tenantId);
             DefaultAccountLockoutTimeSpan = TimeSpan.FromSeconds(GetSettingValue<int>(AbpZeroSettingNames.UserManagement.UserLockOut.DefaultAccountLockoutSeconds, tenantId));
@@ -760,7 +760,8 @@ namespace Abp.Authorization.Users
 
         private async Task<UserPermissionCacheItem> GetUserPermissionCacheItemAsync(Guid userId)
         {
-            var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            //var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            var cacheKey = $"{userId}@{GetCurrentTenantId()}";
             return await _cacheManager.GetUserPermissionCache().GetAsync(cacheKey, async () =>
             {
                 var user = await FindByIdAsync(userId);
@@ -794,7 +795,8 @@ namespace Abp.Authorization.Users
 
         private UserPermissionCacheItem GetUserPermissionCacheItem(Guid userId)
         {
-            var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            //var cacheKey = userId + "@" + (GetCurrentTenantId() ?? 0);
+            var cacheKey = $"{userId}@{GetCurrentTenantId()}";
             return _cacheManager.GetUserPermissionCache().Get(cacheKey, () =>
             {
                 var user = AbpStore.FindById(userId);
@@ -826,12 +828,12 @@ namespace Abp.Authorization.Users
             });
         }
 
-        private bool IsTrue(string settingName, int? tenantId)
+        private bool IsTrue(string settingName, Guid? tenantId)
         {
             return GetSettingValue<bool>(settingName, tenantId);
         }
 
-        private T GetSettingValue<T>(string settingName, int? tenantId) where T : struct
+        private T GetSettingValue<T>(string settingName, Guid? tenantId) where T : struct
         {
             return tenantId == null
                 ? _settingManager.GetSettingValueForApplication<T>(settingName)
@@ -848,7 +850,7 @@ namespace Abp.Authorization.Users
             return LocalizationManager.GetString(LocalizationSourceName, name, cultureInfo);
         }
 
-        private int? GetCurrentTenantId()
+        private Guid? GetCurrentTenantId()
         {
             if (_unitOfWorkManager.Current != null)
             {

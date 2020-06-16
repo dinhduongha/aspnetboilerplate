@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace Abp.Localization
         /// <param name="culture">Culture</param>
         /// <param name="key">Localization key</param>
         /// <param name="tryDefaults">True: fallbacks to default languages if can not find in given culture</param>
-        public string GetStringOrNull(int? tenantId, string sourceName, CultureInfo culture, string key, bool tryDefaults = true)
+        public string GetStringOrNull(Guid? tenantId, string sourceName, CultureInfo culture, string key, bool tryDefaults = true)
         {
             var source = _localizationManager.GetSource(sourceName);
 
@@ -61,7 +62,7 @@ namespace Abp.Localization
         /// <param name="key">Localization key</param>
         /// <param name="value">New localized value.</param>
         [UnitOfWork]
-        public virtual async Task UpdateStringAsync(int? tenantId, string sourceName, CultureInfo culture, string key, string value)
+        public virtual async Task UpdateStringAsync(Guid? tenantId, string sourceName, CultureInfo culture, string key, string value)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {

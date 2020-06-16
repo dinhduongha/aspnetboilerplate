@@ -69,7 +69,7 @@ namespace Abp.Configuration
         /// <param name="name">Unique name of the setting</param>
         /// <param name="tenantId">Tenant id</param>
         /// <returns>Current value of the setting</returns>
-        public static async Task<T> GetSettingValueForTenantAsync<T>(this ISettingManager settingManager, string name, int tenantId)
+        public static async Task<T> GetSettingValueForTenantAsync<T>(this ISettingManager settingManager, string name, Guid tenantId)
            where T : struct
         {
             return (await settingManager.GetSettingValueForTenantAsync(name, tenantId)).To<T>();
@@ -83,7 +83,7 @@ namespace Abp.Configuration
         /// <param name="name">Unique name of the setting</param>
         /// <param name="tenantId">Tenant id</param>
         /// <returns>Current value of the setting</returns>
-        public static T GetSettingValueForTenant<T>(this ISettingManager settingManager, string name, int tenantId)
+        public static T GetSettingValueForTenant<T>(this ISettingManager settingManager, string name, Guid tenantId)
            where T : struct
         {
             return (settingManager.GetSettingValueForTenant(name, tenantId)).To<T>();
@@ -98,7 +98,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <returns>Current value of the setting for the user</returns>
-        public static async Task<T> GetSettingValueForUserAsync<T>(this ISettingManager settingManager, string name, int? tenantId, Guid userId)
+        public static async Task<T> GetSettingValueForUserAsync<T>(this ISettingManager settingManager, string name, Guid? tenantId, Guid userId)
            where T : struct
         {
             return (await settingManager.GetSettingValueForUserAsync(name, tenantId, userId)).To<T>();
@@ -113,7 +113,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <returns>Current value of the setting for the user</returns>
-        public static T GetSettingValueForUser<T>(this ISettingManager settingManager, string name, int? tenantId, Guid userId)
+        public static T GetSettingValueForUser<T>(this ISettingManager settingManager, string name, Guid? tenantId, Guid userId)
            where T : struct
         {
             return (settingManager.GetSettingValueForUser(name, tenantId, userId)).To<T>();

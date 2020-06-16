@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
@@ -229,8 +230,8 @@ namespace Abp.Zero.EntityFramework
             #region Common Indexes
 
             modelBuilder.Conventions.AddAfter<IndexAttributeConvention>(new IndexingPropertyConvention<ISoftDelete, bool>(m => m.IsDeleted));
-            modelBuilder.Conventions.AddAfter<IndexAttributeConvention>(new IndexingPropertyConvention<IMayHaveTenant, int?>(m => m.TenantId));
-            modelBuilder.Conventions.AddAfter<IndexAttributeConvention>(new IndexingPropertyConvention<IMustHaveTenant, int>(m => m.TenantId));
+            modelBuilder.Conventions.AddAfter<IndexAttributeConvention>(new IndexingPropertyConvention<IMayHaveTenant, Guid?>(m => m.TenantId));
+            modelBuilder.Conventions.AddAfter<IndexAttributeConvention>(new IndexingPropertyConvention<IMustHaveTenant, Guid>(m => m.TenantId));
 
             #endregion
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Abp.Webhooks
@@ -41,11 +42,11 @@ namespace Abp.Webhooks
         /// <summary>
         /// Checks if given webhook name is available for given tenant.
         /// </summary>
-        Task<bool> IsAvailableAsync(int? tenantId, string name);
+        Task<bool> IsAvailableAsync(Guid? tenantId, string name);
 
         /// <summary>
         /// Checks if given webhook name is available for given tenant.
         /// </summary>
-        bool IsAvailable(int? tenantId, string name);
+        bool IsAvailable(Guid? tenantId, string name);
     }
 }

@@ -10,7 +10,7 @@ namespace Abp
         /// <summary>
         /// Tenant Id. Can be null for host users.
         /// </summary>
-        int? TenantId { get; }
+        Guid? TenantId { get; }
 
         /// <summary>
         /// Id of the user.

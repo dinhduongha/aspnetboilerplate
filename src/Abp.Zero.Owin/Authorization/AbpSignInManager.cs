@@ -137,7 +137,7 @@ namespace Abp.Authorization
             }
         }
 
-        public virtual async Task<int?> GetVerifiedTenantIdAsync()
+        public virtual async Task<Guid?> GetVerifiedTenantIdAsync()
         {
             var authenticateResult = await AuthenticationManager.AuthenticateAsync(
                 DefaultAuthenticationTypes.TwoFactorCookie
@@ -146,7 +146,7 @@ namespace Abp.Authorization
             return authenticateResult?.Identity?.GetTenantId();
         }
 
-        private bool IsTrue(string settingName, int? tenantId)
+        private bool IsTrue(string settingName, Guid? tenantId)
         {
             return tenantId == null
                 ? _settingManager.GetSettingValueForApplication<bool>(settingName)

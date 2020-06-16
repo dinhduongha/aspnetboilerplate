@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.Runtime.Session;
 
 namespace Abp.Webhooks
@@ -45,7 +46,7 @@ namespace Abp.Webhooks
         /// False: It sends data in <see cref="WebhookPayload"/>. It is recommended way.
         /// </para>
         /// </param>
-        Task PublishAsync(string webhookName, object data, int? tenantId, bool sendExactSameData = false);
+        Task PublishAsync(string webhookName, object data, Guid? tenantId, bool sendExactSameData = false);
 
         /// <summary>
         /// Sends webhooks to given tenant's subscriptions
@@ -61,6 +62,6 @@ namespace Abp.Webhooks
         /// False: It sends data in <see cref="WebhookPayload"/>. It is recommended way.
         /// </para>
         /// </param>
-        void Publish(string webhookName, object data, int? tenantId, bool sendExactSameData = false);
+        void Publish(string webhookName, object data, Guid? tenantId, bool sendExactSameData = false);
     }
 }

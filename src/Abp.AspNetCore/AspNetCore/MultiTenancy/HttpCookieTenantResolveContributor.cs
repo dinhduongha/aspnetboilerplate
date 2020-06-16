@@ -3,6 +3,7 @@ using Abp.Dependency;
 using Abp.Extensions;
 using Abp.MultiTenancy;
 using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Abp.AspNetCore.MultiTenancy
 {
@@ -19,7 +20,7 @@ namespace Abp.AspNetCore.MultiTenancy
             _multiTenancyConfig = multiTenancyConfig;
         }
 
-        public int? ResolveTenantId()
+        public Guid? ResolveTenantId()
         {
             var httpContext = _httpContextAccessor.HttpContext;
             if (httpContext == null)
@@ -32,8 +33,8 @@ namespace Abp.AspNetCore.MultiTenancy
             {
                 return null;
             }
-
-            return int.TryParse(tenantIdValue, out var tenantId) ? tenantId : (int?) null;
+            return Guid.TryParse(tenantIdValue, out var tenantId) ? tenantId : (Guid?)null;
+            //return int.TryParse(tenantIdValue, out var tenantId) ? tenantId : (int?) null;
         }
     }
 }

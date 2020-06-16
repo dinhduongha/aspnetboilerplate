@@ -2,12 +2,12 @@
 											Id INTEGER PRIMARY KEY
 										,	Name varchar(100) 
 										,	IsDeleted BOOLEAN
-										,	DeleterUserId BIGINT
+										,	DeleterUserId CHAR(36)
 										,	DeletionTime DATETIME
 										,	LastModificationTime DATETIME
-										,	LastModifierUserId BIGINT
+										,	LastModifierUserId CHAR(36)
 										,	CreationTime DATETIME
-										,	CreatorUserId BIGINT
+										,	CreatorUserId CHAR(36)
 										,	TenantId INTEGER NULLABLE
 										, Status BOOLEAN
 									);
@@ -16,12 +16,12 @@
 											Id INTEGER PRIMARY KEY
 										,	Gender varchar(100) 
 										,	IsDeleted BOOLEAN
-										,	DeleterUserId BIGINT
+										,	DeleterUserId CHAR(36)
 										,	DeletionTime DATETIME
 										,	LastModificationTime DATETIME
-										,	LastModifierUserId BIGINT
+										,	LastModifierUserId CHAR(36)
 										,	CreationTime DATETIME
-										,	CreatorUserId BIGINT
+										,	CreatorUserId CHAR(36)
 										,	TenantId INTEGER
 									);
 
@@ -35,12 +35,12 @@
 											Id INTEGER PRIMARY KEY
 										,	Name varchar(100) 
 										,	IsDeleted BOOLEAN
-										,	DeleterUserId BIGINT
+										,	DeleterUserId CHAR(36)
 										,	DeletionTime DATETIME
 										,	LastModificationTime DATETIME
-										,	LastModifierUserId BIGINT
+										,	LastModifierUserId CHAR(36)
 										,	CreationTime DATETIME
-										,	CreatorUserId BIGINT
+										,	CreatorUserId CHAR(36)
 										,	ParentId INTEGER NULLABLE
 										,	TenantId INTEGER
 									);

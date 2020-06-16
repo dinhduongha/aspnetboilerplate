@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Abp.MultiTenancy;
 
@@ -8,12 +9,12 @@ namespace Abp.AspNetCore.App.MultiTenancy
     {
         private readonly List<TenantInfo> _tenants = new List<TenantInfo>
         {
-            new TenantInfo(1, "Default"),
-            new TenantInfo(42, "acme"),
-            new TenantInfo(43, "vlsft")
+            new TenantInfo(Guid.Parse("00000000-0000-0000-0000-000000000001"), "Default"),
+            new TenantInfo(Guid.Parse("00000000-0000-0000-0000-000000000042"), "acme"),
+            new TenantInfo(Guid.Parse("00000000-0000-0000-0000-000000000043"), "vlsft")
         };
 
-        public TenantInfo Find(int tenantId)
+        public TenantInfo Find(Guid tenantId)
         {
             return _tenants.FirstOrDefault(t => t.Id == tenantId);
         }

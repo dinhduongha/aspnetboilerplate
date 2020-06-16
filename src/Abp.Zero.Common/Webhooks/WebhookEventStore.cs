@@ -45,7 +45,7 @@ namespace Abp.Webhooks
         }
 
         [UnitOfWork]
-        public virtual Task<WebhookEvent> GetAsync(int? tenantId, Guid id)
+        public virtual Task<WebhookEvent> GetAsync(Guid? tenantId, Guid id)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -54,7 +54,7 @@ namespace Abp.Webhooks
         }
 
         [UnitOfWork]
-        public virtual WebhookEvent Get(int? tenantId, Guid id)
+        public virtual WebhookEvent Get(Guid? tenantId, Guid id)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {

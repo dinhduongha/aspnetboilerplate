@@ -16,7 +16,7 @@ namespace Abp.DynamicEntityParameters
         [ForeignKey("DynamicParameterId")]
         public virtual DynamicParameter DynamicParameter { get; set; }
 
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         public EntityDynamicParameter()
         {
             Id = SequentialGuidGenerator.Instance.Create();

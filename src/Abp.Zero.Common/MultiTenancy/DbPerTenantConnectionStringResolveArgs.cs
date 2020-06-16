@@ -1,18 +1,19 @@
 ﻿using Abp.Domain.Uow;
+using System;
 
 namespace Abp.MultiTenancy
 {
     public class DbPerTenantConnectionStringResolveArgs : ConnectionStringResolveArgs
     {
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
-        public DbPerTenantConnectionStringResolveArgs(int? tenantId, MultiTenancySides? multiTenancySide = null)
+        public DbPerTenantConnectionStringResolveArgs(Guid? tenantId, MultiTenancySides? multiTenancySide = null)
             : base(multiTenancySide)
         {
             TenantId = tenantId;
         }
 
-        public DbPerTenantConnectionStringResolveArgs(int? tenantId, ConnectionStringResolveArgs baseArgs)
+        public DbPerTenantConnectionStringResolveArgs(Guid? tenantId, ConnectionStringResolveArgs baseArgs)
         {
             TenantId = tenantId;
             MultiTenancySide = baseArgs.MultiTenancySide;

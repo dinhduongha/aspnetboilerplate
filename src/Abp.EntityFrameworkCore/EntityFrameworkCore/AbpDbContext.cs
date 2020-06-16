@@ -75,7 +75,7 @@ namespace Abp.EntityFrameworkCore
         /// </summary>
         public virtual bool SuppressAutoSetTenantId { get; set; }
 
-        protected virtual int? CurrentTenantId => GetCurrentTenantIdOrNull();
+        protected virtual Guid? CurrentTenantId => GetCurrentTenantIdOrNull();
 
         protected virtual bool IsSoftDeleteFilterEnabled => CurrentUnitOfWorkProvider?.Current?.IsFilterEnabled(AbpDataFilters.SoftDelete) == true;
 
@@ -400,7 +400,7 @@ namespace Abp.EntityFrameworkCore
             var entity = entityAsObj.As<IMustHaveTenant>();
 
             //Don't set if it's already set
-            if (entity.TenantId != 0)
+            if (entity.TenantId != Guid.Empty)
             {
                 return;
             }
@@ -530,7 +530,7 @@ namespace Abp.EntityFrameworkCore
             return null;
         }
 
-        protected virtual int? GetCurrentTenantIdOrNull()
+        protected virtual Guid? GetCurrentTenantIdOrNull()
         {
             if (CurrentUnitOfWorkProvider != null &&
                 CurrentUnitOfWorkProvider.Current != null)

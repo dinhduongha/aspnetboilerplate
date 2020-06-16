@@ -33,7 +33,7 @@ namespace Abp.Localization
             }
         }
 
-        public string GetString(int? tenantId, string name, CultureInfo culture)
+        public string GetString(Guid? tenantId, string name, CultureInfo culture)
         {
             var value = GetStringOrNull(tenantId, name, culture);
 
@@ -45,7 +45,7 @@ namespace Abp.Localization
             return value;
         }
 
-        public string GetStringOrNull(int? tenantId, string name, CultureInfo culture, bool tryDefaults = true)
+        public string GetStringOrNull(Guid? tenantId, string name, CultureInfo culture, bool tryDefaults = true)
         {
             var cultureName = culture.Name;
             var dictionaries = DictionaryProvider.Dictionaries;

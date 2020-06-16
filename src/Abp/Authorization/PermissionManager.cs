@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Abp.Application.Features;
@@ -97,7 +98,7 @@ namespace Abp.Authorization
             }
         }
 
-        private int? GetCurrentTenantId()
+        private Guid? GetCurrentTenantId()
         {
             if (_unitOfWorkManager.Current != null)
             {

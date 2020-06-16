@@ -27,7 +27,7 @@ namespace Abp.Authorization.Roles
         /// <summary>
         /// Tenant's Id, if this role is a tenant-level role. Null, if not.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// Unique name of this role.
@@ -67,7 +67,7 @@ namespace Abp.Authorization.Roles
             Name = Guid.NewGuid().ToString("N");
         }
 
-        protected AbpRoleBase(int? tenantId, string displayName)
+        protected AbpRoleBase(Guid? tenantId, string displayName)
             : this()
         {
             Id = SequentialGuidGenerator.Instance.Create();
@@ -75,7 +75,7 @@ namespace Abp.Authorization.Roles
             DisplayName = displayName;
         }
 
-        protected AbpRoleBase(int? tenantId, string name, string displayName)
+        protected AbpRoleBase(Guid? tenantId, string name, string displayName)
             : this(tenantId, displayName)
         {
             Id = SequentialGuidGenerator.Instance.Create();

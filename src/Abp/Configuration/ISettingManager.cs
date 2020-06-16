@@ -64,7 +64,7 @@ namespace Abp.Configuration
         /// <param name="name">Unique name of the setting</param>
         /// <param name="tenantId">Tenant id</param>
         /// <returns>Current value of the setting</returns>
-        Task<string> GetSettingValueForTenantAsync(string name, int tenantId);
+        Task<string> GetSettingValueForTenantAsync(string name, Guid tenantId);
 
         /// <summary>
         /// Gets current value of a setting for a tenant level.
@@ -73,7 +73,7 @@ namespace Abp.Configuration
         /// <param name="name">Unique name of the setting</param>
         /// <param name="tenantId">Tenant id</param>
         /// <returns>Current value of the setting</returns>
-        string GetSettingValueForTenant(string name, int tenantId);
+        string GetSettingValueForTenant(string name, Guid tenantId);
 
         /// <summary>
         /// Gets current value of a setting for a tenant level.
@@ -84,7 +84,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">Tenant id</param>
         /// <param name="fallbackToDefault"></param>
         /// <returns>Current value of the setting</returns>
-        Task<string> GetSettingValueForTenantAsync(string name, int tenantId, bool fallbackToDefault);
+        Task<string> GetSettingValueForTenantAsync(string name, Guid tenantId, bool fallbackToDefault);
 
         /// <summary>
         /// Gets current value of a setting for a tenant level.
@@ -95,7 +95,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">Tenant id</param>
         /// <param name="fallbackToDefault"></param>
         /// <returns>Current value of the setting</returns>
-        string GetSettingValueForTenant(string name, int tenantId, bool fallbackToDefault);
+        string GetSettingValueForTenant(string name, Guid tenantId, bool fallbackToDefault);
 
         /// <summary>
         /// Gets current value of a setting for a user level.
@@ -105,7 +105,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <returns>Current value of the setting for the user</returns>
-        Task<string> GetSettingValueForUserAsync(string name, int? tenantId, Guid userId);
+        Task<string> GetSettingValueForUserAsync(string name, Guid? tenantId, Guid userId);
 
         /// <summary>
         /// Gets current value of a setting for a user level.
@@ -115,7 +115,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <returns>Current value of the setting for the user</returns>
-        string GetSettingValueForUser(string name, int? tenantId, Guid userId);
+        string GetSettingValueForUser(string name, Guid? tenantId, Guid userId);
 
         /// <summary>
         /// Gets current value of a setting for a user level.
@@ -127,7 +127,7 @@ namespace Abp.Configuration
         /// <param name="userId">User id</param>
         /// <param name="fallbackToDefault"></param>
         /// <returns>Current value of the setting for the user</returns>
-        Task<string> GetSettingValueForUserAsync(string name, int? tenantId, Guid userId, bool fallbackToDefault);
+        Task<string> GetSettingValueForUserAsync(string name, Guid? tenantId, Guid userId, bool fallbackToDefault);
 
         /// <summary>
         /// Gets current value of a setting for a user level.
@@ -139,7 +139,7 @@ namespace Abp.Configuration
         /// <param name="userId">User id</param>
         /// <param name="fallbackToDefault"></param>
         /// <returns>Current value of the setting for the user</returns>
-        string GetSettingValueForUser(string name, int? tenantId, Guid userId, bool fallbackToDefault);
+        string GetSettingValueForUser(string name, Guid? tenantId, Guid userId, bool fallbackToDefault);
 
         /// <summary>
         /// Gets current value of a setting for a user level.
@@ -215,7 +215,7 @@ namespace Abp.Configuration
         /// </summary>
         /// <param name="tenantId">Tenant to get settings</param>
         /// <returns>List of setting values</returns>
-        Task<IReadOnlyList<ISettingValue>> GetAllSettingValuesForTenantAsync(int tenantId);
+        Task<IReadOnlyList<ISettingValue>> GetAllSettingValuesForTenantAsync(Guid tenantId);
 
         /// <summary>
         /// Gets a list of all setting values specified for a tenant.
@@ -225,7 +225,7 @@ namespace Abp.Configuration
         /// </summary>
         /// <param name="tenantId">Tenant to get settings</param>
         /// <returns>List of setting values</returns>
-        IReadOnlyList<ISettingValue> GetAllSettingValuesForTenant(int tenantId);
+        IReadOnlyList<ISettingValue> GetAllSettingValuesForTenant(Guid tenantId);
 
         /// <summary>
         /// Gets a list of all setting values specified for a user.
@@ -267,7 +267,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">TenantId</param>
         /// <param name="name">Unique name of the setting</param>
         /// <param name="value">Value of the setting</param>
-        Task ChangeSettingForTenantAsync(int tenantId, string name, string value);
+        Task ChangeSettingForTenantAsync(Guid tenantId, string name, string value);
 
         /// <summary>
         /// Changes setting for a Tenant.
@@ -275,7 +275,7 @@ namespace Abp.Configuration
         /// <param name="tenantId">TenantId</param>
         /// <param name="name">Unique name of the setting</param>
         /// <param name="value">Value of the setting</param>
-        void ChangeSettingForTenant(int tenantId, string name, string value);
+        void ChangeSettingForTenant(Guid tenantId, string name, string value);
 
         /// <summary>
         /// Changes setting for a user.

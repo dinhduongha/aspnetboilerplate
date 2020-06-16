@@ -22,7 +22,7 @@ namespace Abp.Notifications
         /// <summary>
         /// Indicates all tenants.
         /// </summary>
-        public static int[] AllTenants => new[] { NotificationInfo.AllTenantIds.To<int>() };
+        public static Guid[] AllTenants => new[] { Guid.Empty };//{ NotificationInfo.AllTenantIds.To<int>() };
 
         /// <summary>
         /// Reference to ABP session.
@@ -62,7 +62,7 @@ namespace Abp.Notifications
             NotificationSeverity severity = NotificationSeverity.Info,
             UserIdentifier[] userIds = null,
             UserIdentifier[] excludedUserIds = null,
-            int?[] tenantIds = null)
+            Guid?[] tenantIds = null)
         {
             if (notificationName.IsNullOrEmpty())
             {
@@ -128,7 +128,7 @@ namespace Abp.Notifications
             NotificationSeverity severity = NotificationSeverity.Info,
             UserIdentifier[] userIds = null,
             UserIdentifier[] excludedUserIds = null,
-            int?[] tenantIds = null)
+            Guid?[] tenantIds = null)
         {
             if (notificationName.IsNullOrEmpty())
             {

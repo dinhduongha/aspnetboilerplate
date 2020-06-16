@@ -1,17 +1,18 @@
 using Abp.Runtime.Caching;
+using System;
 
 namespace Abp.MultiTenancy
 {
     public static class TenantCacheManagerExtensions
     {
-        public static ITypedCache<int, TenantCacheItem> GetTenantCache(this ICacheManager cacheManager)
+        public static ITypedCache<Guid, TenantCacheItem> GetTenantCache(this ICacheManager cacheManager)
         {
-            return cacheManager.GetCache<int, TenantCacheItem>(TenantCacheItem.CacheName);
+            return cacheManager.GetCache<Guid, TenantCacheItem>(TenantCacheItem.CacheName);
         }
 
-        public static ITypedCache<string, int?> GetTenantByNameCache(this ICacheManager cacheManager)
+        public static ITypedCache<string, Guid?> GetTenantByNameCache(this ICacheManager cacheManager)
         {
-            return cacheManager.GetCache<string, int?>(TenantCacheItem.ByNameCacheName);
+            return cacheManager.GetCache<string, Guid?>(TenantCacheItem.ByNameCacheName);
         }
     }
 }

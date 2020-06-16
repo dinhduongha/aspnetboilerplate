@@ -37,7 +37,7 @@ namespace Abp.Runtime.Session
             }
         }
 
-        public override int? TenantId
+        public override Guid? TenantId
         {
             get
             {
@@ -54,7 +54,8 @@ namespace Abp.Runtime.Session
                 var tenantIdClaim = PrincipalAccessor.Principal?.Claims.FirstOrDefault(c => c.Type == AbpClaimTypes.TenantId);
                 if (!string.IsNullOrEmpty(tenantIdClaim?.Value))
                 {
-                    return Convert.ToInt32(tenantIdClaim.Value);
+                    return Guid.Parse(tenantIdClaim.Value);
+                    //return Convert.ToInt32(tenantIdClaim.Value);
                 }
 
                 if (UserId == null)
@@ -80,7 +81,7 @@ namespace Abp.Runtime.Session
             }
         }
 
-        public override int? ImpersonatorTenantId
+        public override Guid? ImpersonatorTenantId
         {
             get
             {
@@ -95,7 +96,8 @@ namespace Abp.Runtime.Session
                     return null;
                 }
 
-                return Convert.ToInt32(impersonatorTenantIdClaim.Value);
+                return Guid.Parse(impersonatorTenantIdClaim.Value);
+                //return Convert.ToInt32(impersonatorTenantIdClaim.Value);
             }
         }
 

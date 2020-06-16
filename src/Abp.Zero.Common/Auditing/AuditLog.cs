@@ -62,7 +62,7 @@ namespace Abp.Auditing
         /// <summary>
         /// TenantId.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual Guid? TenantId { get; set; }
 
         /// <summary>
         /// UserId.
@@ -127,7 +127,7 @@ namespace Abp.Auditing
         /// <summary>
         /// <see cref="AuditInfo.ImpersonatorTenantId"/>.
         /// </summary>
-        public virtual int? ImpersonatorTenantId { get; set; }
+        public virtual Guid? ImpersonatorTenantId { get; set; }
 
         /// <summary>
         /// <see cref="AuditInfo.CustomData"/>.
