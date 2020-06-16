@@ -81,7 +81,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             return CreateTenantAndSubscribeToWebhookAsync(new List<string> { webhookDefinitionName }, tenantFeatures);
         }
 
-        protected async Task<int> CreateAndGetTenantIdWithFeaturesAsync(string featureKey, string featureValue)
+        protected async Task<Guid> CreateAndGetTenantIdWithFeaturesAsync(string featureKey, string featureValue)
         {
             return await CreateAndGetTenantIdWithFeaturesAsync(
                 new Dictionary<string, string>()
@@ -93,12 +93,12 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
         /// Creates tenant with given features. Returns created tenant's id
         /// </summary>
         /// <param name="tenantFeatures"></param>
-        protected async Task<int> CreateAndGetTenantIdWithFeaturesAsync(Dictionary<string, string> tenantFeatures = null)
+        protected async Task<Guid> CreateAndGetTenantIdWithFeaturesAsync(Dictionary<string, string> tenantFeatures = null)
         {
             string name = Guid.NewGuid().ToString().Replace("-", "");
 
             var tenant = new Tenant(name, name);
-            var tenantId = await Resolve<IRepository<Tenant>>().InsertAndGetIdAsync(tenant);
+            var tenantId = await Resolve<IRepository<Tenant, Guid>>().InsertAndGetIdAsync(tenant);
 
             if (tenantFeatures != null)
             {
@@ -111,7 +111,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             return tenantId;
         }
 
-        protected async Task AddOrReplaceFeatureToTenantAsync(int tenantId, string featureName, string featureValue)
+        protected async Task AddOrReplaceFeatureToTenantAsync(Guid tenantId, string featureName, string featureValue)
         {
             await WithUnitOfWorkAsync(async () =>
             {

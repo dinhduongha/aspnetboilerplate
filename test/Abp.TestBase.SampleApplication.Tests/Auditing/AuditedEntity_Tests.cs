@@ -12,20 +12,21 @@ namespace Abp.TestBase.SampleApplication.Tests.Auditing
 {
     public class AuditedEntity_Tests: SampleApplicationTestBase
     {
-        private readonly IRepository<Message> _messageRepository;
+        private readonly IRepository<Message, Guid> _messageRepository;
         private readonly IRepository<Company> _companyRepository;
 
         public AuditedEntity_Tests()
         {
-            _messageRepository = Resolve<IRepository<Message>>();
+            _messageRepository = Resolve<IRepository<Message, Guid>>();
             _companyRepository = Resolve<IRepository<Company>>();
         }
 
         [Fact]
         public void Should_Write_Audit_Properties()
         {
+            Resolve<IMultiTenancyConfig>().IsEnabled = true;
             //Arrange
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             AbpSession.UserId = new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0");
 
             //Act: Create a new entity
@@ -94,7 +95,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Auditing
             company.LastModifierUserId.ShouldBe(new Guid("0171acad-e4f2-26c1-0296-b839e53b35e0"));
 
             //Login as a tenant
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             AbpSession.UserId = new Guid("0171acae-503c-3391-00ac-658ee60229c0");
 
             //Get the same company to modify

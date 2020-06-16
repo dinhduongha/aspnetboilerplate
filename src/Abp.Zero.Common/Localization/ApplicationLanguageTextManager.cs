@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Abp.Localization
         /// Initializes a new instance of the <see cref="ApplicationLanguageTextManager"/> class.
         /// </summary>
         public ApplicationLanguageTextManager(
-            ILocalizationManager localizationManager, 
+            ILocalizationManager localizationManager,
             IRepository<ApplicationLanguageText, long> applicationTextRepository,
             IUnitOfWorkManager unitOfWorkManager)
         {
@@ -51,6 +52,20 @@ namespace Abp.Localization
             return source
                 .As<IMultiTenantLocalizationSource>()
                 .GetStringOrNull(tenantId, key, culture, tryDefaults);
+        }
+
+        public List<string> GetStringsOrNull(Guid? tenantId, string sourceName, CultureInfo culture, List<string> keys, bool tryDefaults = true)
+        {
+            var source = _localizationManager.GetSource(sourceName);
+
+            if (!(source is IMultiTenantLocalizationSource))
+            {
+                return source.GetStringsOrNull(keys, culture, tryDefaults);
+            }
+
+            return source
+                .As<IMultiTenantLocalizationSource>()
+                .GetStringsOrNull(tenantId, keys, culture, tryDefaults);
         }
 
         /// <summary>

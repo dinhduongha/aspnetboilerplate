@@ -23,7 +23,7 @@ namespace Abp.IdentityServer4
         public async Task Should_Inject_AbpUserClaimsPrincipalFactory()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var repository = Resolve<IRepository<User, Guid>>();
 

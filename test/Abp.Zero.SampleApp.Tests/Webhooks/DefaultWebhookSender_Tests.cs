@@ -18,8 +18,8 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             : base(Substitute.For<IWebhooksConfiguration>())
         {
             WebhookSendAttemptStore = Substitute.For<IWebhookSendAttemptStore>();
-            WebhookSendAttemptStore.GetSendAttemptCountAsync(Arg.Any<int?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(Task.FromResult(0));
-            WebhookSendAttemptStore.GetSendAttemptCount(Arg.Any<int?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(0);
+            WebhookSendAttemptStore.GetSendAttemptCountAsync(Arg.Any<Guid?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(Task.FromResult(0));
+            WebhookSendAttemptStore.GetSendAttemptCount(Arg.Any<Guid?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(0);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var payload = await GetWebhookPayloadAsync(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = data
             });
@@ -46,7 +46,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var payload = GetWebhookPayload(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = data
             });
@@ -62,7 +62,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
         {
             var payload = await GetWebhookPayloadAsync(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = new { Test = "test" }.ToJsonString()
             });
@@ -100,7 +100,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var serializedBody = GetSerializedBody(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = data,
                 SendExactSameData = false
@@ -114,7 +114,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             {
                 payload = serializedBody.FromJsonString<WebhookPayloadTest>();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("Payload must be WebhookPayload json");
             }
@@ -131,7 +131,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var serializedBody = GetSerializedBody(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = data,
                 SendExactSameData = true
@@ -148,7 +148,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var serializedBody = await GetSerializedBodyAsync(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = data,
                 SendExactSameData = false
@@ -162,7 +162,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             {
                 payload = serializedBody.FromJsonString<WebhookPayloadTest>();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Exception("Payload must be WebhookPayload json");
             }
@@ -179,7 +179,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var serializedBody = await GetSerializedBodyAsync(new WebhookSenderArgs()
             {
-                TenantId = 1,
+                TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                 WebhookName = AppWebhookDefinitionNames.Theme.DefaultThemeChanged,
                 Data = data,
                 SendExactSameData = true

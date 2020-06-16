@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.ZeroCore.SampleApp.Core;
 using Shouldly;
 using Xunit;
@@ -12,8 +13,8 @@ namespace Abp.Zero.Users
         {
             var userManager = LocalIocManager.Resolve<UserManager>();
             userManager.Options.Tokens.ProviderMap.Count.ShouldBeGreaterThan(0);
-
-            await userManager.InitializeOptionsAsync(1);
+            
+            await userManager.InitializeOptionsAsync(new Guid("00000000-0000-0000-0000-000000000001"));
             userManager.Options.Tokens.ProviderMap.Count.ShouldBeGreaterThan(0);
         }
     }

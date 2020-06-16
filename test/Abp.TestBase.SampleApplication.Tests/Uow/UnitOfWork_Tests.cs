@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Abp.Configuration.Startup;
 using Abp.Domain.Repositories;
 using Abp.Domain.Services;
 using Abp.Domain.Uow;
@@ -12,13 +13,13 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
 {
     public class UnitOfWork_Tests : SampleApplicationTestBase
     {
-        private IRepository<Message> _messageRepository;
+        private IRepository<Message, Guid> _messageRepository;
         private IUnitOfWorkManager _unitOfWorkManager;
         private IMessageTestDomainService _messageTestDomainService;
 
         public UnitOfWork_Tests()
         {
-            _messageRepository = Resolve<IRepository<Message>>();
+            _messageRepository = Resolve<IRepository<Message, Guid>>();
             _unitOfWorkManager = Resolve<IUnitOfWorkManager>();
             _messageTestDomainService = Resolve<IMessageTestDomainService>();
         }
@@ -26,7 +27,8 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
         [Fact]
         public async Task Should_Uow_Not_Set_Tenant_Null_If_Completed_Outside_SetTenantId_Using()
         {
-            AbpSession.TenantId = 1;
+            Resolve<IMultiTenancyConfig>().IsEnabled = true;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var messageEntity = new Message() { Text = "Test Message" };
 
@@ -43,14 +45,15 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
             {
                 var entity = context.Messages.Single(x => x.Id == messageEntity.Id);
                 entity.Text.ShouldBe(messageEntity.Text);
-                entity.TenantId.ShouldBe(1);
+                entity.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000001"));
             });
         }
 
         [Fact]
         public async Task Should_Uow_Set_Tenant_Null_If_Completed_Inside_SetTenantId_Using()
         {
-            AbpSession.TenantId = 1;
+            Resolve<IMultiTenancyConfig>().IsEnabled = true;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var messageEntity = new Message() { Text = "Test Message" };
 
@@ -74,7 +77,8 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
         [Fact]
         public async Task Should_Uow_Not_Set_Tenant_Null_With_OUW_Attribute()
         {
-            AbpSession.TenantId = 1;
+            Resolve<IMultiTenancyConfig>().IsEnabled = true;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             string newText = Guid.NewGuid().ToString("N");
             await _messageTestDomainService.InsetNewMessageWithUsingUOWSetTenantIdNull(newText);
@@ -82,14 +86,15 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
             UsingDbContext(context =>
             {
                 var entity = context.Messages.Single(x => x.Text == newText);
-                entity.TenantId.ShouldBe(1);
+                entity.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000001"));
             });
         }
 
         [Fact]
         public async Task Should_Uow_Set_Tenant_Null_With_OUW_Attribute_And_SaveChangesAsync()
         {
-            AbpSession.TenantId = 1;
+            Resolve<IMultiTenancyConfig>().IsEnabled = true;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             string newText = Guid.NewGuid().ToString("N");
             await _messageTestDomainService.InsetNewMessageWithUsingUOWSetTenantIdNullAndSaveChangesAsync(newText);
@@ -110,9 +115,9 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
 
     public class MessageTestDomainService : DomainService, IMessageTestDomainService
     {
-        private readonly IRepository<Message> _messageRepository;
+        private readonly IRepository<Message, Guid> _messageRepository;
 
-        public MessageTestDomainService(IRepository<Message> messageRepository)
+        public MessageTestDomainService(IRepository<Message, Guid> messageRepository)
         {
             _messageRepository = messageRepository;
         }

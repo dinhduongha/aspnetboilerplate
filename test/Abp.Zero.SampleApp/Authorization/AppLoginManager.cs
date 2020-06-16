@@ -18,7 +18,7 @@ namespace Abp.Zero.SampleApp.Authorization
         public AppLogInManager(
             UserManager userManager, 
             IMultiTenancyConfig multiTenancyConfig, 
-            IRepository<Tenant> tenantRepository, 
+            IRepository<Tenant,Guid> tenantRepository, 
             IUnitOfWorkManager unitOfWorkManager, 
             ISettingManager settingManager, 
             IRepository<UserLoginAttempt, Guid> userLoginAttemptRepository, 

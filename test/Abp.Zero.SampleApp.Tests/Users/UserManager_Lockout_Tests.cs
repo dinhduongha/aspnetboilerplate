@@ -148,7 +148,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
 
             LocalIocManager.Using<ISettingManager>(settingManager =>
             {
-                if (AbpSession.TenantId is int tenantId)
+                if (AbpSession.TenantId is Guid tenantId)
                 {
                     settingManager.ChangeSettingForTenant(tenantId, AbpZeroSettingNames.UserManagement.UserLockOut.IsEnabled, isLockoutEnabledByDefault.ToString());
                 }

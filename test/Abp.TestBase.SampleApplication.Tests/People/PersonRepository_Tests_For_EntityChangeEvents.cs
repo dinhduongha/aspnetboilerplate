@@ -243,11 +243,11 @@ namespace Abp.TestBase.SampleApplication.Tests.People
 
         public class PersonHandler : IEventHandler<EntityCreatingEventData<Person>>, IEventHandler<EntityCreatedEventData<Person>>, ITransientDependency
         {
-            public const int FakeTenantId = 65910381;
+            public static Guid FakeTenantId = new Guid("00000000-0000-0000-0000-000065910381") ;
 
-            private readonly IRepository<Message> _messageRepository;
+            private readonly IRepository<Message, Guid> _messageRepository;
 
-            public PersonHandler(IRepository<Message> messageRepository)
+            public PersonHandler(IRepository<Message, Guid> messageRepository)
             {
                 _messageRepository = messageRepository;
             }

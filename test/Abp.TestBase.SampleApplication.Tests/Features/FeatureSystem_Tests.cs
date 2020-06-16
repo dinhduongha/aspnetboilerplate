@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Abp.Application.Features;
 using Abp.Authorization;
@@ -41,10 +42,10 @@ namespace Abp.TestBase.SampleApplication.Tests.Features
         public virtual void Should_Get_Feature_Values()
         {
             var featureValueStore = Substitute.For<IFeatureValueStore>();
-            featureValueStore.GetValueOrNullAsync(1, _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("true"));
-            featureValueStore.GetValueOrNullAsync(1, _featureManager.Get(SampleFeatureProvider.Names.MaxContactCount)).Returns(Task.FromResult("20"));
-            featureValueStore.GetValueOrNull(1, _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns("true");
-            featureValueStore.GetValueOrNull(1, _featureManager.Get(SampleFeatureProvider.Names.MaxContactCount)).Returns("20");
+            featureValueStore.GetValueOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("true"));
+            featureValueStore.GetValueOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.MaxContactCount)).Returns(Task.FromResult("20"));
+            featureValueStore.GetValueOrNull(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns("true");
+            featureValueStore.GetValueOrNull(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.MaxContactCount)).Returns("20");
 
             LocalIocManager.IocContainer.Register(
                 Component.For<IFeatureValueStore>().Instance(featureValueStore).LifestyleSingleton()
@@ -60,8 +61,8 @@ namespace Abp.TestBase.SampleApplication.Tests.Features
         public void Should_Call_Method_With_Feature_If_Enabled()
         {
             var featureValueStore = Substitute.For<IFeatureValueStore>();
-            featureValueStore.GetValueOrNullAsync(1, _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("true"));
-            featureValueStore.GetValueOrNull(1, _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns("true");
+            featureValueStore.GetValueOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("true"));
+            featureValueStore.GetValueOrNull(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns("true");
 
             LocalIocManager.IocContainer.Register(
                 Component.For<IFeatureValueStore>().Instance(featureValueStore).LifestyleSingleton()
@@ -75,8 +76,8 @@ namespace Abp.TestBase.SampleApplication.Tests.Features
         public void Should_Not_Call_Method_With_Feature_If_Not_Enabled()
         {
             var featureValueStore = Substitute.For<IFeatureValueStore>();
-            featureValueStore.GetValueOrNullAsync(1, _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("false"));
-            featureValueStore.GetValueOrNullAsync(1, _featureManager.Get(SampleFeatureProvider.Names.MaxContactCount)).Returns(Task.FromResult("20"));
+            featureValueStore.GetValueOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("false"));
+            featureValueStore.GetValueOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.MaxContactCount)).Returns(Task.FromResult("20"));
 
             LocalIocManager.IocContainer.Register(
                 Component.For<IFeatureValueStore>().Instance(featureValueStore).LifestyleSingleton()
@@ -93,7 +94,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Features
             CultureInfo.CurrentUICulture = new CultureInfo("en");
 
             var featureValueStore = Substitute.For<IFeatureValueStore>();
-            featureValueStore.GetValueOrNullAsync(1, _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("false"));
+            featureValueStore.GetValueOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), _featureManager.Get(SampleFeatureProvider.Names.Contacts)).Returns(Task.FromResult("false"));
 
             var contactListAppService = Resolve<IContactListAppService>();
             var ex = Assert.Throws<AbpAuthorizationException>(() => contactListAppService.Test());

@@ -1,8 +1,9 @@
+using System;
 using Abp.Application.Services;
 
 namespace Abp.TestBase.SampleApplication.Messages
 {
-    public interface IAsyncMessageAppService : IAsyncCrudAppService<MessageDto>
+    public interface IAsyncMessageAppService : IAsyncCrudAppService<MessageDto, Guid>
     {
         
     }

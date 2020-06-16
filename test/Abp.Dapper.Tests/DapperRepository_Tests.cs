@@ -107,22 +107,22 @@ namespace Abp.Dapper.Tests
                     softDeletedProductFromDapperWhenFilterDisabled.ShouldNotBeNull();
                 }
 
-                using (AbpSession.Use(2, new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0")))
+                using (AbpSession.Use(new Guid("00000000-0000-0000-0000-000000000002"), new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0")))
                 {
                     int productWithTenant2Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant2"));
 
                     var productWithTenant2 = _productRepository.Get(productWithTenant2Id);
 
-                    productWithTenant2.TenantId.ShouldBe(1); //Not sure about that?,Because we changed TenantId to 2 in this scope !!! Abp.TenantId = 2 now NOT 1 !!!
+                    productWithTenant2.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000001")); //Not sure about that?,Because we changed TenantId to 2 in this scope !!! Abp.TenantId = 2 now NOT 1 !!!
                 }
 
-                using (_unitOfWorkManager.Current.SetTenantId(3))
+                using (_unitOfWorkManager.Current.SetTenantId(new Guid("00000000-0000-0000-0000-000000000003")))
                 {
                     int productWithTenant3Id = _productDapperRepository.InsertAndGetId(new Product("ProductWithTenant3"));
 
                     Product productWithTenant3 = _productRepository.Get(productWithTenant3Id);
 
-                    productWithTenant3.TenantId.ShouldBe(3);
+                    productWithTenant3.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000003"));
                 }
 
                 Product productWithTenantId3FromDapper = _productDapperRepository.FirstOrDefault(x => x.Name == "ProductWithTenant3");
@@ -131,7 +131,7 @@ namespace Abp.Dapper.Tests
                 Product p = await _productDapperRepository.FirstOrDefaultAsync(x => x.Status == Status.Active);
                 p.ShouldNotBeNull();
 
-                using (_unitOfWorkManager.Current.SetTenantId(3))
+                using (_unitOfWorkManager.Current.SetTenantId(new Guid("00000000-0000-0000-0000-000000000003")))
                 {
                     Product productWithTenantId3FromDapperInsideTenantScope = _productDapperRepository.FirstOrDefault(x => x.Name == "ProductWithTenant3");
                     productWithTenantId3FromDapperInsideTenantScope.ShouldNotBeNull();

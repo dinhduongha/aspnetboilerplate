@@ -36,11 +36,11 @@ namespace Abp.Zero
             }
 
             //Seed initial data for default tenant
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             UsingDbContext(context =>
             {
                 NormalizeDbContext(context);
-                new TestDataBuilder(context, 1).Create();
+                new TestDataBuilder(context, new Guid("00000000-0000-0000-0000-000000000001")).Create();
             });
         }
 
@@ -58,7 +58,7 @@ namespace Abp.Zero
                     var post1 = new Post { Blog = blog1, Title = "test-post-1-title", Body = "test-post-1-body" };
                     var post2 = new Post { Blog = blog1, Title = "test-post-2-title", Body = "test-post-2-body" };
                     var post3 = new Post { Blog = blog1, Title = "test-post-3-title", Body = "test-post-3-body-deleted", IsDeleted = true };
-                    var post4 = new Post { Blog = blog1, Title = "test-post-4-title", Body = "test-post-4-body", TenantId = 42 };
+                    var post4 = new Post { Blog = blog1, Title = "test-post-4-title", Body = "test-post-4-body", TenantId = new Guid("00000000-0000-0000-0000-000000000042") };
 
                     context.Posts.AddRange(post1, post2, post3, post4);
 
@@ -144,7 +144,7 @@ namespace Abp.Zero
             });
         }
 
-        protected IDisposable UsingTenantId(int? tenantId)
+        protected IDisposable UsingTenantId(Guid? tenantId)
         {
             var previousTenantId = AbpSession.TenantId;
             AbpSession.TenantId = tenantId;
@@ -171,7 +171,7 @@ namespace Abp.Zero
             return UsingDbContextAsync(AbpSession.TenantId, func);
         }
 
-        protected void UsingDbContext(int? tenantId, Action<SampleAppDbContext> action)
+        protected void UsingDbContext(Guid? tenantId, Action<SampleAppDbContext> action)
         {
             using (UsingTenantId(tenantId))
             {
@@ -183,7 +183,7 @@ namespace Abp.Zero
             }
         }
 
-        protected async Task UsingDbContextAsync(int? tenantId, Func<SampleAppDbContext, Task> action)
+        protected async Task UsingDbContextAsync(Guid? tenantId, Func<SampleAppDbContext, Task> action)
         {
             using (UsingTenantId(tenantId))
             {
@@ -195,7 +195,7 @@ namespace Abp.Zero
             }
         }
 
-        protected T UsingDbContext<T>(int? tenantId, Func<SampleAppDbContext, T> func)
+        protected T UsingDbContext<T>(Guid? tenantId, Func<SampleAppDbContext, T> func)
         {
             T result;
 
@@ -211,7 +211,7 @@ namespace Abp.Zero
             return result;
         }
 
-        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<SampleAppDbContext, Task<T>> func)
+        protected async Task<T> UsingDbContextAsync<T>(Guid? tenantId, Func<SampleAppDbContext, Task<T>> func)
         {
             T result;
 

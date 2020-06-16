@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Abp.BackgroundJobs;
 using Abp.Domain.Uow;
 using Abp.Notifications;
@@ -51,6 +52,32 @@ namespace Abp.Tests.Notifications
             await _backgroundJobManager.Received()
                 .EnqueueAsync<NotificationDistributionJob, NotificationDistributionJobArgs>(
                     Arg.Any<NotificationDistributionJobArgs>()
+                );
+        }
+
+        [Fact]
+        public async Task Should_PublishAsync_To_Host()
+        {
+            // Act
+            await _publisher.PublishAsync("TestNotification", tenantIds: new Guid?[] { null });
+
+            // Assert
+            await _store.Received()
+                .InsertNotificationAsync(
+                    Arg.Is<NotificationInfo>(n => n.TenantIds == "null")
+                );
+        }
+
+        [Fact]
+        public void Should_Publish_To_Host()
+        {
+            // Act
+            _publisher.Publish("TestNotification", tenantIds: new Guid?[] { null });
+
+            // Assert
+            _store.Received()
+                .InsertNotification(
+                    Arg.Is<NotificationInfo>(n => n.TenantIds == "null")
                 );
         }
 

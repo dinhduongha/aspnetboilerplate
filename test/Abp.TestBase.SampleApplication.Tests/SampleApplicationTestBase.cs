@@ -46,7 +46,7 @@ namespace Abp.TestBase.SampleApplication.Tests
                     context.ContactLists.Add(
                         new ContactList
                         {
-                            TenantId = 1,
+                            TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                             Name = "List of Tenant-1",
                             People = new List<Person>
                                      {
@@ -58,7 +58,7 @@ namespace Abp.TestBase.SampleApplication.Tests
                     context.ContactLists.Add(
                         new ContactList
                         {
-                            TenantId = 2,
+                            TenantId = new Guid("00000000-0000-0000-0000-000000000002"),
                             Name = "List of Tenant-2",
                             People = new List<Person>
                                      {
@@ -69,7 +69,7 @@ namespace Abp.TestBase.SampleApplication.Tests
                     context.ContactLists.Add(
                         new ContactList
                         {
-                            TenantId = 3,
+                            TenantId = new Guid("00000000-0000-0000-0000-000000000003"),
                             Name = "List-1 of Tenant-3",
                             People = new List<Person>
                                      {
@@ -80,7 +80,7 @@ namespace Abp.TestBase.SampleApplication.Tests
                     context.ContactLists.Add(
                         new ContactList
                         {
-                            TenantId = 3,
+                            TenantId = new Guid("00000000-0000-0000-0000-000000000003"),
                             Name = "List-2 of Tenant-3",
                             People = new List<Person>()
                         });
@@ -99,14 +99,14 @@ namespace Abp.TestBase.SampleApplication.Tests
                     context.Messages.Add(
                         new Message
                         {
-                            TenantId = 1,
+                            TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                             Text = "tenant-1-message-1"
                         });
 
                     context.Messages.Add(
                         new Message
                         {
-                            TenantId = 1,
+                            TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                             Text = "tenant-1-message-2"
                         });
                 });

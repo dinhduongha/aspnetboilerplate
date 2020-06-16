@@ -6,7 +6,7 @@ using Abp.Domain.Entities.Auditing;
 namespace Abp.TestBase.SampleApplication.Messages
 {
     [Table("Messages")]
-    public class Message : FullAuditedEntity, IMayHaveTenant
+    public class Message : FullAuditedEntity<Guid>, IMayHaveTenant
     {
         public Guid? TenantId { get; set; }
 

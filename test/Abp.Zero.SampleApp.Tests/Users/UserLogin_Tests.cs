@@ -28,7 +28,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
         public async Task Should_Login_With_Correct_Values_Without_MultiTenancy()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = false;
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var loginResult = await _logInManager.LoginAsync("user1", "123qwe");
             loginResult.Result.ShouldBe(AbpLoginResultType.Success);
@@ -71,7 +71,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
         public async Task Should_Login_With_Correct_Values_With_MultiTenancy()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var loginResult = await _logInManager.LoginAsync("user1", "123qwe", Tenant.DefaultTenantName);
             loginResult.Result.ShouldBe(AbpLoginResultType.Success);
@@ -85,7 +85,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
 
             //Set session
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             //Email confirmation is disabled as default

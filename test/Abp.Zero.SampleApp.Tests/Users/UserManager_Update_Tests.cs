@@ -1,3 +1,4 @@
+using System;
 using Abp.Domain.Uow;
 using Abp.Zero.SampleApp.Users;
 using Microsoft.AspNet.Identity;
@@ -16,7 +17,7 @@ namespace Abp.Zero.SampleApp.Tests.Users
             _userManager = Resolve<UserManager>();
             _unitOfWorkManager = Resolve<IUnitOfWorkManager>();
 
-            AbpSession.TenantId = 1; //Default tenant
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001"); //Default tenant
         }
 
         [Fact]

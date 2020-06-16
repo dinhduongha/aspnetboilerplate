@@ -1,13 +1,14 @@
-﻿using Abp.ZeroCore.SampleApp.EntityFramework;
+﻿using System;
+using Abp.ZeroCore.SampleApp.EntityFramework;
 
 namespace Abp.Zero.TestData
 {
     public class TestDataBuilder
     {
         private readonly SampleAppDbContext _context;
-        private readonly int _tenantId;
+        private readonly Guid _tenantId;
 
-        public TestDataBuilder(SampleAppDbContext context, int tenantId)
+        public TestDataBuilder(SampleAppDbContext context, Guid tenantId)
         {
             _context = context;
             _tenantId = tenantId;

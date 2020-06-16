@@ -131,6 +131,7 @@ namespace Abp.Application.Features
         [UnitOfWork]
         public virtual async Task SetEditionFeatureValueAsync(int editionId, string featureName, string value)
         {
+            using (_unitOfWorkManager.Current.EnableFilter(AbpDataFilters.MayHaveTenant))
             using (_unitOfWorkManager.Current.SetTenantId(null))
             {
                 if (await GetEditionValueOrNullAsync(editionId, featureName) == value)
@@ -171,6 +172,7 @@ namespace Abp.Application.Features
         [UnitOfWork]
         public virtual void SetEditionFeatureValue(int editionId, string featureName, string value)
         {
+            using (_unitOfWorkManager.Current.EnableFilter(AbpDataFilters.MayHaveTenant))
             using (_unitOfWorkManager.Current.SetTenantId(null))
             {
                 if (GetEditionValueOrNull(editionId, featureName) == value)
@@ -221,6 +223,7 @@ namespace Abp.Application.Features
 
                 using (var uow = _unitOfWorkManager.Begin())
                 {
+                    using (_unitOfWorkManager.Current.EnableFilter(AbpDataFilters.MayHaveTenant))
                     using (_unitOfWorkManager.Current.SetTenantId(tenantId))
                     {
                         var featureSettings = await _tenantFeatureRepository.GetAllListAsync();
@@ -256,6 +259,7 @@ namespace Abp.Application.Features
 
                 using (var uow = _unitOfWorkManager.Begin())
                 {
+                    using (_unitOfWorkManager.Current.EnableFilter(AbpDataFilters.MayHaveTenant))
                     using (_unitOfWorkManager.Current.SetTenantId(tenantId))
                     {
                         var featureSettings = _tenantFeatureRepository.GetAllList();
@@ -298,6 +302,7 @@ namespace Abp.Application.Features
 
             using (var uow = _unitOfWorkManager.Begin())
             {
+                using (_unitOfWorkManager.Current.EnableFilter(AbpDataFilters.MayHaveTenant))
                 using (_unitOfWorkManager.Current.SetTenantId(null))
                 {
                     var featureSettings = await _editionFeatureRepository.GetAllListAsync(f => f.EditionId == editionId);
@@ -319,6 +324,7 @@ namespace Abp.Application.Features
 
             using (var uow = _unitOfWorkManager.Begin())
             {
+                using (_unitOfWorkManager.Current.EnableFilter(AbpDataFilters.MayHaveTenant))
                 using (_unitOfWorkManager.Current.SetTenantId(null))
                 {
                     var featureSettings = _editionFeatureRepository.GetAllList(f => f.EditionId == editionId);

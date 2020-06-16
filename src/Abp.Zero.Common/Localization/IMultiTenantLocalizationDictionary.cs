@@ -17,6 +17,13 @@ namespace Abp.Localization
         LocalizedString GetOrNull(Guid? tenantId, string name);
 
         /// <summary>
+        /// Gets a <see cref="LocalizedString"/>.
+        /// </summary>
+        /// <param name="tenantId">TenantId or null for host.</param>
+        /// <param name="names">List of localization key names.</param>
+        IReadOnlyList<LocalizedString> GetStringsOrNull(Guid? tenantId, List<string> names);
+
+        /// <summary>
         /// Gets all <see cref="LocalizedString"/>s.
         /// </summary>
         /// <param name="tenantId">TenantId or null for host.</param>

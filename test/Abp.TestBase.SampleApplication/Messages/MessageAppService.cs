@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Abp.Application.Services;
 using Abp.Domain.Repositories;
@@ -6,9 +7,9 @@ using Abp.Linq.Extensions;
 
 namespace Abp.TestBase.SampleApplication.Messages
 {
-    public class MessageAppService : CrudAppService<Message, MessageDto, int, GetMessagesWithFilterInput>
+    public class MessageAppService : CrudAppService<Message, MessageDto, Guid, GetMessagesWithFilterInput>
     {
-        public MessageAppService(IRepository<Message, int> repository)
+        public MessageAppService(IRepository<Message, Guid> repository)
             : base(repository)
         {
 

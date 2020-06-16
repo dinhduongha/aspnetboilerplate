@@ -6,7 +6,7 @@ using System;
 namespace Abp.Zero.NHibernate.EntityMappings
 {
     /// <summary>
-    /// Base class to map classes derived from <see cref="AbpTenant{TTenant,TUser}"/>
+    /// Base class to map classes derived from <see cref="AbpTenant{TUser}"/>
     /// </summary>
     /// <typeparam name="TTenant">Tenant type</typeparam>
     /// <typeparam name="TUser">User type</typeparam>

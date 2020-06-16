@@ -26,7 +26,7 @@ namespace Abp.ZeroCore.SampleApp.EntityFramework.Seed
 
             //Default tenant seed (in host database).
             new DefaultTenantBuilder(context).Create();
-            new TenantRoleAndUserBuilder(context, 1).Create();
+            new TenantRoleAndUserBuilder(context, new Guid("00000000-0000-0000-0000-000000000001")).Create();
         }
 
         private static void WithDbContext<TDbContext>(IIocResolver iocResolver, Action<TDbContext> contextAction)

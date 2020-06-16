@@ -13,11 +13,11 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
 {
     public class Messages_MultiTenancy_Tests : SampleApplicationTestBase
     {
-        private readonly IRepository<Message> _messageRepository;
+        private readonly IRepository<Message, Guid> _messageRepository;
 
         public Messages_MultiTenancy_Tests()
         {
-            _messageRepository = Resolve<IRepository<Message>>();
+            _messageRepository = Resolve<IRepository<Message, Guid>>();
         }
 
         protected override void CreateInitialData()
@@ -44,9 +44,9 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                 //Should start UOW with TenantId in the session
                 unitOfWorkManager.Current.GetTenantId().ShouldBeNull();
 
-                using (unitOfWorkManager.Current.SetTenantId(1))
+                using (unitOfWorkManager.Current.SetTenantId(new Guid("00000000-0000-0000-0000-000000000001")))
                 {
-                    unitOfWorkManager.Current.GetTenantId().ShouldBe(1);
+                    unitOfWorkManager.Current.GetTenantId().ShouldBe(new Guid("00000000-0000-0000-0000-000000000001"));
 
                     tenant1Message1 = _messageRepository.FirstOrDefault(m => m.Text == "tenant-1-message-1");
                     tenant1Message1.ShouldNotBeNull(); //Can get tenant's data from host since we used SetTenantId()
@@ -58,7 +58,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                     var tenant1Message2 = _messageRepository.Single(m => m.Text == "tenant-1-message-2");
                     _messageRepository.Delete(tenant1Message2);
 
-                    tenant1MessageNew = _messageRepository.Insert(new Message(1, "tenant-1-message-new"));
+                    tenant1MessageNew = _messageRepository.Insert(new Message(new Guid("00000000-0000-0000-0000-000000000001"), "tenant-1-message-new"));
                 }
 
                 unitOfWork.Complete();
@@ -87,7 +87,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
         [Fact]
         public void EntityAuditProperty_Tests_Same_Tenant_User()
         {
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             AbpSession.UserId = new Guid("0171acaf-c9a8-0cc1-0549-a422266d2c00");
 
             Message tenant1MessageNew;
@@ -100,7 +100,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
             using (var unitOfWork = unitOfWorkManager.Begin())
             {
                 //Should start UOW with TenantId in the session
-                unitOfWorkManager.Current.GetTenantId().ShouldBe(1);
+                unitOfWorkManager.Current.GetTenantId().ShouldBe(new Guid("00000000-0000-0000-0000-000000000001"));
 
                 tenant1Message1 = _messageRepository.FirstOrDefault(m => m.Text == "tenant-1-message-1");
                 tenant1Message1.ShouldNotBeNull();
@@ -112,7 +112,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                 var tenant1Message2 = _messageRepository.Single(m => m.Text == "tenant-1-message-2");
                 _messageRepository.Delete(tenant1Message2);
 
-                tenant1MessageNew = _messageRepository.Insert(new Message(1, "tenant-1-message-new"));
+                tenant1MessageNew = _messageRepository.Insert(new Message(new Guid("00000000-0000-0000-0000-000000000001"), "tenant-1-message-new"));
 
                 unitOfWork.Complete();
             }
@@ -143,12 +143,12 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
             AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             //A tenant can reach its own data
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             _messageRepository.Count().ShouldBe(2);
             _messageRepository.GetAllList().Any(m => m.TenantId != AbpSession.TenantId).ShouldBe(false);
 
             //Tenant 999999 has no data
-            AbpSession.TenantId = 999999;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000999999");
             _messageRepository.Count().ShouldBe(0);
 
             //Host can reach its own data (since MayHaveTenant filter is enabled by default)
@@ -162,13 +162,13 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                 unitOfWorkManager.Current.GetTenantId().ShouldBe(null);
 
                 //We can also set tenantId parameter's value without changing AbpSession.TenantId
-                using (unitOfWorkManager.Current.SetTenantId(1))
+                using (unitOfWorkManager.Current.SetTenantId(new Guid("00000000-0000-0000-0000-000000000001")))
                 {
-                    unitOfWorkManager.Current.GetTenantId().ShouldBe(1);
+                    unitOfWorkManager.Current.GetTenantId().ShouldBe(new Guid("00000000-0000-0000-0000-000000000001"));
 
                     //We should only get tenant 1's entities since we set tenantId to 1
                     _messageRepository.Count().ShouldBe(2);
-                    _messageRepository.GetAllList().Any(m => m.TenantId != 1).ShouldBe(false);
+                    _messageRepository.GetAllList().Any(m => m.TenantId != new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(false);
                 }
 
                 unitOfWorkManager.Current.GetTenantId().ShouldBe(null);

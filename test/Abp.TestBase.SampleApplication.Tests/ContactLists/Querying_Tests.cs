@@ -1,3 +1,4 @@
+using System;
 using System.Data.Entity;
 using System.Linq;
 using Abp.Configuration.Startup;
@@ -11,11 +12,11 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
 {
     public class Querying_Tests : SampleApplicationTestBase
     {
-        private readonly IRepository<Message> _messageRepository;
+        private readonly IRepository<Message, Guid> _messageRepository;
 
         public Querying_Tests()
         {
-            _messageRepository = Resolve<IRepository<Message>>();
+            _messageRepository = Resolve<IRepository<Message, Guid>>();
         }
 
         protected override void CreateInitialData()

@@ -21,7 +21,7 @@ namespace Abp.Zero.SampleApp.Tests.Repository
         [Fact]
         public async Task Should_Permanently_Delete_SoftDelete_Entity_With_HarDelete_Method()
         {
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var uowManager = Resolve<IUnitOfWorkManager>();
 
@@ -62,7 +62,7 @@ namespace Abp.Zero.SampleApp.Tests.Repository
         [Fact]
         public async Task Should_Permanently_Delete_Multiple_SoftDelete_Entities_With_HarDelete_Method()
         {
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var uowManager = Resolve<IUnitOfWorkManager>();
 

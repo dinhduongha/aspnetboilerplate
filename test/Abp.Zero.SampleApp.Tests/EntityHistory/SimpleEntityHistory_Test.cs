@@ -114,9 +114,9 @@ namespace Abp.Zero.SampleApp.Tests.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(0);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
             });
 
             /* Advertisement does not have Audited attribute. */
@@ -132,10 +132,10 @@ namespace Abp.Zero.SampleApp.Tests.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(1);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(1);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
                 context.EntityChangeSets.Single().CreationTime.ShouldBeGreaterThan(justNow);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(1);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
             });
         }
 
@@ -206,9 +206,9 @@ namespace Abp.Zero.SampleApp.Tests.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(0);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
             });
 
             Resolve<IEntityHistoryConfiguration>().Selectors.Add("Selected", typeof(Student));
@@ -227,10 +227,10 @@ namespace Abp.Zero.SampleApp.Tests.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(1);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(1);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
                 context.EntityChangeSets.Single().CreationTime.ShouldBeGreaterThan(justNow);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(4); //Name,IdCard,Address,Grade
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(4); //Name,IdCard,Address,Grade
             });
         }
 
@@ -322,9 +322,9 @@ namespace Abp.Zero.SampleApp.Tests.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(0);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
             });
 
             var justNow = Clock.Now;
@@ -334,10 +334,10 @@ namespace Abp.Zero.SampleApp.Tests.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(1);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(1);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
                 context.EntityChangeSets.Single().CreationTime.ShouldBeGreaterThan(justNow);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(3);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(3);
             });
         }
 

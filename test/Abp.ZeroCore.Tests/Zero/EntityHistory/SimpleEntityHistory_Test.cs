@@ -104,9 +104,9 @@ namespace Abp.Zero.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(0);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(0);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(0);
             });
 
             /* Advertisement does not have Audited attribute. */
@@ -120,10 +120,10 @@ namespace Abp.Zero.EntityHistory
 
             UsingDbContext((context) =>
             {
-                context.EntityChanges.Count(e => e.TenantId == 1).ShouldBe(1);
-                context.EntityChangeSets.Count(e => e.TenantId == 1).ShouldBe(1);
+                context.EntityChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
+                context.EntityChangeSets.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
                 context.EntityChangeSets.Single().CreationTime.ShouldBeGreaterThan(justNow);
-                context.EntityPropertyChanges.Count(e => e.TenantId == 1).ShouldBe(1);
+                context.EntityPropertyChanges.Count(e => e.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
             });
         }
 
@@ -208,7 +208,7 @@ namespace Abp.Zero.EntityHistory
             _entityHistoryStore.When(x => x.Save(Arg.Any<EntityChangeSet>()))
                 .Do(callback => entityHistoryStore.Save(callback.Arg<EntityChangeSet>()));
 
-            const int tenantId = 1;
+            var tenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             UsingDbContext(tenantId, (context) =>
             {

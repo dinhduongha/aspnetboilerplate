@@ -87,7 +87,7 @@ namespace Abp.Zero.Users
     {
         public MyUserTokenExpirationWorker(AbpTimer timer, IRepository<UserToken, Guid> userTokenRepository,
             IBackgroundJobConfiguration backgroundJobConfiguration, IUnitOfWorkManager unitOfWorkManager,
-            IRepository<Tenant> tenantRepository) : base(timer, userTokenRepository, backgroundJobConfiguration,
+            IRepository<Tenant, Guid> tenantRepository) : base(timer, userTokenRepository, backgroundJobConfiguration,
             unitOfWorkManager, tenantRepository)
         {
         }

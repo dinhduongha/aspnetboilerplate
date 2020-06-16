@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities;
+﻿using System;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.EntityFramework.Repositories;
@@ -12,7 +13,7 @@ namespace Abp.EntityFramework.Tests
 {
     public class DbContextTypeMatcher_Tests : TestBaseWithLocalIocManager
     {
-        private int? _tenantId = 1;
+        private Guid? _tenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
         private readonly DbContextTypeMatcher matcher;
 

@@ -1,4 +1,5 @@
-﻿using Abp.Zero.SampleApp.EntityFramework;
+﻿using System;
+using Abp.Zero.SampleApp.EntityFramework;
 using Abp.Zero.SampleApp.EntityHistory;
 
 namespace Abp.Zero.SampleApp.Tests.TestDatas
@@ -20,10 +21,10 @@ namespace Abp.Zero.SampleApp.Tests.TestDatas
             _context.Blogs.AddRange(new Blog[] { blog1, blog2 });
             _context.SaveChanges();
 
-            var post1 = new Post { TenantId = 1, Blog = blog1, Title = "test-post-1-title", Body = "test-post-1-body" };
-            var post2 = new Post { TenantId = 1, Blog = blog1, Title = "test-post-2-title", Body = "test-post-2-body" };
-            var post3 = new Post { TenantId = 1, Blog = blog1, Title = "test-post-3-title", Body = "test-post-3-body-deleted", IsDeleted = true };
-            var post4 = new Post { TenantId = 42, Blog = blog1, Title = "test-post-4-title", Body = "test-post-4-body" };
+            var post1 = new Post { TenantId = new Guid("00000000-0000-0000-0000-000000000001"), Blog = blog1, Title = "test-post-1-title", Body = "test-post-1-body" };
+            var post2 = new Post { TenantId = new Guid("00000000-0000-0000-0000-000000000001"), Blog = blog1, Title = "test-post-2-title", Body = "test-post-2-body" };
+            var post3 = new Post { TenantId = new Guid("00000000-0000-0000-0000-000000000001"), Blog = blog1, Title = "test-post-3-title", Body = "test-post-3-body-deleted", IsDeleted = true };
+            var post4 = new Post { TenantId = new Guid("00000000-0000-0000-0000-000000000042"), Blog = blog1, Title = "test-post-4-title", Body = "test-post-4-body" };
 
             _context.Posts.AddRange(new Post[] { post1, post2, post3, post4});
 

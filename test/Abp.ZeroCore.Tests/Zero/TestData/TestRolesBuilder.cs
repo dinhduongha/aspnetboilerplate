@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Abp.Authorization.Roles;
 using Abp.ZeroCore.SampleApp.Core;
@@ -9,9 +10,9 @@ namespace Abp.Zero.TestData
     public class TestRolesBuilder
     {
         private readonly SampleAppDbContext _context;
-        private readonly int _tenantId;
+        private readonly Guid _tenantId;
 
-        public TestRolesBuilder(SampleAppDbContext context, int tenantId)
+        public TestRolesBuilder(SampleAppDbContext context, Guid tenantId)
         {
             _context = context;
             _tenantId = tenantId;

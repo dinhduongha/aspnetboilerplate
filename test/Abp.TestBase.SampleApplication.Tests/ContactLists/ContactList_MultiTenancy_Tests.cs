@@ -27,15 +27,15 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
             AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             //A tenant can reach its own data
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             _contactListRepository.GetAllList().Any(cl => cl.TenantId != AbpSession.TenantId).ShouldBe(false);
 
             //A tenant can reach its own data
-            AbpSession.TenantId = 2;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000002");
             _contactListRepository.GetAllList().Any(cl => cl.TenantId != AbpSession.TenantId).ShouldBe(false);
 
             //Tenant 999999 has no data
-            AbpSession.TenantId = 999999;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000999999");
             _contactListRepository.GetAllList().Count.ShouldBe(0);
 
             //Host can reach all tenant data (since MustHaveTenant filter is disabled for host as default)
@@ -43,9 +43,9 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
             _contactListRepository.GetAllList().Count.ShouldBe(4);
 
             //Host can filter tenant data if it wants
-            _contactListRepository.GetAllList().Count(t => t.TenantId == 1).ShouldBe(1);
-            _contactListRepository.GetAllList().Count(t => t.TenantId == 2).ShouldBe(1);
-            _contactListRepository.GetAllList().Count(t => t.TenantId == 999999).ShouldBe(0);
+            _contactListRepository.GetAllList().Count(t => t.TenantId == new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(1);
+            _contactListRepository.GetAllList().Count(t => t.TenantId == new Guid("00000000-0000-0000-0000-000000000002")).ShouldBe(1);
+            _contactListRepository.GetAllList().Count(t => t.TenantId == new Guid("00000000-0000-0000-0000-000000999999")).ShouldBe(0);
 
             //We can also set tenantId parameter's value without changing AbpSession.TenantId
             var unitOfWorkManager = Resolve<IUnitOfWorkManager>();
@@ -60,12 +60,12 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                     _contactListRepository.GetAllList().Count.ShouldBe(0);
 
                     //We're overriding filter parameter's value
-                    unitOfWorkManager.Current.SetTenantId(1);
+                    unitOfWorkManager.Current.SetTenantId(new Guid("00000000-0000-0000-0000-000000000001"));
 
                     //We should only get tenant 1's entities since we set tenantId to 1
                     var contactLists = _contactListRepository.GetAllList();
                     contactLists.Count.ShouldBe(1);
-                    contactLists.Any(cl => cl.TenantId != 1).ShouldBe(false);
+                    contactLists.Any(cl => cl.TenantId != new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(false);
                 }
 
                 unitOfWork.Complete();
@@ -83,11 +83,11 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                 //Host can reach all tenant data (since MustHaveTenant filter is disabled for host as default)
                 _contactListRepository.GetAllList().Count.ShouldBe(4);
 
-                unitOfWorkManager.Current.SetTenantId(1);
+                unitOfWorkManager.Current.SetTenantId(new Guid("00000000-0000-0000-0000-000000000001"));
                 //We should only get tenant 1's entities since we set tenantId to 1 (which automatically enables MustHaveTenant filter)
                 var contactLists = _contactListRepository.GetAllList();
                 contactLists.Count.ShouldBe(1);
-                contactLists.Any(cl => cl.TenantId != 1).ShouldBe(false);
+                contactLists.Any(cl => cl.TenantId != new Guid("00000000-0000-0000-0000-000000000001")).ShouldBe(false);
 
                 unitOfWorkManager.Current.SetTenantId(null);
                 //Switched to host, which automatically disables MustHaveTenant filter
@@ -100,7 +100,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
         [Fact]
         public void MustHaveTenant_Should_Work_In_AppService()
         {
-            AbpSession.TenantId = 3;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000003");
             AbpSession.UserId = new Guid("0171ac9f-b101-10d1-0417-1152a6897d40");
 
             var lists = _contactListAppService.GetContactLists();

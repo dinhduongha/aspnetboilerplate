@@ -1,4 +1,5 @@
-﻿using Abp.Configuration.Startup;
+﻿using System;
+using Abp.Configuration.Startup;
 using Abp.Domain.Repositories;
 using Abp.Domain.Uow;
 using Abp.EntityFramework.GraphDiff.Extensions;
@@ -17,7 +18,7 @@ namespace Abp.TestBase.SampleApplication.Tests.EntityFramework.GraphDiff
         public GraphDiffExtensions_Tests()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
-            AbpSession.TenantId = 3;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000003");
 
             _contactListRepository = Resolve<IRepository<ContactList>>();
             _peopleRepository = Resolve<IRepository<Person>>();

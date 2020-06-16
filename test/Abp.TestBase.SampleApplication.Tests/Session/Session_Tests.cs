@@ -15,7 +15,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
     public class Session_Tests : SampleApplicationTestBase
     {
         private readonly IAbpSession _session;
-        private IRepository<Message> _messageRepository;
+        private IRepository<Message, Guid> _messageRepository;
         private IUnitOfWorkManager _unitOfWorkManager;
 
         public Session_Tests()
@@ -23,7 +23,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
             _session = Resolve<IAbpSession>();
 
-            _messageRepository = Resolve<IRepository<Message>>();
+            _messageRepository = Resolve<IRepository<Message, Guid>>();
             _unitOfWorkManager = Resolve<IUnitOfWorkManager>();
         }
 
@@ -34,9 +34,9 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
             _session.TenantId.ShouldBeNull();
 
             //using (_session.Use(42, 571))
-            using (_session.Use(42, new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00")))
+            using (_session.Use(new Guid("00000000-0000-0000-0000-000000000042"), new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00")))
             {
-                _session.TenantId.ShouldBe(42);
+                _session.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042"));
                 _session.UserId.ShouldBe(new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00"));
 
                 using (_session.Use(null, new Guid("0171ac9f-b101-10d1-0417-1152a6897d40")))
@@ -45,7 +45,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
                     _session.UserId.ShouldBe(new Guid("0171ac9f-b101-10d1-0417-1152a6897d40"));
                 }
 
-                _session.TenantId.ShouldBe(42);
+                _session.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042"));
                 _session.UserId.ShouldBe(new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00"));
             }
 
@@ -56,7 +56,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
         [Fact]
         public async Task Should_Uow_Set_Tenant_Null_If_Completed_Outside_Session_Use_Using()
         {
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var messageEntity = new Message() { Text = "Test Message" };
 
@@ -80,7 +80,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
         [Fact]
         public async Task Should_Uow_Set_Tenant_Null_If_Completed_Inside_Session_Use_Using()
         {
-            AbpSession.TenantId = 1;
+            AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var messageEntity = new Message() { Text = "Test Message" };
 

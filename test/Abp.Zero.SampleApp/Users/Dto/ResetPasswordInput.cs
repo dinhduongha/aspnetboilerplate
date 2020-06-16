@@ -4,7 +4,7 @@ namespace Abp.Zero.SampleApp.Users.Dto
 {
     public class ResetPasswordInput
     {
-        public int? TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         public Guid UserId { get; set; }
 

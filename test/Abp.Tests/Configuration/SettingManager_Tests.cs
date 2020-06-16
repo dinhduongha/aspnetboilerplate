@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,6 @@ using Abp.Runtime.Remoting;
 using Abp.Runtime.Session;
 using Abp.TestBase.Runtime.Session;
 using Abp.Tests.MultiTenancy;
-using JetBrains.Annotations;
 using NSubstitute;
 using Shouldly;
 using Xunit;
@@ -30,6 +29,7 @@ namespace Abp.Tests.Configuration
         private const string MyAllLevelsSetting = "MyAllLevelsSetting";
         private const string MyNotInheritedSetting = "MyNotInheritedSetting";
         private const string MyEnumTypeSetting = "MyEnumTypeSetting";
+        private const string MyEncryptedSetting = "MyEncryptedSetting";
 
         private SettingManager CreateSettingManager(bool multiTenancyIsEnabled = true)
         {
@@ -37,11 +37,12 @@ namespace Abp.Tests.Configuration
                 CreateMockSettingDefinitionManager(),
                 new AbpMemoryCacheManager(
                     new CachingConfiguration(Substitute.For<IAbpStartupConfiguration>())
-                    ),
+                ),
                 new MultiTenancyConfig
                 {
                     IsEnabled = multiTenancyIsEnabled
-                }, new TestTenantStore());
+                }, new TestTenantStore(),
+                new SettingEncryptionService(new SettingsConfiguration()));
         }
 
         [Fact]
@@ -72,33 +73,38 @@ namespace Abp.Tests.Configuration
             settingManager.SettingStore = new MemorySettingStore();
             settingManager.AbpSession = session;
 
-            session.TenantId = 1;
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             //Inherited setting
 
-            session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"); // 1
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000001"); // 1
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 1 stored value");
 
-            session.UserId = new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0"); // 2
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000002"); // 2
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 2 stored value");
 
-            session.UserId = new Guid("0171ac9f-b101-10d1-0417-1152a6897d40"); // 3;
-            (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("tenant 1 stored value"); //Because no user value in the store
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000003");
+            (await settingManager.GetSettingValueAsync(MyAllLevelsSetting))
+                .ShouldBe("tenant 1 stored value"); //Because no user value in the store
 
-            session.TenantId = 3;
-            session.UserId = new Guid("0171ac9f-b101-10d1-0417-1152a6897d40"); // 3;
-            (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("application level stored value"); //Because no user and tenant value in the store
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000003");
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000003");
+            (await settingManager.GetSettingValueAsync(MyAllLevelsSetting))
+                .ShouldBe("application level stored value"); //Because no user and tenant value in the store
 
             //Not inherited setting
 
-            session.TenantId = 1;
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001"); ;
             session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"); // 1;
 
-            (await settingManager.GetSettingValueForApplicationAsync(MyNotInheritedSetting)).ShouldBe("application value");
-            (await settingManager.GetSettingValueForTenantAsync(MyNotInheritedSetting, session.TenantId.Value)).ShouldBe("default-value");
+            (await settingManager.GetSettingValueForApplicationAsync(MyNotInheritedSetting)).ShouldBe(
+                "application value");
+            (await settingManager.GetSettingValueForTenantAsync(MyNotInheritedSetting, session.TenantId.Value))
+                .ShouldBe("default-value");
             (await settingManager.GetSettingValueAsync(MyNotInheritedSetting)).ShouldBe("default-value");
 
-            (await settingManager.GetSettingValueAsync<MyEnumSettingType>(MyEnumTypeSetting)).ShouldBe(MyEnumSettingType.Setting1);
+            (await settingManager.GetSettingValueAsync<MyEnumSettingType>(MyEnumTypeSetting)).ShouldBe(MyEnumSettingType
+                .Setting1);
         }
 
         [Fact]
@@ -107,17 +113,18 @@ namespace Abp.Tests.Configuration
             var settingManager = CreateSettingManager();
             settingManager.SettingStore = new MemorySettingStore();
 
-            (await settingManager.GetAllSettingValuesAsync()).Count.ShouldBe(4);
+            (await settingManager.GetAllSettingValuesAsync()).Count.ShouldBe(5);
 
-            (await settingManager.GetAllSettingValuesForApplicationAsync()).Count.ShouldBe(3);
+            (await settingManager.GetAllSettingValuesForApplicationAsync()).Count.ShouldBe(4);
 
-            (await settingManager.GetAllSettingValuesForTenantAsync(1)).Count.ShouldBe(1);
-            (await settingManager.GetAllSettingValuesForTenantAsync(2)).Count.ShouldBe(0);
-            (await settingManager.GetAllSettingValuesForTenantAsync(3)).Count.ShouldBe(0);
+            (await settingManager.GetAllSettingValuesForTenantAsync(new Guid("00000000-0000-0000-0000-000000000001"))).Count.ShouldBe(2);
+            (await settingManager.GetAllSettingValuesForTenantAsync(new Guid("00000000-0000-0000-0000-000000000001"))).Count.ShouldBe(2);
+            (await settingManager.GetAllSettingValuesForTenantAsync(new Guid("00000000-0000-0000-0000-000000000002"))).Count.ShouldBe(0);
+            (await settingManager.GetAllSettingValuesForTenantAsync(new Guid("00000000-0000-0000-0000-000000000003"))).Count.ShouldBe(0);
 
-            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00")))).Count.ShouldBe(1);
-            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0")))).Count.ShouldBe(1);
-            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(1, new Guid("0171ac9f-b101-10d1-0417-1152a6897d40")))).Count.ShouldBe(0);
+            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000001")))).Count.ShouldBe(1);
+            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000002")))).Count.ShouldBe(2);
+            (await settingManager.GetAllSettingValuesForUserAsync(new UserIdentifier(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000003")))).Count.ShouldBe(0);
         }
 
         [Fact]
@@ -133,17 +140,19 @@ namespace Abp.Tests.Configuration
 
             await settingManager.ChangeSettingForApplicationAsync(MyAppLevelSetting, "53");
             await settingManager.ChangeSettingForApplicationAsync(MyAppLevelSetting, "54");
-            await settingManager.ChangeSettingForApplicationAsync(MyAllLevelsSetting, "application level changed value");
+            await settingManager.ChangeSettingForApplicationAsync(MyAllLevelsSetting,
+                "application level changed value");
 
-            (await settingManager.SettingStore.GetSettingOrNullAsync(null, null, MyAppLevelSetting)).Value.ShouldBe("54");
+            (await settingManager.SettingStore.GetSettingOrNullAsync(null, null, MyAppLevelSetting)).Value
+                .ShouldBe("54");
 
             (await settingManager.GetSettingValueAsync<int>(MyAppLevelSetting)).ShouldBe(54);
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("application level changed value");
 
             //Tenant level changes
 
-            session.TenantId = 1;
-            await settingManager.ChangeSettingForTenantAsync(1, MyAllLevelsSetting, "tenant 1 changed value");
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
+            await settingManager.ChangeSettingForTenantAsync(new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting, "tenant 1 changed value");
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("tenant 1 changed value");
 
             //User level changes
@@ -163,31 +172,32 @@ namespace Abp.Tests.Configuration
             settingManager.SettingStore = store;
             settingManager.AbpSession = session;
 
-            session.TenantId = 1;
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
             session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
 
             //We can get user's personal stored value
-            (await store.GetSettingOrNullAsync(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldNotBe(null);
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldNotBe(null);
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 1 stored value");
 
             //This will delete setting for the user since it's same as tenant's setting value
             await settingManager.ChangeSettingForUserAsync(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting, "tenant 1 stored value");
-            (await store.GetSettingOrNullAsync(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
 
             //We can get tenant's setting value
-            (await store.GetSettingOrNullAsync(1, null, MyAllLevelsSetting)).ShouldNotBe(null);
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), null, MyAllLevelsSetting)).ShouldNotBe(null);
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("tenant 1 stored value");
 
             //This will delete setting for tenant since it's same as application's setting value
-            await settingManager.ChangeSettingForTenantAsync(1, MyAllLevelsSetting, "application level stored value");
-            (await store.GetSettingOrNullAsync(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
+            await settingManager.ChangeSettingForTenantAsync(new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting, "application level stored value");
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
 
             //We can get application's value
             (await store.GetSettingOrNullAsync(null, null, MyAllLevelsSetting)).ShouldNotBe(null);
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("application level stored value");
 
             //This will delete setting for application since it's same as the default value of the setting
-            await settingManager.ChangeSettingForApplicationAsync(MyAllLevelsSetting, "application level default value");
+            await settingManager.ChangeSettingForApplicationAsync(MyAllLevelsSetting,
+                "application level default value");
             (await store.GetSettingOrNullAsync(null, null, MyAllLevelsSetting)).ShouldBe(null);
 
             //Now, there is no setting value, default value should return
@@ -244,19 +254,140 @@ namespace Abp.Tests.Configuration
             await settingManager.ChangeSettingForApplicationAsync(MyAppLevelSetting, "B");
 
             // it's ok
-            ( await settingManager.GetSettingValueForApplicationAsync(MyAppLevelSetting) ).ShouldBe("B");
+            (await settingManager.GetSettingValueForApplicationAsync(MyAppLevelSetting)).ShouldBe("B");
 
             //change setting with same value "B" again,
             await settingManager.ChangeSettingForApplicationAsync(MyAppLevelSetting, "B");
 
             //but was "A" ,that's wrong
-            ( await settingManager.GetSettingValueForApplicationAsync(MyAppLevelSetting) ).ShouldBe("B");
+            (await settingManager.GetSettingValueForApplicationAsync(MyAppLevelSetting)).ShouldBe("B");
+        }
+
+        [Fact]
+        public async Task Should_Get_Encrypted_Setting_Value()
+        {
+            var session = CreateTestAbpSession();
+
+            var settingManager = CreateSettingManager();
+            settingManager.SettingStore = new MemorySettingStore();
+            settingManager.AbpSession = session;
+
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
+
+            // User setting
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000002");
+            (await settingManager.GetSettingValueAsync(MyEncryptedSetting)).ShouldBe("user_setting");
+
+            // Tenant setting
+            session.UserId = null;
+            (await settingManager.GetSettingValueAsync(MyEncryptedSetting)).ShouldBe("tenant_setting");
+
+            // App setting
+            session.TenantId = null;
+            (await settingManager.GetSettingValueAsync(MyEncryptedSetting)).ShouldBe("app_setting");
+        }
+
+        [Fact]
+        public async Task Should_Set_Encrypted_Setting_Value()
+        {
+            var session = CreateTestAbpSession();
+
+            var settingManager = CreateSettingManager();
+            settingManager.SettingStore = new MemorySettingStore();
+            settingManager.AbpSession = session;
+
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
+
+            // User setting
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000002");
+            await settingManager.ChangeSettingForUserAsync(session.ToUserIdentifier(), MyEncryptedSetting,
+                "user_123qwe");
+
+            var settingValue = await settingManager.SettingStore.GetSettingOrNullAsync(
+                session.TenantId,
+                session.UserId,
+                MyEncryptedSetting
+            );
+
+            settingValue.Value.ShouldBe("oKPqQDCAHhz+AEnl/r0fsw==");
+
+            // Tenant setting
+            session.UserId = null;
+            await settingManager.ChangeSettingForTenantAsync(session.GetTenantId(), MyEncryptedSetting,
+                "tenant_123qwe");
+
+            settingValue = await settingManager.SettingStore.GetSettingOrNullAsync(
+                session.TenantId,
+                session.UserId,
+                MyEncryptedSetting
+            );
+
+            settingValue.Value.ShouldBe("YX+MTwbuOwXgL7tnKw+oxw==");
+
+            // App setting
+            session.TenantId = null;
+            await settingManager.ChangeSettingForApplicationAsync(MyEncryptedSetting, "app_123qwe");
+
+            settingValue = await settingManager.SettingStore.GetSettingOrNullAsync(
+                session.TenantId,
+                session.UserId,
+                MyEncryptedSetting
+            );
+
+            settingValue.Value.ShouldBe("EOi2wcQt1pi1K4qYycBBbg==");
+        }
+
+        [Fact]
+        public async Task Should_Get_Changed_Encrypted_Setting_Value()
+        {
+            var session = CreateTestAbpSession();
+
+            var settingManager = CreateSettingManager();
+            settingManager.SettingStore = new MemorySettingStore();
+            settingManager.AbpSession = session;
+
+            session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
+
+            // User setting
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000002");
+
+            await settingManager.ChangeSettingForUserAsync(
+                session.ToUserIdentifier(),
+                MyEncryptedSetting,
+                "new_user_setting"
+            );
+
+            var settingValue = await settingManager.GetSettingValueAsync(MyEncryptedSetting);
+            settingValue.ShouldBe("new_user_setting");
+
+            // Tenant Setting
+            session.UserId = null;
+
+            await settingManager.ChangeSettingForTenantAsync(
+                session.GetTenantId(),
+                MyEncryptedSetting,
+                "new_tenant_setting"
+            );
+
+            settingValue = await settingManager.GetSettingValueAsync(MyEncryptedSetting);
+            settingValue.ShouldBe("new_tenant_setting");
+
+            // App Setting
+            session.TenantId = null;
+
+            await settingManager.ChangeSettingForApplicationAsync(
+                MyEncryptedSetting,
+                "new_app_setting"
+            );
+
+            settingValue = await settingManager.GetSettingValueAsync(MyEncryptedSetting);
+            settingValue.ShouldBe("new_app_setting");
         }
 
         private static TestAbpSession CreateTestAbpSession(bool multiTenancyIsEnabled = true)
         {
             return new TestAbpSession(
-                new MultiTenancyConfig { IsEnabled = multiTenancyIsEnabled },
+                new MultiTenancyConfig {IsEnabled = multiTenancyIsEnabled},
                 new DataContextAmbientScopeProvider<SessionOverride>(
                     new AsyncLocalAmbientDataContext()
                 ),
@@ -269,9 +400,22 @@ namespace Abp.Tests.Configuration
             var settings = new Dictionary<string, SettingDefinition>
             {
                 {MyAppLevelSetting, new SettingDefinition(MyAppLevelSetting, "42")},
-                {MyAllLevelsSetting, new SettingDefinition(MyAllLevelsSetting, "application level default value", scopes: SettingScopes.Application | SettingScopes.Tenant | SettingScopes.User)},
-                {MyNotInheritedSetting, new SettingDefinition(MyNotInheritedSetting, "default-value", scopes: SettingScopes.Application | SettingScopes.Tenant, isInherited: false)},
+                {
+                    MyAllLevelsSetting,
+                    new SettingDefinition(MyAllLevelsSetting, "application level default value",
+                        scopes: SettingScopes.Application | SettingScopes.Tenant | SettingScopes.User)
+                },
+                {
+                    MyNotInheritedSetting,
+                    new SettingDefinition(MyNotInheritedSetting, "default-value",
+                        scopes: SettingScopes.Application | SettingScopes.Tenant, isInherited: false)
+                },
                 {MyEnumTypeSetting, new SettingDefinition(MyEnumTypeSetting, MyEnumSettingType.Setting1.ToString())},
+                {
+                    MyEncryptedSetting,
+                    new SettingDefinition(MyEncryptedSetting, "", isEncrypted: true,
+                        scopes: SettingScopes.Application | SettingScopes.Tenant | SettingScopes.User)
+                }
             };
 
             var definitionManager = Substitute.For<ISettingDefinitionManager>();
@@ -293,20 +437,27 @@ namespace Abp.Tests.Configuration
                 {
                     new SettingInfo(null, null, MyAppLevelSetting, "48"),
                     new SettingInfo(null, null, MyAllLevelsSetting, "application level stored value"),
-                    new SettingInfo(1, null, MyAllLevelsSetting, "tenant 1 stored value"),
-                    new SettingInfo(1, new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting, "user 1 stored value"),
-                    new SettingInfo(1, new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0"), MyAllLevelsSetting, "user 2 stored value"),
+                    new SettingInfo(new Guid("00000000-0000-0000-0000-000000000001"), null, MyAllLevelsSetting, "tenant 1 stored value"),
+
+                    new SettingInfo(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting, "user 1 stored value"),
+                    new SettingInfo(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000002"), MyAllLevelsSetting, "user 2 stored value"),
+                    new SettingInfo(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000002"), MyEncryptedSetting,
+                        "Bs90qo8Argqw3l4ZfWsRqQ=="), // encrypted setting: user_setting
+                    new SettingInfo(new Guid("00000000-0000-0000-0000-000000000001"), null, MyEncryptedSetting,
+                        "f1dilIUWtfL7DhGextUFKw=="), // encrypted setting: tenant_setting
+                    new SettingInfo(null, null, MyEncryptedSetting,
+                        "OsxLBbqIX7jiqOXo3M1DdA=="), // encrypted setting: app_setting
                     new SettingInfo(null, null, MyNotInheritedSetting, "application value"),
                 };
             }
 
-
-            public Task<SettingInfo> GetSettingOrNullAsync(int? tenantId, Guid? userId, string name)
+            public Task<SettingInfo> GetSettingOrNullAsync(Guid? tenantId, Guid? userId, string name)
             {
-                return Task.FromResult(_settings.FirstOrDefault(s => s.TenantId == tenantId && s.UserId == userId && s.Name == name));
+                return Task.FromResult(_settings.FirstOrDefault(s =>
+                    s.TenantId == tenantId && s.UserId == userId && s.Name == name));
             }
 
-            public SettingInfo GetSettingOrNull(int? tenantId, Guid? userId, string name)
+            public SettingInfo GetSettingOrNull(Guid? tenantId, Guid? userId, string name)
             {
                 return _settings.FirstOrDefault(s => s.TenantId == tenantId && s.UserId == userId && s.Name == name);
             }
@@ -314,12 +465,14 @@ namespace Abp.Tests.Configuration
 #pragma warning disable 1998
             public async Task DeleteAsync(SettingInfo setting)
             {
-                _settings.RemoveAll(s => s.TenantId == setting.TenantId && s.UserId == setting.UserId && s.Name == setting.Name);
+                _settings.RemoveAll(s =>
+                    s.TenantId == setting.TenantId && s.UserId == setting.UserId && s.Name == setting.Name);
             }
 
             public void Delete(SettingInfo setting)
             {
-                _settings.RemoveAll(s => s.TenantId == setting.TenantId && s.UserId == setting.UserId && s.Name == setting.Name);
+                _settings.RemoveAll(s =>
+                    s.TenantId == setting.TenantId && s.UserId == setting.UserId && s.Name == setting.Name);
             }
 #pragma warning restore 1998
 
@@ -353,14 +506,16 @@ namespace Abp.Tests.Configuration
                 }
             }
 
-            public Task<List<SettingInfo>> GetAllListAsync(int? tenantId, Guid? userId)
+            public Task<List<SettingInfo>> GetAllListAsync(Guid? tenantId, Guid? userId)
             {
-                return Task.FromResult(_settings.Where(s => s.TenantId == tenantId && s.UserId == userId).ToList());
+                return Task.FromResult(_settings.Where(s => s.TenantId == tenantId && s.UserId == userId)
+                    .Select(s => new SettingInfo(s.TenantId, s.UserId, s.Name, s.Value)).ToList());
             }
 
-            public List<SettingInfo> GetAllList(int? tenantId, Guid? userId)
+            public List<SettingInfo> GetAllList(Guid? tenantId, Guid? userId)
             {
-                return _settings.Where(s => s.TenantId == tenantId && s.UserId == userId).ToList();
+                return _settings.Where(s => s.TenantId == tenantId && s.UserId == userId)
+                    .Select(s => new SettingInfo(s.TenantId, s.UserId, s.Name, s.Value)).ToList();
             }
         }
     }

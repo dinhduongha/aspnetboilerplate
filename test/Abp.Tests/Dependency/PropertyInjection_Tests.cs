@@ -18,7 +18,7 @@ namespace Abp.Tests.Dependency
         public void Should_Inject_Session_For_ApplicationService()
         {
             var session = Substitute.For<IAbpSession>();
-            session.TenantId.Returns(1);
+            session.TenantId.Returns(new Guid("00000000-0000-0000-0000-000000000001"));
             session.UserId.Returns(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
 
             LocalIocManager.Register<MyApplicationService>();
@@ -35,7 +35,7 @@ namespace Abp.Tests.Dependency
             public void TestSession()
             {
                 AbpSession.ShouldNotBe(null);
-                AbpSession.TenantId.ShouldBe(1);
+                AbpSession.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000001"));
                 AbpSession.UserId.ShouldBe(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
             }
         }

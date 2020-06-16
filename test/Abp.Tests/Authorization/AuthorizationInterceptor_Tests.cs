@@ -41,7 +41,7 @@ namespace Abp.Tests.Authorization
 
             //Mock session
             var session = Substitute.For<IAbpSession>();
-            session.TenantId.Returns(1);
+            session.TenantId.Returns(new Guid("00000000-0000-0000-0000-000000000001"));
             session.UserId.Returns(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"));
             LocalIocManager.IocContainer.Register(Component.For<IAbpSession>().Instance(session));
 
@@ -149,7 +149,7 @@ namespace Abp.Tests.Authorization
 
         private void EmptySession()
         {
-            LocalIocManager.Resolve<IAbpSession>().TenantId.Returns((int?) null);
+            LocalIocManager.Resolve<IAbpSession>().TenantId.Returns((Guid?) null);
             LocalIocManager.Resolve<IAbpSession>().UserId.Returns((Guid?) null);
         }
 
