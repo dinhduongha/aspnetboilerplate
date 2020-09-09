@@ -5,14 +5,14 @@ using System;
 
 namespace Abp.Domain.Entities.Caching
 {
-    public class MustHaveTenantEntityCache<TEntity, TCacheItem> : MustHaveTenantEntityCache<TEntity, TCacheItem, Guid>,
+    public class MustHaveTenantEntityCache<TEntity, TCacheItem> : MustHaveTenantEntityCache<TEntity, TCacheItem, int>,
         IMultiTenancyEntityCache<TCacheItem>
-        where TEntity : class, IEntity<Guid>, IMustHaveTenant
+        where TEntity : class, IEntity<int>, IMustHaveTenant
     {
         public MustHaveTenantEntityCache(
             ICacheManager cacheManager,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<TEntity, Guid> repository,
+            IRepository<TEntity, int> repository,
             string cacheName = null)
             : base(
                 cacheManager,

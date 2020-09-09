@@ -55,7 +55,7 @@ namespace Abp.AspNetCore.SignalR.Hubs
             return userId.Value;
         }
 
-        public static long? GetImpersonatorUserId(this HubCallerContext context)
+        public static Guid? GetImpersonatorUserId(this HubCallerContext context)
         {
             if (context?.User == null)
             {
@@ -68,10 +68,16 @@ namespace Abp.AspNetCore.SignalR.Hubs
                 return null;
             }
 
-            return Convert.ToInt64(impersonatorUserIdClaim.Value);
+            //return Convert.ToInt64(impersonatorUserIdClaim.Value);
+            if (!Guid.TryParse(impersonatorUserIdClaim.Value, out var impersonatorUserId))
+            {
+                return null;
+            }
+
+            return impersonatorUserId;
         }
 
-        public static long? GetImpersonatorTenantId(this HubCallerContext context)
+        public static Guid? GetImpersonatorTenantId(this HubCallerContext context)
         {
             if (context?.User == null)
             {
@@ -84,7 +90,13 @@ namespace Abp.AspNetCore.SignalR.Hubs
                 return null;
             }
 
-            return Convert.ToInt32(impersonatorTenantIdClaim.Value);
+            //return Convert.ToInt32(impersonatorTenantIdClaim.Value);
+            if (!Guid.TryParse(impersonatorTenantIdClaim.Value, out var impersonatorTenantId))
+            {
+                return null;
+            }
+
+            return impersonatorTenantId;
         }
 
         public static UserIdentifier ToUserIdentifier(this HubCallerContext context)

@@ -13,13 +13,13 @@ namespace Abp.Zero.Users
     public class UserManager_Tokens_Tests : AbpZeroTestBase
     {
         private readonly AbpUserManager<Role, User> _abpUserManager;
-        private readonly IRepository<UserToken, Guid> _userTokenRepository;
+        private readonly IRepository<UserToken, long> _userTokenRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public UserManager_Tokens_Tests()
         {
             _abpUserManager = Resolve<AbpUserManager<Role, User>>();
-            _userTokenRepository = Resolve<IRepository<UserToken, Guid>>();
+            _userTokenRepository = Resolve<IRepository<UserToken, long>>();
             _unitOfWorkManager = Resolve<IUnitOfWorkManager>();
         }
 

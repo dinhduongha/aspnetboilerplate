@@ -12,7 +12,7 @@ namespace Abp.Authorization.Users
     /// Used to save a login attempt of a user.
     /// </summary>
     [Table("AbpUserLoginAttempts")]
-    public class UserLoginAttempt : Entity<Guid>, IHasCreationTime, IMayHaveTenant
+    public class UserLoginAttempt : Entity<long>, IHasCreationTime, IMayHaveTenant
     {
         /// <summary>
         /// Max length of the <see cref="TenancyName"/> property.
@@ -91,7 +91,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public UserLoginAttempt()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             CreationTime = Clock.Now;
         }
     }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Abp.EntityHistory
 {
     [Table("AbpEntityPropertyChanges")]
-    public class EntityPropertyChange : Entity<Guid>, IMayHaveTenant
+    public class EntityPropertyChange : Entity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of <see cref="PropertyName"/> property.
@@ -29,7 +29,7 @@ namespace Abp.EntityHistory
         /// <summary>
         /// EntityChangeId.
         /// </summary>
-        public virtual Guid EntityChangeId { get; set; }
+        public virtual long EntityChangeId { get; set; }
 
         /// <summary>
         /// NewValue.
@@ -62,7 +62,7 @@ namespace Abp.EntityHistory
         public virtual Guid? TenantId { get; set; }
         public EntityPropertyChange()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
     }
 }

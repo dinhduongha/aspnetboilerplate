@@ -9,7 +9,7 @@ namespace Abp.Organizations
     /// Represents membership of a User to an OU.
     /// </summary>
     [Table("AbpOrganizationUnitRoles")]
-    public class OrganizationUnitRole : CreationAuditedEntity<Guid>, IMayHaveTenant, ISoftDelete
+    public class OrganizationUnitRole : CreationAuditedEntity<long>, IMayHaveTenant, ISoftDelete
     {
         /// <summary>
         /// TenantId of this entity.
@@ -19,12 +19,12 @@ namespace Abp.Organizations
         /// <summary>
         /// Id of the Role.
         /// </summary>
-        public virtual Guid RoleId { get; set; }
+        public virtual int RoleId { get; set; }
 
         /// <summary>
         /// Id of the <see cref="OrganizationUnit"/>.
         /// </summary>
-        public virtual Guid OrganizationUnitId { get; set; }
+        public virtual long OrganizationUnitId { get; set; }
 
         /// <summary>
         /// Specifies if the organization is soft deleted or not.
@@ -36,7 +36,7 @@ namespace Abp.Organizations
         /// </summary>
         public OrganizationUnitRole()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Abp.Organizations
         /// <param name="tenantId">TenantId</param>
         /// <param name="roleId">Id of the User.</param>
         /// <param name="organizationUnitId">Id of the <see cref="OrganizationUnit"/>.</param>
-        public OrganizationUnitRole(Guid? tenantId, Guid roleId, Guid organizationUnitId)
+        public OrganizationUnitRole(Guid? tenantId, int roleId, long organizationUnitId)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             RoleId = roleId;
             OrganizationUnitId = organizationUnitId;

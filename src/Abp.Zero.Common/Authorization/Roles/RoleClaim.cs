@@ -8,7 +8,7 @@ using Abp.Domain.Entities.Auditing;
 namespace Abp.Authorization.Roles
 {
     [Table("AbpRoleClaims")]
-    public class RoleClaim : CreationAuditedEntity<Guid>, IMayHaveTenant
+    public class RoleClaim : CreationAuditedEntity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="ClaimType"/> property.
@@ -17,7 +17,7 @@ namespace Abp.Authorization.Roles
 
         public virtual Guid? TenantId { get; set; }
 
-        public virtual Guid RoleId { get; set; }
+        public virtual int RoleId { get; set; }
 
         [StringLength(MaxClaimTypeLength)]
         public virtual string ClaimType { get; set; }
@@ -26,12 +26,12 @@ namespace Abp.Authorization.Roles
 
         public RoleClaim()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public RoleClaim(AbpRoleBase role, Claim claim)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = role.TenantId;
             RoleId = role.Id;
             ClaimType = claim.Type;

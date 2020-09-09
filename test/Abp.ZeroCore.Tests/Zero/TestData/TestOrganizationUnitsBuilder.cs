@@ -41,7 +41,7 @@ namespace Abp.Zero.TestData
             var ou21 = CreateOU("OU21", OrganizationUnit.CreateCode(2, 1), ou2.Id);
         }
 
-        private OrganizationUnit CreateOU(string displayName, string code, Guid? parentId = null)
+        private OrganizationUnit CreateOU(string displayName, string code, long? parentId = null)
         {
             var ou = _context.OrganizationUnits.Add(new OrganizationUnit(_tenantId, displayName, parentId) { Code = code }).Entity;
             _context.SaveChanges();

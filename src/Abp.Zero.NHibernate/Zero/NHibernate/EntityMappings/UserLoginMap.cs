@@ -4,7 +4,7 @@ using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class UserLoginMap : EntityMap<UserLogin, Guid>
+    public class UserLoginMap : EntityMap<UserLogin, long>
     {
         public UserLoginMap()
             : base("AbpUserLogins")

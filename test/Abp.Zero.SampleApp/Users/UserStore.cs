@@ -12,14 +12,14 @@ namespace Abp.Zero.SampleApp.Users
     {
         public UserStore(
             IRepository<User, Guid> userRepository,
-            IRepository<UserLogin, Guid> userLoginRepository,
-            IRepository<UserRole, Guid> userRoleRepository,
-            IRepository<Role, Guid> roleRepository,
-            IRepository<UserPermissionSetting, Guid> userPermissionSettingRepository,
+            IRepository<UserLogin, long> userLoginRepository,
+            IRepository<UserRole, long> userRoleRepository,
+            IRepository<Role> roleRepository,
+            IRepository<UserPermissionSetting, long> userPermissionSettingRepository,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<UserClaim, Guid> userClaimRepository,
-            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository,
-            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository)
+            IRepository<UserClaim, long> userClaimRepository,
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
+            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
             : base(
                 userRepository,
                 userLoginRepository,

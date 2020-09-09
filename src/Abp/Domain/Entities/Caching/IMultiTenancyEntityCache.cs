@@ -3,7 +3,7 @@ using System;
 
 namespace Abp.Domain.Entities.Caching
 {
-    public interface IMultiTenancyEntityCache<TCacheItem> : IMultiTenancyEntityCache<TCacheItem, Guid>
+    public interface IMultiTenancyEntityCache<TCacheItem> : IMultiTenancyEntityCache<TCacheItem, int>
     {
     }
 

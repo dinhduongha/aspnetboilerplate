@@ -65,6 +65,7 @@ namespace Abp
 
             if (splitted.Length == 2)
             {
+            	/// TODO: DinhHa
                 return new UserIdentifier(Guid.Parse(splitted[1]), Guid.Parse(splitted[0]));
                 //return new UserIdentifier(splitted[1].To<int>(), Guid.Parse(splitted[0]));
             }

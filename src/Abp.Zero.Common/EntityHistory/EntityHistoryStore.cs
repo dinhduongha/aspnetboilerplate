@@ -10,12 +10,12 @@ namespace Abp.EntityHistory
     /// </summary>
     public class EntityHistoryStore : IEntityHistoryStore, ITransientDependency
     {
-        private readonly IRepository<EntityChangeSet, Guid> _changeSetRepository;
+        private readonly IRepository<EntityChangeSet, long> _changeSetRepository;
 
         /// <summary>
         /// Creates a new <see cref="EntityHistoryStore"/>.
         /// </summary>
-        public EntityHistoryStore(IRepository<EntityChangeSet, Guid> changeSetRepository)
+        public EntityHistoryStore(IRepository<EntityChangeSet, long> changeSetRepository)
         {
             _changeSetRepository = changeSetRepository;
         }

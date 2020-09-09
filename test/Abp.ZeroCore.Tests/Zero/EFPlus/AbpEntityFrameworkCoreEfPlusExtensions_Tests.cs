@@ -11,12 +11,12 @@ namespace Abp.Zero.EFPlus
 {
     public class AbpEntityFrameworkCoreEfPlusExtensions_Tests : AbpZeroTestBase
     {
-        private readonly IRepository<Role, Guid> _roleRepository;
+        private readonly IRepository<Role> _roleRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public AbpEntityFrameworkCoreEfPlusExtensions_Tests()
         {
-            _roleRepository = Resolve<IRepository<Role, Guid>>();
+            _roleRepository = Resolve<IRepository<Role>>();
             _unitOfWorkManager = Resolve<IUnitOfWorkManager>();
         }
 
@@ -26,7 +26,7 @@ namespace Abp.Zero.EFPlus
             using (var uow = _unitOfWorkManager.Begin())
             {
                 // Act
-                await _roleRepository.BatchDeleteAsync(r => r.Id != Guid.Empty);
+                await _roleRepository.BatchDeleteAsync(r => r.Id != 0);
 
                 // Assert
                 var roleCount = _roleRepository.Count();
@@ -62,7 +62,7 @@ namespace Abp.Zero.EFPlus
         {
             using (var uow = _unitOfWorkManager.Begin())
             {
-                await _roleRepository.BatchDeleteAsync(r => r.Id != Guid.Empty);
+                await _roleRepository.BatchDeleteAsync(r => r.Id != 0);
 
                 using (_unitOfWorkManager.Current.SetTenantId(null))
                 {
@@ -81,7 +81,7 @@ namespace Abp.Zero.EFPlus
             {
                 using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
                 {
-                    await _roleRepository.BatchDeleteAsync(r => r.Id != Guid.Empty);
+                    await _roleRepository.BatchDeleteAsync(r => r.Id != 0);
 
                     var roleCount = _roleRepository.Count();
                     roleCount.ShouldBe(0);
@@ -97,7 +97,7 @@ namespace Abp.Zero.EFPlus
             using (var uow = _unitOfWorkManager.Begin())
             {
                 // Act
-                await _roleRepository.BatchUpdateAsync(r => new Role { DisplayName = "Test" }, r => r.Id != Guid.Empty);
+                await _roleRepository.BatchUpdateAsync(r => new Role { DisplayName = "Test" }, r => r.Id != 0);
 
                 // Assert
                 var roleCount = _roleRepository.Count(r => r.DisplayName == "Test");
@@ -135,7 +135,7 @@ namespace Abp.Zero.EFPlus
         {
             using (var uow = _unitOfWorkManager.Begin())
             {
-                await _roleRepository.BatchUpdateAsync(r => new Role { DisplayName = "Test" }, r => r.Id != Guid.Empty);
+                await _roleRepository.BatchUpdateAsync(r => new Role { DisplayName = "Test" }, r => r.Id != 0);
 
                 using (_unitOfWorkManager.Current.SetTenantId(null))
                 {
@@ -154,7 +154,7 @@ namespace Abp.Zero.EFPlus
             {
                 using (_unitOfWorkManager.Current.DisableFilter(AbpDataFilters.MayHaveTenant))
                 {
-                    await _roleRepository.BatchUpdateAsync(r => new Role { DisplayName = "Test" }, r => r.Id != Guid.Empty);
+                    await _roleRepository.BatchUpdateAsync(r => new Role { DisplayName = "Test" }, r => r.Id != 0);
 
                     var roleCount = _roleRepository.Count(r => r.DisplayName == "Test");
                     roleCount.ShouldBe(5);

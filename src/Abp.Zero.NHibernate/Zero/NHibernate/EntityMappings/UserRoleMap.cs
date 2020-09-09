@@ -4,7 +4,7 @@ using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class UserRoleMap : EntityMap<UserRole, Guid>
+    public class UserRoleMap : EntityMap<UserRole, long>
     {
         public UserRoleMap()
             : base("AbpUserRoles")

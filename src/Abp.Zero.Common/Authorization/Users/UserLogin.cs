@@ -9,7 +9,7 @@ namespace Abp.Authorization.Users
     /// Used to store a User Login for external Login services.
     /// </summary>
     [Table("AbpUserLogins")]
-    public class UserLogin : Entity<Guid>, IMayHaveTenant
+    public class UserLogin : Entity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of <see cref="LoginProvider"/> property.
@@ -44,12 +44,12 @@ namespace Abp.Authorization.Users
 
         public UserLogin()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public UserLogin(Guid? tenantId, Guid userId, string loginProvider, string providerKey)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             UserId = userId;
             LoginProvider = loginProvider;

@@ -202,6 +202,7 @@ namespace Abp.EntityFramework
 
         protected virtual void ConfigureFilters(DbModelBuilder modelBuilder)
         {
+        	/// TODO: DinhHa
             modelBuilder.Filter(AbpDataFilters.SoftDelete, (ISoftDelete d) => d.IsDeleted, false);
             modelBuilder.Filter(AbpDataFilters.MustHaveTenant,
                 (IMustHaveTenant t, Guid tenantId) => t.TenantId == tenantId || (Guid?)t.TenantId == null,

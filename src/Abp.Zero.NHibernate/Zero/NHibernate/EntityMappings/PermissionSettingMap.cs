@@ -4,7 +4,7 @@ using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class PermissionSettingMap : EntityMap<PermissionSetting, Guid>
+    public class PermissionSettingMap : EntityMap<PermissionSetting, long>
     {
         public PermissionSettingMap()
             : base("AbpPermissions")

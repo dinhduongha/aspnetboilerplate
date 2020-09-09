@@ -9,7 +9,7 @@ namespace Abp.Authorization.Users
     /// Represents role record of a user. 
     /// </summary>
     [Table("AbpUserRoles")]
-    public class UserRole : CreationAuditedEntity<Guid>, IMayHaveTenant
+    public class UserRole : CreationAuditedEntity<long>, IMayHaveTenant
     {
         public virtual Guid? TenantId { get; set; }
 
@@ -21,14 +21,14 @@ namespace Abp.Authorization.Users
         /// <summary>
         /// Role id.
         /// </summary>
-        public virtual Guid RoleId { get; set; }
+        public virtual int RoleId { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="UserRole"/> object.
         /// </summary>
         public UserRole()
         {
-            /// TODO: cause run test case failure.
+            /// TODO: DinhHa cause run test case failure.
             //Id = SequentialGuidGenerator.Instance.Create();
         }
 
@@ -38,7 +38,7 @@ namespace Abp.Authorization.Users
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <param name="roleId">Role id</param>
-        public UserRole(Guid? tenantId, Guid userId, Guid roleId)
+        public UserRole(Guid? tenantId, Guid userId, int roleId)
         {
             //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;

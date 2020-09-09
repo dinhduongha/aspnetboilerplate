@@ -4,7 +4,7 @@ using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class UserClaimMap : EntityMap<UserClaim, Guid>
+    public class UserClaimMap : EntityMap<UserClaim, long>
     {
         public UserClaimMap()
             : base("AbpUserClaims")

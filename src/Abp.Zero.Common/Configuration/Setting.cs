@@ -10,7 +10,7 @@ namespace Abp.Configuration
     /// Represents a setting for a tenant or user.
     /// </summary>
     [Table("AbpSettings")]
-    public class Setting : AuditedEntity<Guid>, IMayHaveTenant
+    public class Setting : AuditedEntity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="Name"/> property.
@@ -46,7 +46,7 @@ namespace Abp.Configuration
         /// </summary>
         public Setting()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Abp.Configuration
         /// <param name="value">Value of the setting</param>
         public Setting(Guid? tenantId, Guid? userId, string name, string value)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             UserId = userId;
             Name = name;

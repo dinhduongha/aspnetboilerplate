@@ -16,11 +16,11 @@ namespace Abp.Organizations
     /// </summary>
     public class OrganizationUnitManager : DomainService
     {
-        protected IRepository<OrganizationUnit, Guid> OrganizationUnitRepository { get; private set; }
+        protected IRepository<OrganizationUnit, long> OrganizationUnitRepository { get; private set; }
 
         public IAsyncQueryableExecuter AsyncQueryableExecuter { get; set; }
         
-        public OrganizationUnitManager(IRepository<OrganizationUnit, Guid> organizationUnitRepository)
+        public OrganizationUnitManager(IRepository<OrganizationUnit, long> organizationUnitRepository)
         {
             OrganizationUnitRepository = organizationUnitRepository;
 
@@ -56,7 +56,7 @@ namespace Abp.Organizations
             OrganizationUnitRepository.Update(organizationUnit);
         }
 
-        public virtual async Task<string> GetNextChildCodeAsync(Guid? parentId)
+        public virtual async Task<string> GetNextChildCodeAsync(long? parentId)
         {
             var lastChild = await GetLastChildOrNullAsync(parentId);
             if (lastChild == null)
@@ -68,7 +68,7 @@ namespace Abp.Organizations
             return OrganizationUnit.CalculateNextCode(lastChild.Code);
         }
 
-        public virtual string GetNextChildCode(Guid? parentId)
+        public virtual string GetNextChildCode(long? parentId)
         {
             var lastChild = GetLastChildOrNull(parentId);
             if (lastChild == null)
@@ -80,7 +80,7 @@ namespace Abp.Organizations
             return OrganizationUnit.CalculateNextCode(lastChild.Code);
         }
 
-        public virtual async Task<OrganizationUnit> GetLastChildOrNullAsync(Guid? parentId)
+        public virtual async Task<OrganizationUnit> GetLastChildOrNullAsync(long? parentId)
         {
             var query = OrganizationUnitRepository.GetAll()
                 .Where(ou => ou.ParentId == parentId)
@@ -88,7 +88,7 @@ namespace Abp.Organizations
             return await AsyncQueryableExecuter.FirstOrDefaultAsync(query);
         }
 
-        public virtual OrganizationUnit GetLastChildOrNull(Guid? parentId)
+        public virtual OrganizationUnit GetLastChildOrNull(long? parentId)
         {
             var query = OrganizationUnitRepository.GetAll()
                 .Where(ou => ou.ParentId == parentId)
@@ -96,18 +96,18 @@ namespace Abp.Organizations
             return query.FirstOrDefault();
         }
 
-        public virtual async Task<string> GetCodeAsync(Guid id)
+        public virtual async Task<string> GetCodeAsync(long id)
         {
             return (await OrganizationUnitRepository.GetAsync(id)).Code;
         }
 
-        public virtual string GetCode(Guid id)
+        public virtual string GetCode(long id)
         {
             return (OrganizationUnitRepository.Get(id)).Code;
         }
 
         [UnitOfWork]
-        public virtual async Task DeleteAsync(Guid id)
+        public virtual async Task DeleteAsync(long id)
         {
             var children = await FindChildrenAsync(id, true);
 
@@ -120,7 +120,7 @@ namespace Abp.Organizations
         }
 
         [UnitOfWork]
-        public virtual void Delete(Guid id)
+        public virtual void Delete(long id)
         {
             var children = FindChildren(id, true);
 
@@ -133,7 +133,7 @@ namespace Abp.Organizations
         }
 
         [UnitOfWork]
-        public virtual async Task MoveAsync(Guid id, Guid? parentId)
+        public virtual async Task MoveAsync(long id, long? parentId)
         {
             var organizationUnit = await OrganizationUnitRepository.GetAsync(id);
             if (organizationUnit.ParentId == parentId)
@@ -161,7 +161,7 @@ namespace Abp.Organizations
         }
 
         [UnitOfWork]
-        public virtual void Move(Guid id, Guid? parentId)
+        public virtual void Move(long id, long? parentId)
         {
             var organizationUnit = OrganizationUnitRepository.Get(id);
             if (organizationUnit.ParentId == parentId)
@@ -188,7 +188,7 @@ namespace Abp.Organizations
             }
         }
 
-        public async Task<List<OrganizationUnit>> FindChildrenAsync(Guid? parentId, bool recursive = false)
+        public async Task<List<OrganizationUnit>> FindChildrenAsync(long? parentId, bool recursive = false)
         {
             if (!recursive)
             {
@@ -207,7 +207,7 @@ namespace Abp.Organizations
             );
         }
 
-        public List<OrganizationUnit> FindChildren(Guid? parentId, bool recursive = false)
+        public List<OrganizationUnit> FindChildren(long? parentId, bool recursive = false)
         {
             if (!recursive)
             {

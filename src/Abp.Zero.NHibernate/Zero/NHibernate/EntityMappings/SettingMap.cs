@@ -4,7 +4,7 @@ using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class SettingMap : EntityMap<Setting, Guid>
+    public class SettingMap : EntityMap<Setting, long>
     {
         public SettingMap()
             : base("AbpSettings")

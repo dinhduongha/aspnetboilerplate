@@ -13,10 +13,10 @@ namespace Abp.EntityHistory
 {
     public abstract class EntitySnapshotManagerBase : IEntitySnapshotManager, ITransientDependency
     {
-        protected readonly IRepository<EntityChange, Guid> EntityChangeRepository;
+        protected readonly IRepository<EntityChange, long> EntityChangeRepository;
         public IAsyncQueryableExecuter AsyncQueryableExecuter { get; set; }
 
-        protected EntitySnapshotManagerBase(IRepository<EntityChange, Guid> entityChangeRepository)
+        protected EntitySnapshotManagerBase(IRepository<EntityChange, long> entityChangeRepository)
         {
             EntityChangeRepository = entityChangeRepository;
             AsyncQueryableExecuter = NullAsyncQueryableExecuter.Instance;

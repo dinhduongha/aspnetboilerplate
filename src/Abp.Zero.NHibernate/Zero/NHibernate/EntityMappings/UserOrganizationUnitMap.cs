@@ -4,7 +4,7 @@ using System;
 
 namespace Abp.Zero.NHibernate.EntityMappings
 {
-    public class UserOrganizationUnitMap : EntityMap<UserOrganizationUnit, Guid>
+    public class UserOrganizationUnitMap : EntityMap<UserOrganizationUnit, long>
     {
         public UserOrganizationUnitMap()
             : base("AbpUserOrganizationUnits")

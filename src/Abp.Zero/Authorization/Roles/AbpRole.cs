@@ -16,7 +16,7 @@ namespace Abp.Authorization.Roles
     /// Non-static (dynamic) roles can be added/removed by users and we can not know their name while coding.
     /// A user can have multiple roles. Thus, user will have all permissions of all assigned roles.
     /// </remarks>
-    public abstract class AbpRole<TUser> : AbpRoleBase, IRole<Guid>, IFullAudited<TUser>
+    public abstract class AbpRole<TUser> : AbpRoleBase, IRole<int>, IFullAudited<TUser>
         where TUser : AbpUser<TUser>
     {
         /// <summary>

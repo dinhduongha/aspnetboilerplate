@@ -6,14 +6,14 @@ using System;
 namespace Abp.Domain.Entities.Caching
 {
     public class MayHaveTenantEntityCache<TEntity, TCacheItem> :
-        MayHaveTenantEntityCache<TEntity, TCacheItem, Guid>,
+        MayHaveTenantEntityCache<TEntity, TCacheItem, int>,
         IMultiTenancyEntityCache<TCacheItem>
-        where TEntity : class, IEntity<Guid>, IMayHaveTenant
+        where TEntity : class, IEntity<int>, IMayHaveTenant
     {
         public MayHaveTenantEntityCache(
             ICacheManager cacheManager,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<TEntity, Guid> repository,
+            IRepository<TEntity, int> repository,
             string cacheName = null)
             : base(
                 cacheManager,

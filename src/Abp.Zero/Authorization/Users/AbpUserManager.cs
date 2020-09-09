@@ -63,8 +63,8 @@ namespace Abp.Authorization.Users
         private readonly IPermissionManager _permissionManager;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly ICacheManager _cacheManager;
-        private readonly IRepository<OrganizationUnit, Guid> _organizationUnitRepository;
-        private readonly IRepository<UserOrganizationUnit, Guid> _userOrganizationUnitRepository;
+        private readonly IRepository<OrganizationUnit, long> _organizationUnitRepository;
+        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
         private readonly IOrganizationUnitSettings _organizationUnitSettings;
         private readonly ISettingManager _settingManager;
 
@@ -74,8 +74,8 @@ namespace Abp.Authorization.Users
             IPermissionManager permissionManager,
             IUnitOfWorkManager unitOfWorkManager,
             ICacheManager cacheManager,
-            IRepository<OrganizationUnit, Guid> organizationUnitRepository,
-            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository,
+            IRepository<OrganizationUnit, long> organizationUnitRepository,
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
             IOrganizationUnitSettings organizationUnitSettings,
             ILocalizationManager localizationManager,
             IdentityEmailMessageService emailService,
@@ -537,7 +537,7 @@ namespace Abp.Authorization.Users
             return IdentityResult.Success;
         }
 
-        public virtual async Task<bool> IsInOrganizationUnitAsync(Guid userId, Guid ouId)
+        public virtual async Task<bool> IsInOrganizationUnitAsync(Guid userId, long ouId)
         {
             return await IsInOrganizationUnitAsync(
                 await GetUserByIdAsync(userId),
@@ -552,7 +552,7 @@ namespace Abp.Authorization.Users
                 ) > 0;
         }
 
-        public virtual async Task AddToOrganizationUnitAsync(Guid userId, Guid ouId)
+        public virtual async Task AddToOrganizationUnitAsync(Guid userId, long ouId)
         {
             await AddToOrganizationUnitAsync(
                 await GetUserByIdAsync(userId),
@@ -574,7 +574,7 @@ namespace Abp.Authorization.Users
             await _userOrganizationUnitRepository.InsertAsync(new UserOrganizationUnit(user.TenantId, user.Id, ou.Id));
         }
 
-        public virtual async Task RemoveFromOrganizationUnitAsync(Guid userId, Guid ouId)
+        public virtual async Task RemoveFromOrganizationUnitAsync(Guid userId, long ouId)
         {
             await RemoveFromOrganizationUnitAsync(
                 await GetUserByIdAsync(userId),
@@ -587,7 +587,7 @@ namespace Abp.Authorization.Users
             await _userOrganizationUnitRepository.DeleteAsync(uou => uou.UserId == user.Id && uou.OrganizationUnitId == ou.Id);
         }
 
-        public virtual async Task SetOrganizationUnitsAsync(Guid userId, params Guid[] organizationUnitIds)
+        public virtual async Task SetOrganizationUnitsAsync(Guid userId, params long[] organizationUnitIds)
         {
             await SetOrganizationUnitsAsync(
                 await GetUserByIdAsync(userId),
@@ -605,11 +605,11 @@ namespace Abp.Authorization.Users
         }
 
         [UnitOfWork]
-        public virtual async Task SetOrganizationUnitsAsync(TUser user, params Guid[] organizationUnitIds)
+        public virtual async Task SetOrganizationUnitsAsync(TUser user, params long[] organizationUnitIds)
         {
             if (organizationUnitIds == null)
             {
-                organizationUnitIds = new Guid[0];
+                organizationUnitIds = new long[0];
             }
 
             await CheckMaxUserOrganizationUnitMembershipCountAsync(user.TenantId, organizationUnitIds.Length);

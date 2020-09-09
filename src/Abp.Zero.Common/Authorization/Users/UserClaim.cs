@@ -8,7 +8,7 @@ using Abp.Domain.Entities.Auditing;
 namespace Abp.Authorization.Users
 {
     [Table("AbpUserClaims")]
-    public class UserClaim : CreationAuditedEntity<Guid>, IMayHaveTenant
+    public class UserClaim : CreationAuditedEntity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="ClaimType"/> property.
@@ -26,12 +26,12 @@ namespace Abp.Authorization.Users
 
         public UserClaim()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public UserClaim(AbpUserBase user, Claim claim)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = user.TenantId;
             UserId = user.Id;
             ClaimType = claim.Type;

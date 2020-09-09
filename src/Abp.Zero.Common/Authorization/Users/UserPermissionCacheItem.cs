@@ -13,7 +13,7 @@ namespace Abp.Authorization.Users
 
         public Guid UserId { get; set; }
 
-        public List<Guid> RoleIds { get; set; }
+        public List<int> RoleIds { get; set; }
 
         public HashSet<string> GrantedPermissions { get; set; }
 
@@ -21,7 +21,7 @@ namespace Abp.Authorization.Users
 
         public UserPermissionCacheItem()
         {
-            RoleIds = new List<Guid>();
+            RoleIds = new List<int>();
             GrantedPermissions = new HashSet<string>();
             ProhibitedPermissions = new HashSet<string>();
         }

@@ -10,6 +10,6 @@ namespace Abp.Authorization.Roles
         /// <summary>
         /// Role id.
         /// </summary>
-        public virtual Guid RoleId { get; set; }
+        public virtual int RoleId { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace Abp.Authorization.Roles
     /// Applications should derive this class with appropriate generic arguments.
     /// </summary>
     public abstract class AbpRoleManager<TRole, TUser>
-        : RoleManager<TRole, Guid>,
+        : RoleManager<TRole, int>,
         IDomainService
         where TRole : AbpRole<TUser>, new()
         where TUser : AbpUser<TUser>
@@ -62,8 +62,8 @@ namespace Abp.Authorization.Roles
 
         protected IUnitOfWorkManager UnitOfWorkManager { get; }
 
-        private readonly IRepository<OrganizationUnit, Guid> _organizationUnitRepository;
-        private readonly IRepository<OrganizationUnitRole, Guid> _organizationUnitRoleRepository;
+        private readonly IRepository<OrganizationUnit, long> _organizationUnitRepository;
+        private readonly IRepository<OrganizationUnitRole, long> _organizationUnitRoleRepository;
 
         /// <summary>
         /// Constructor.
@@ -74,8 +74,8 @@ namespace Abp.Authorization.Roles
             IRoleManagementConfig roleManagementConfig,
             ICacheManager cacheManager,
             IUnitOfWorkManager unitOfWorkManager,
-            IRepository<OrganizationUnit, Guid> organizationUnitRepository,
-            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository)
+            IRepository<OrganizationUnit, long> organizationUnitRepository,
+            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
             : base(store)
         {
             PermissionManager = permissionManager;
@@ -119,7 +119,7 @@ namespace Abp.Authorization.Roles
         /// <param name="roleId">The role's id to check it's permission</param>
         /// <param name="permissionName">Name of the permission</param>
         /// <returns>True, if the role has the permission</returns>
-        public virtual async Task<bool> IsGrantedAsync(Guid roleId, string permissionName)
+        public virtual async Task<bool> IsGrantedAsync(int roleId, string permissionName)
         {
             return await IsGrantedAsync(roleId, PermissionManager.GetPermission(permissionName));
         }
@@ -130,7 +130,7 @@ namespace Abp.Authorization.Roles
         /// <param name="roleId">The role's id to check it's permission</param>
         /// <param name="permissionName">Name of the permission</param>
         /// <returns>True, if the role has the permission</returns>
-        public virtual bool IsGranted(Guid roleId, string permissionName)
+        public virtual bool IsGranted(int roleId, string permissionName)
         {
             return IsGranted(roleId, PermissionManager.GetPermission(permissionName));
         }
@@ -163,7 +163,7 @@ namespace Abp.Authorization.Roles
         /// <param name="roleId">role id</param>
         /// <param name="permission">The permission</param>
         /// <returns>True, if the role has the permission</returns>
-        public virtual async Task<bool> IsGrantedAsync(Guid roleId, Permission permission)
+        public virtual async Task<bool> IsGrantedAsync(int roleId, Permission permission)
         {
             //Get cached role permissions
             var cacheItem = await GetRolePermissionCacheItemAsync(roleId);
@@ -178,7 +178,7 @@ namespace Abp.Authorization.Roles
         /// <param name="roleId">role id</param>
         /// <param name="permission">The permission</param>
         /// <returns>True, if the role has the permission</returns>
-        public virtual bool IsGranted(Guid roleId, Permission permission)
+        public virtual bool IsGranted(int roleId, Permission permission)
         {
             //Get cached role permissions
             var cacheItem = GetRolePermissionCacheItem(roleId);
@@ -192,7 +192,7 @@ namespace Abp.Authorization.Roles
         /// </summary>
         /// <param name="roleId">Role id</param>
         /// <returns>List of granted permissions</returns>
-        public virtual async Task<IReadOnlyList<Permission>> GetGrantedPermissionsAsync(Guid roleId)
+        public virtual async Task<IReadOnlyList<Permission>> GetGrantedPermissionsAsync(int roleId)
         {
             return await GetGrantedPermissionsAsync(await GetRoleByIdAsync(roleId));
         }
@@ -225,7 +225,7 @@ namespace Abp.Authorization.Roles
         /// </summary>
         /// <param name="roleId">Role id</param>
         /// <param name="permissions">Permissions</param>
-        public virtual async Task SetGrantedPermissionsAsync(Guid roleId, IEnumerable<Permission> permissions)
+        public virtual async Task SetGrantedPermissionsAsync(int roleId, IEnumerable<Permission> permissions)
         {
             await SetGrantedPermissionsAsync(await GetRoleByIdAsync(roleId), permissions);
         }
@@ -363,7 +363,7 @@ namespace Abp.Authorization.Roles
         /// <param name="roleId">Role id</param>
         /// <returns>Role</returns>
         /// <exception cref="AbpException">Throws exception if no role with given id</exception>
-        public virtual async Task<TRole> GetRoleByIdAsync(Guid roleId)
+        public virtual async Task<TRole> GetRoleByIdAsync(int roleId)
         {
             var role = await FindByIdAsync(roleId);
             if (role == null)
@@ -453,7 +453,7 @@ namespace Abp.Authorization.Roles
             return IdentityResult.Success;
         }
 
-        public virtual async Task<IdentityResult> CheckDuplicateRoleNameAsync(Guid? expectedRoleId, string name, string displayName)
+        public virtual async Task<IdentityResult> CheckDuplicateRoleNameAsync(int? expectedRoleId, string name, string displayName)
         {
             var role = await FindByNameAsync(name);
             if (role != null && role.Id != expectedRoleId)
@@ -494,7 +494,7 @@ namespace Abp.Authorization.Roles
             }
         }
 
-        public virtual async Task SetOrganizationUnitsAsync(Guid roleId, params Guid[] organizationUnitIds)
+        public virtual async Task SetOrganizationUnitsAsync(int roleId, params long[] organizationUnitIds)
         {
             await SetOrganizationUnitsAsync(
                 await GetRoleByIdAsync(roleId),
@@ -502,11 +502,11 @@ namespace Abp.Authorization.Roles
             );
         }
 
-        public virtual async Task SetOrganizationUnitsAsync(TRole role, params Guid[] organizationUnitIds)
+        public virtual async Task SetOrganizationUnitsAsync(TRole role, params long[] organizationUnitIds)
         {
             if (organizationUnitIds == null)
             {
-                organizationUnitIds = new Guid[0];
+                organizationUnitIds = new long[0];
             }
 
             var currentOus = await GetOrganizationUnitsAsync(role);
@@ -533,7 +533,7 @@ namespace Abp.Authorization.Roles
             }
         }
 
-        public virtual async Task<bool> IsInOrganizationUnitAsync(Guid roleId, Guid ouId)
+        public virtual async Task<bool> IsInOrganizationUnitAsync(int roleId, long ouId)
         {
             return await IsInOrganizationUnitAsync(
                 await GetRoleByIdAsync(roleId),
@@ -548,7 +548,7 @@ namespace Abp.Authorization.Roles
                    ) > 0;
         }
 
-        public virtual async Task AddToOrganizationUnitAsync(Guid roleId, Guid ouId)
+        public virtual async Task AddToOrganizationUnitAsync(int roleId, long ouId)
         {
             await AddToOrganizationUnitAsync(
                 await GetRoleByIdAsync(roleId),
@@ -566,7 +566,7 @@ namespace Abp.Authorization.Roles
             await _organizationUnitRoleRepository.InsertAsync(new OrganizationUnitRole(role.TenantId, role.Id, ou.Id));
         }
 
-        public async Task RemoveFromOrganizationUnitAsync(Guid roleId, Guid organizationUnitId)
+        public async Task RemoveFromOrganizationUnitAsync(int roleId, long organizationUnitId)
         {
             await RemoveFromOrganizationUnitAsync(
                 await GetRoleByIdAsync(roleId),
@@ -595,7 +595,7 @@ namespace Abp.Authorization.Roles
             return AbpStore.FindByDisplayNameAsync(displayName);
         }
 
-        private async Task<RolePermissionCacheItem> GetRolePermissionCacheItemAsync(Guid roleId)
+        private async Task<RolePermissionCacheItem> GetRolePermissionCacheItemAsync(int roleId)
         {
             //var cacheKey = roleId + "@" + (GetCurrentTenantId() ?? 0);
             var cacheKey = $"{roleId}@{GetCurrentTenantId()}";
@@ -639,7 +639,7 @@ namespace Abp.Authorization.Roles
             });
         }
 
-        private RolePermissionCacheItem GetRolePermissionCacheItem(Guid roleId)
+        private RolePermissionCacheItem GetRolePermissionCacheItem(int roleId)
         {
             //var cacheKey = roleId + "@" + (GetCurrentTenantId() ?? 0);
             var cacheKey = $"{roleId}@{GetCurrentTenantId()}";

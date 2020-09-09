@@ -29,7 +29,7 @@ namespace Abp.TestBase.Runtime.Session
             {
                 if (!_multiTenancy.IsEnabled)
                 {
-                    // TODO:
+                    // TODO: DinhHa
                     return null;
                     //return 1;
                 }

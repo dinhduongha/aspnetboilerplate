@@ -8,6 +8,7 @@ namespace Abp.Zero.FluentMigrator.Migrations
     {
         public override void Up()
         {
+        	// TODO: DinhHa
             Create.Table("AbpTenants")
                 .WithIdAsInt32()
                 .WithColumn("TenancyName").AsString(32).NotNullable()

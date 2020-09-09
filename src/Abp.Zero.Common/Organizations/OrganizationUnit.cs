@@ -14,7 +14,7 @@ namespace Abp.Organizations
     /// Represents an organization unit (OU).
     /// </summary>
     [Table("AbpOrganizationUnits")]
-    public class OrganizationUnit : FullAuditedEntity<Guid>, IMayHaveTenant
+    public class OrganizationUnit : FullAuditedEntity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="DisplayName"/> property.
@@ -52,7 +52,7 @@ namespace Abp.Organizations
         /// Parent <see cref="OrganizationUnit"/> Id.
         /// Null, if this OU is root.
         /// </summary>
-        public virtual Guid? ParentId { get; set; }
+        public virtual long? ParentId { get; set; }
 
         /// <summary>
         /// Hierarchical Code of this organization unit.
@@ -81,7 +81,7 @@ namespace Abp.Organizations
         /// </summary>
         public OrganizationUnit()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
         }
 
         /// <summary>
@@ -90,9 +90,9 @@ namespace Abp.Organizations
         /// <param name="tenantId">Tenant's Id or null for host.</param>
         /// <param name="displayName">Display name.</param>
         /// <param name="parentId">Parent's Id or null if OU is a root.</param>
-        public OrganizationUnit(Guid? tenantId, string displayName, Guid? parentId = null)
+        public OrganizationUnit(Guid? tenantId, string displayName, long? parentId = null)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             DisplayName = displayName;
             ParentId = parentId;

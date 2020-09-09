@@ -11,11 +11,11 @@ namespace Abp.Zero.Repository
 {
     public class Repository_Hard_Delete_Test : AbpZeroTestBase
     {
-        private readonly IRepository<Role, Guid> _roleRepository;
+        private readonly IRepository<Role> _roleRepository;
 
         public Repository_Hard_Delete_Test()
         {
-            _roleRepository = LocalIocManager.Resolve<IRepository<Role, Guid>>();
+            _roleRepository = LocalIocManager.Resolve<IRepository<Role>>();
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Abp.Zero.Repository
 
             using (var uow = uowManager.Begin())
             {
-                await _roleRepository.HardDeleteAsync(r => r.Id != Guid.Empty);
+                await _roleRepository.HardDeleteAsync(r => r.Id != 0);
 
                 uow.Complete();
             }
@@ -101,10 +101,10 @@ namespace Abp.Zero.Repository
             var admin = await _roleRepository.FirstOrDefaultAsync(u => u.NormalizedName == "ADMIN");
 
             Assert.Throws<AbpException>(() => _roleRepository.HardDelete(admin));
-            Assert.Throws<AbpException>(() => _roleRepository.HardDelete(u => u.Id != Guid.Empty));
+            Assert.Throws<AbpException>(() => _roleRepository.HardDelete(u => u.Id != 0));
 
             await Assert.ThrowsAsync<AbpException>(async () => await _roleRepository.HardDeleteAsync(admin));
-            await Assert.ThrowsAsync<AbpException>(async () => await _roleRepository.HardDeleteAsync(u => u.Id != Guid.Empty));
+            await Assert.ThrowsAsync<AbpException>(async () => await _roleRepository.HardDeleteAsync(u => u.Id != 0));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Abp.Authorization.Users
     /// Represents an authentication token for a user.
     /// </summary>
     [Table("AbpUserTokens")]
-    public class UserToken : Entity<Guid>, IMayHaveTenant
+    public class UserToken : Entity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="LoginProvider"/> property.

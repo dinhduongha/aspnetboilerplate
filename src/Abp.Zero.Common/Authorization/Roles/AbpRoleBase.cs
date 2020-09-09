@@ -12,7 +12,7 @@ namespace Abp.Authorization.Roles
     /// Base class for role.
     /// </summary>
     [Table("AbpRoles")]
-    public abstract class AbpRoleBase : FullAuditedEntity<Guid>, IMayHaveTenant
+    public abstract class AbpRoleBase : FullAuditedEntity<int>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="DisplayName"/> property.
@@ -63,14 +63,14 @@ namespace Abp.Authorization.Roles
 
         protected AbpRoleBase()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             Name = Guid.NewGuid().ToString("N");
         }
 
         protected AbpRoleBase(Guid? tenantId, string displayName)
             : this()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             TenantId = tenantId;
             DisplayName = displayName;
         }
@@ -78,7 +78,7 @@ namespace Abp.Authorization.Roles
         protected AbpRoleBase(Guid? tenantId, string name, string displayName)
             : this(tenantId, displayName)
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             Name = name;
         }
 

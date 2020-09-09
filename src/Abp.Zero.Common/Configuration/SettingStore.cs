@@ -13,14 +13,14 @@ namespace Abp.Configuration
     /// </summary>
     public class SettingStore : ISettingStore, ITransientDependency
     {
-        private readonly IRepository<Setting, Guid> _settingRepository;
+        private readonly IRepository<Setting, long> _settingRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         public SettingStore(
-            IRepository<Setting, Guid> settingRepository,
+            IRepository<Setting, long> settingRepository,
             IUnitOfWorkManager unitOfWorkManager)
         {
             _settingRepository = settingRepository;

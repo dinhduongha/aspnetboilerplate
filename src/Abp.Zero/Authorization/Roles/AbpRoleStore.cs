@@ -13,24 +13,24 @@ namespace Abp.Authorization.Roles
     /// Implements 'Role Store' of ASP.NET Identity Framework.
     /// </summary>
     public abstract class AbpRoleStore<TRole, TUser> :
-        IQueryableRoleStore<TRole, Guid>,
+        IQueryableRoleStore<TRole, int>,
         IRolePermissionStore<TRole>,
         ITransientDependency
 
         where TRole : AbpRole<TUser>
         where TUser : AbpUser<TUser>
     {
-        private readonly IRepository<TRole, Guid> _roleRepository;
-        private readonly IRepository<UserRole, Guid> _userRoleRepository;
-        private readonly IRepository<RolePermissionSetting, Guid> _rolePermissionSettingRepository;
+        private readonly IRepository<TRole> _roleRepository;
+        private readonly IRepository<UserRole, long> _userRoleRepository;
+        private readonly IRepository<RolePermissionSetting, long> _rolePermissionSettingRepository;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         protected AbpRoleStore(
-            IRepository<TRole,Guid> roleRepository,
-            IRepository<UserRole, Guid> userRoleRepository,
-            IRepository<RolePermissionSetting, Guid> rolePermissionSettingRepository)
+            IRepository<TRole> roleRepository,
+            IRepository<UserRole, long> userRoleRepository,
+            IRepository<RolePermissionSetting, long> rolePermissionSettingRepository)
         {
             _roleRepository = roleRepository;
             _userRoleRepository = userRoleRepository;
@@ -58,12 +58,12 @@ namespace Abp.Authorization.Roles
             await _roleRepository.DeleteAsync(role);
         }
 
-        public virtual async Task<TRole> FindByIdAsync(Guid roleId)
+        public virtual async Task<TRole> FindByIdAsync(int roleId)
         {
             return await _roleRepository.FirstOrDefaultAsync(roleId);
         }
 
-        public virtual TRole FindById(Guid roleId)
+        public virtual TRole FindById(int roleId)
         {
             return _roleRepository.FirstOrDefault(roleId);
         }
@@ -133,14 +133,14 @@ namespace Abp.Authorization.Roles
             return GetPermissions(role.Id);
         }
 
-        public async Task<IList<PermissionGrantInfo>> GetPermissionsAsync(Guid roleId)
+        public async Task<IList<PermissionGrantInfo>> GetPermissionsAsync(int roleId)
         {
             return (await _rolePermissionSettingRepository.GetAllListAsync(p => p.RoleId == roleId))
                 .Select(p => new PermissionGrantInfo(p.Name, p.IsGranted))
                 .ToList();
         }
 
-        public IList<PermissionGrantInfo> GetPermissions(Guid roleId)
+        public IList<PermissionGrantInfo> GetPermissions(int roleId)
         {
             return (_rolePermissionSettingRepository.GetAllList(p => p.RoleId == roleId))
                 .Select(p => new PermissionGrantInfo(p.Name, p.IsGranted))
@@ -148,7 +148,7 @@ namespace Abp.Authorization.Roles
         }
 
         /// <inheritdoc/>
-        public virtual async Task<bool> HasPermissionAsync(Guid roleId, PermissionGrantInfo permissionGrant)
+        public virtual async Task<bool> HasPermissionAsync(int roleId, PermissionGrantInfo permissionGrant)
         {
             return await _rolePermissionSettingRepository.FirstOrDefaultAsync(
                 p => p.RoleId == roleId &&

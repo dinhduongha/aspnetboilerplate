@@ -64,28 +64,28 @@ namespace Abp.Authorization.Users
 
         public IRepository<TUser, Guid> UserRepository { get; }
 
-        private readonly IRepository<TRole, Guid> _roleRepository;
-        private readonly IRepository<UserRole, Guid> _userRoleRepository;
+        private readonly IRepository<TRole> _roleRepository;
+        private readonly IRepository<UserRole, long> _userRoleRepository;
         private readonly IAsyncQueryableExecuter _asyncQueryableExecuter;
-        private readonly IRepository<UserLogin, Guid> _userLoginRepository;
-        private readonly IRepository<UserClaim, Guid> _userClaimRepository;
-        private readonly IRepository<UserPermissionSetting, Guid> _userPermissionSettingRepository;
-        private readonly IRepository<UserOrganizationUnit, Guid> _userOrganizationUnitRepository;
-        private readonly IRepository<OrganizationUnitRole, Guid> _organizationUnitRoleRepository;
+        private readonly IRepository<UserLogin, long> _userLoginRepository;
+        private readonly IRepository<UserClaim, long> _userClaimRepository;
+        private readonly IRepository<UserPermissionSetting, long> _userPermissionSettingRepository;
+        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
+        private readonly IRepository<OrganizationUnitRole, long> _organizationUnitRoleRepository;
 
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public AbpUserStore(
             IUnitOfWorkManager unitOfWorkManager,
             IRepository<TUser, Guid> userRepository,
-            IRepository<TRole, Guid> roleRepository,
+            IRepository<TRole> roleRepository,
             IAsyncQueryableExecuter asyncQueryableExecuter,
-            IRepository<UserRole, Guid> userRoleRepository,
-            IRepository<UserLogin, Guid> userLoginRepository,
-            IRepository<UserClaim, Guid> userClaimRepository,
-            IRepository<UserPermissionSetting, Guid> userPermissionSettingRepository, 
-            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository, 
-            IRepository<OrganizationUnitRole, Guid> organizationUnitRoleRepository)
+            IRepository<UserRole, long> userRoleRepository,
+            IRepository<UserLogin, long> userLoginRepository,
+            IRepository<UserClaim, long> userClaimRepository,
+            IRepository<UserPermissionSetting, long> userPermissionSettingRepository, 
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository, 
+            IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
         {
             _unitOfWorkManager = unitOfWorkManager;
             UserRepository = userRepository;

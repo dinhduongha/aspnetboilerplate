@@ -22,7 +22,7 @@ namespace Abp.Notifications
         /// <summary>
         /// Indicates all tenants.
         /// </summary>
-        public static Guid[] AllTenants => new[] { Guid.Empty };//{ NotificationInfo.AllTenantIds.To<int>() };
+        public static Guid[] AllTenants => new[] { Guid.Empty }; /// TODO: DinhHa //{ NotificationInfo.AllTenantIds.To<int>() };
 
         /// <summary>
         /// Reference to ABP session.

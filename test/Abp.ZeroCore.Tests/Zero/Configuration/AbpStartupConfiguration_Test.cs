@@ -14,7 +14,7 @@ namespace Abp.Zero.Configuration
         }
 
         [Fact]
-        public void Should_Get_Custom_Config_Providers()
+        public void Should_Get_Custom_Config_Providers() 
         {
             var providers = _startupConfiguration.CustomConfigProviders;
 

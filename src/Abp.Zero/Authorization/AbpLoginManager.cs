@@ -32,7 +32,7 @@ namespace Abp.Authorization
         protected IUnitOfWorkManager UnitOfWorkManager { get; }
         protected AbpUserManager<TRole, TUser> UserManager { get; }
         protected ISettingManager SettingManager { get; }
-        protected IRepository<UserLoginAttempt, Guid> UserLoginAttemptRepository { get; }
+        protected IRepository<UserLoginAttempt, long> UserLoginAttemptRepository { get; }
         protected IUserManagementConfig UserManagementConfig { get; }
         protected IIocResolver IocResolver { get; }
         protected AbpRoleManager<TRole, TUser> RoleManager { get; }
@@ -43,7 +43,7 @@ namespace Abp.Authorization
             IRepository<TTenant, Guid> tenantRepository,
             IUnitOfWorkManager unitOfWorkManager,
             ISettingManager settingManager,
-            IRepository<UserLoginAttempt, Guid> userLoginAttemptRepository,
+            IRepository<UserLoginAttempt, long> userLoginAttemptRepository,
             IUserManagementConfig userManagementConfig,
             IIocResolver iocResolver,
             AbpRoleManager<TRole, TUser> roleManager)

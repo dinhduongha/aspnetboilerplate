@@ -16,7 +16,6 @@ namespace Abp.Dapper.NHibernate.Tests
 
         protected DapperNhBasedApplicationTestBase()
         {
-            //AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
             AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000001");
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
         }

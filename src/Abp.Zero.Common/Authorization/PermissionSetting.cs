@@ -10,7 +10,7 @@ namespace Abp.Authorization
     /// Used to grant/deny a permission for a role or user.
     /// </summary>
     [Table("AbpPermissions")]
-    public abstract class PermissionSetting : CreationAuditedEntity<Guid>, IMayHaveTenant
+    public abstract class PermissionSetting : CreationAuditedEntity<long>, IMayHaveTenant
     {
         /// <summary>
         /// Maximum length of the <see cref="Name"/> field.
@@ -37,7 +37,7 @@ namespace Abp.Authorization
         /// </summary>
         protected PermissionSetting()
         {
-            Id = SequentialGuidGenerator.Instance.Create();
+            //Id = SequentialGuidGenerator.Instance.Create();
             IsGranted = true;
         }
     }

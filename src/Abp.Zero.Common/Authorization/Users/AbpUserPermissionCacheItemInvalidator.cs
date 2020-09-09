@@ -18,12 +18,12 @@ namespace Abp.Authorization.Users
         ITransientDependency
     {
         private readonly ICacheManager _cacheManager;
-        private readonly IRepository<UserOrganizationUnit, Guid> _userOrganizationUnitRepository;
+        private readonly IRepository<UserOrganizationUnit, long> _userOrganizationUnitRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public AbpUserPermissionCacheItemInvalidator(
             ICacheManager cacheManager, 
-            IRepository<UserOrganizationUnit, Guid> userOrganizationUnitRepository, 
+            IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository, 
             IUnitOfWorkManager unitOfWorkManager)
         {
             _cacheManager = cacheManager;

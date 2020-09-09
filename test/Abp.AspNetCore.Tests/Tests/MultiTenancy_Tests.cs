@@ -25,17 +25,18 @@ namespace Abp.AspNetCore.Tests
         [Fact]
         public async Task HttpHeaderTenantResolveContributor_Test()
         {
-            Client.DefaultRequestHeaders.Add(_multiTenancyConfig.TenantIdResolveKey, "42");
+            Client.DefaultRequestHeaders.Add(_multiTenancyConfig.TenantIdResolveKey, "00000000-0000-0000-0000-000000000042");
 
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<int?>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<Guid?>>(
                 GetUrl<MultiTenancyTestController>(
                     nameof(MultiTenancyTestController.GetTenantId)
                 )
             );
 
             //Assert
-            response.Result.ShouldBe(42);
+            //response.Result.ShouldBe(42);
+            response.Result.ShouldBe(Guid.Parse("00000000-0000-0000-0000-000000000042"));
         }
 
         [Fact]
@@ -43,33 +44,35 @@ namespace Abp.AspNetCore.Tests
         {
             _multiTenancyConfig.TenantIdResolveKey = "Abp-TenantId";
 
-            Client.DefaultRequestHeaders.Add(_multiTenancyConfig.TenantIdResolveKey, "42");
+            Client.DefaultRequestHeaders.Add(_multiTenancyConfig.TenantIdResolveKey, "00000000-0000-0000-0000-000000000042");
 
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<int?>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<Guid?>>(
                 GetUrl<MultiTenancyTestController>(
                     nameof(MultiTenancyTestController.GetTenantId)
                 )
             );
 
             //Assert
-            response.Result.ShouldBe(42);
+            //response.Result.ShouldBe(42);
+            response.Result.ShouldBe(Guid.Parse("00000000-0000-0000-0000-000000000042"));
         }
 
         [Fact]
         public async Task HttpCookieTenantResolveContributor_Test()
         {
-            Client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue(_multiTenancyConfig.TenantIdResolveKey, "42").ToString());
+            Client.DefaultRequestHeaders.Add("Cookie", new CookieHeaderValue(_multiTenancyConfig.TenantIdResolveKey, "00000000-0000-0000-0000-000000000042").ToString());
 
             // Act
-            var response = await GetResponseAsObjectAsync<AjaxResponse<int?>>(
+            var response = await GetResponseAsObjectAsync<AjaxResponse<Guid?>>(
                 GetUrl<MultiTenancyTestController>(
                     nameof(MultiTenancyTestController.GetTenantId)
                 )
             );
 
             //Assert
-            response.Result.ShouldBe(42);
+            //response.Result.ShouldBe(42);
+            response.Result.ShouldBe(Guid.Parse("00000000-0000-0000-0000-000000000042"));
         }
 
         [Fact]

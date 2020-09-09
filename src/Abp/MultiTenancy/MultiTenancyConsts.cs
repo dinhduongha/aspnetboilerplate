@@ -9,6 +9,6 @@ namespace Abp.MultiTenancy
         /// <summary>
         /// Default tenant id: 1.
         /// </summary>
-        public static Guid DefaultTenantId = Guid.Empty;
+        public static Guid DefaultTenantId = Guid.Empty; /// TODO: DinhHa
     }
 }
