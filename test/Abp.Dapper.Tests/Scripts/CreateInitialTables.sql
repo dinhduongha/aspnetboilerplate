@@ -8,7 +8,7 @@
 										,	LastModifierUserId BIGINT
 										,	CreationTime DATETIME
 										,	CreatorUserId BIGINT
-										,	TenantId INTEGER NULLABLE
+										,	TenantId BIGINT NULLABLE
 										, Status BOOLEAN
 									);
 
@@ -22,13 +22,13 @@
 										,	LastModifierUserId BIGINT
 										,	CreationTime DATETIME
 										,	CreatorUserId BIGINT
-										,	TenantId INTEGER
+										,	TenantId BIGINT
 									);
 
   CREATE TABLE IF NOT EXISTS Person (
 											Id INTEGER PRIMARY KEY
 										,	Name varchar(100) 
-										,	TenantId INTEGER
+										,	TenantId BIGINT
 									);
 
  CREATE TABLE IF NOT EXISTS Goods (
@@ -42,7 +42,7 @@
 										,	CreationTime DATETIME
 										,	CreatorUserId BIGINT
 										,	ParentId INTEGER NULLABLE
-										,	TenantId INTEGER
+										,	TenantId BIGINT
 									);
 
  

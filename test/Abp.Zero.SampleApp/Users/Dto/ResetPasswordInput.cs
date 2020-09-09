@@ -2,7 +2,7 @@
 {
     public class ResetPasswordInput
     {
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public long UserId { get; set; }
 

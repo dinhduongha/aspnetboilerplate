@@ -21,12 +21,12 @@ namespace Abp.Webhooks
             return default;
         }
 
-        public Task<WebhookEvent> GetAsync(int? tenantId, Guid id)
+        public Task<WebhookEvent> GetAsync(long? tenantId, Guid id)
         {
             return Task.FromResult<WebhookEvent>(default);
         }
 
-        public WebhookEvent Get(int? tenantId, Guid id)
+        public WebhookEvent Get(long? tenantId, Guid id)
         {
             return default;
         }

@@ -52,7 +52,7 @@ namespace Abp.Tests.Notifications
         public async Task Should_PublishAsync_To_Host()
         {
             // Act
-            await _publisher.PublishAsync("TestNotification", tenantIds: new int?[] { null });
+            await _publisher.PublishAsync("TestNotification", tenantIds: new long?[] { null });
 
             // Assert
             await _store.Received()
@@ -65,7 +65,7 @@ namespace Abp.Tests.Notifications
         public void Should_Publish_To_Host()
         {
             // Act
-            _publisher.Publish("TestNotification", tenantIds: new int?[] { null });
+            _publisher.Publish("TestNotification", tenantIds: new long?[] { null });
 
             // Assert
             _store.Received()

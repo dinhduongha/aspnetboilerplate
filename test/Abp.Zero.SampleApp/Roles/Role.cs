@@ -10,7 +10,7 @@ namespace Abp.Zero.SampleApp.Roles
 
         }
 
-        public Role(int? tenantId, string name, string displayName)
+        public Role(long? tenantId, string name, string displayName)
             : base(tenantId, name, displayName)
         {
 

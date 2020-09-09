@@ -244,7 +244,7 @@ namespace Abp.Notifications
             return userIds.ToArray();
         }
 
-        private static int?[] GetTenantIds(NotificationInfo notificationInfo)
+        private static long?[] GetTenantIds(NotificationInfo notificationInfo)
         {
             if (notificationInfo.TenantIds.IsNullOrEmpty())
             {
@@ -254,7 +254,7 @@ namespace Abp.Notifications
             return notificationInfo
                 .TenantIds
                 .Split(",")
-                .Select(tenantIdAsStr => tenantIdAsStr == "null" ? (int?)null : (int?)tenantIdAsStr.To<int>())
+                .Select(tenantIdAsStr => tenantIdAsStr == "null" ? (long?)null : (long?)tenantIdAsStr.To<long>())
                 .ToArray();
         }
 

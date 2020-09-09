@@ -37,7 +37,7 @@ namespace Abp.Runtime.Security
             return Convert.ToInt64(userIdOrNull.Value);
         }
 
-        public static int? GetTenantId(this IIdentity identity)
+        public static long? GetTenantId(this IIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
 
@@ -49,7 +49,7 @@ namespace Abp.Runtime.Security
                 return null;
             }
 
-            return Convert.ToInt32(tenantIdOrNull.Value);
+            return Convert.ToInt64(tenantIdOrNull.Value);
         }
 
         public static long? GetImpersonatorUserId(this IIdentity identity)
@@ -67,7 +67,7 @@ namespace Abp.Runtime.Security
             return Convert.ToInt64(userIdOrNull.Value);
         }
 
-        public static int? GetImpersonatorTenantId(this IIdentity identity)
+        public static long? GetImpersonatorTenantId(this IIdentity identity)
         {
             Check.NotNull(identity, nameof(identity));
 
@@ -79,7 +79,7 @@ namespace Abp.Runtime.Security
                 return null;
             }
 
-            return Convert.ToInt32(tenantIdOrNull.Value);
+            return Convert.ToInt64(tenantIdOrNull.Value);
         }
     }
 }

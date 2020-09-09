@@ -87,7 +87,7 @@ namespace Abp.Zero.SampleApp.Tests.Localization
             await Should_Get_Only_Active_Languages(_defaultTenant.Id);
         }
 
-        private async Task Should_Get_Only_Active_Languages(int? tenantId)
+        private async Task Should_Get_Only_Active_Languages(long? tenantId)
         {
             var allLanguages = await _languageManager.GetLanguagesAsync(tenantId);
             allLanguages.ShouldNotBeEmpty("Can not check that without any languages");

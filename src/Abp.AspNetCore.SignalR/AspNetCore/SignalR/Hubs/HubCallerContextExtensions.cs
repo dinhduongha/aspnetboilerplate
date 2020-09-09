@@ -7,7 +7,7 @@ namespace Abp.AspNetCore.SignalR.Hubs
 {
     public static class HubCallerContextExtensions
     {
-        public static int? GetTenantId(this HubCallerContext context)
+        public static long? GetTenantId(this HubCallerContext context)
         {
             if (context?.User == null)
             {
@@ -20,7 +20,7 @@ namespace Abp.AspNetCore.SignalR.Hubs
                 return null;
             }
 
-            return Convert.ToInt32(tenantIdClaim.Value);
+            return Convert.ToInt64(tenantIdClaim.Value);
         }
 
         public static long? GetUserIdOrNull(this HubCallerContext context)
@@ -84,7 +84,7 @@ namespace Abp.AspNetCore.SignalR.Hubs
                 return null;
             }
 
-            return Convert.ToInt32(impersonatorTenantIdClaim.Value);
+            return Convert.ToInt64(impersonatorTenantIdClaim.Value);
         }
 
         public static UserIdentifier ToUserIdentifier(this HubCallerContext context)

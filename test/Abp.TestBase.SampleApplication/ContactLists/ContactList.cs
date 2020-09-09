@@ -8,7 +8,7 @@ namespace Abp.TestBase.SampleApplication.ContactLists
     [Table("ContactLists")]
     public class ContactList : Entity, IMustHaveTenant
     {
-        public virtual int TenantId { get; set; }
+        public virtual long TenantId { get; set; }
 
         public virtual string Name { get; set; }
 

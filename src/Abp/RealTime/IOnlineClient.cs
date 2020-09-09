@@ -21,7 +21,7 @@ namespace Abp.RealTime
         /// <summary>
         /// Tenant Id.
         /// </summary>
-        int? TenantId { get; }
+        long? TenantId { get; }
 
         /// <summary>
         /// User Id.

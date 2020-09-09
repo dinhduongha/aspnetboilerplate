@@ -144,7 +144,7 @@ namespace Abp.Zero
             });
         }
 
-        protected IDisposable UsingTenantId(int? tenantId)
+        protected IDisposable UsingTenantId(long? tenantId)
         {
             var previousTenantId = AbpSession.TenantId;
             AbpSession.TenantId = tenantId;
@@ -171,7 +171,7 @@ namespace Abp.Zero
             return UsingDbContextAsync(AbpSession.TenantId, func);
         }
 
-        protected void UsingDbContext(int? tenantId, Action<SampleAppDbContext> action)
+        protected void UsingDbContext(long? tenantId, Action<SampleAppDbContext> action)
         {
             using (UsingTenantId(tenantId))
             {
@@ -183,7 +183,7 @@ namespace Abp.Zero
             }
         }
 
-        protected async Task UsingDbContextAsync(int? tenantId, Func<SampleAppDbContext, Task> action)
+        protected async Task UsingDbContextAsync(long? tenantId, Func<SampleAppDbContext, Task> action)
         {
             using (UsingTenantId(tenantId))
             {
@@ -195,7 +195,7 @@ namespace Abp.Zero
             }
         }
 
-        protected T UsingDbContext<T>(int? tenantId, Func<SampleAppDbContext, T> func)
+        protected T UsingDbContext<T>(long? tenantId, Func<SampleAppDbContext, T> func)
         {
             T result;
 
@@ -211,7 +211,7 @@ namespace Abp.Zero
             return result;
         }
 
-        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<SampleAppDbContext, Task<T>> func)
+        protected async Task<T> UsingDbContextAsync<T>(long? tenantId, Func<SampleAppDbContext, Task<T>> func)
         {
             T result;
 

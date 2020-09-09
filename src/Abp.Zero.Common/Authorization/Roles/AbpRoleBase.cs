@@ -27,7 +27,7 @@ namespace Abp.Authorization.Roles
         /// <summary>
         /// Tenant's Id, if this role is a tenant-level role. Null, if not.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// Unique name of this role.
@@ -66,14 +66,14 @@ namespace Abp.Authorization.Roles
             Name = Guid.NewGuid().ToString("N");
         }
 
-        protected AbpRoleBase(int? tenantId, string displayName)
+        protected AbpRoleBase(long? tenantId, string displayName)
             : this()
         {
             TenantId = tenantId;
             DisplayName = displayName;
         }
 
-        protected AbpRoleBase(int? tenantId, string name, string displayName)
+        protected AbpRoleBase(long? tenantId, string name, string displayName)
             : this(tenantId, displayName)
         {
             Name = name;

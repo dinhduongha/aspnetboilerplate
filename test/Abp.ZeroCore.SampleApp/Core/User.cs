@@ -9,7 +9,7 @@ namespace Abp.ZeroCore.SampleApp.Core
             return string.Format("[User {0}] {1}", Id, UserName);
         }
 
-        public static User CreateTenantAdminUser(int tenantId, string emailAddress)
+        public static User CreateTenantAdminUser(long tenantId, string emailAddress)
         {
             var user = new User
             {

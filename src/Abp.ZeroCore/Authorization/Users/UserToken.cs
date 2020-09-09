@@ -27,7 +27,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public const int MaxValueLength = 512;
 
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the primary key of the user that the token belongs to.

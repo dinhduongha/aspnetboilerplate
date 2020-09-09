@@ -23,7 +23,7 @@ namespace Abp.Application.Features
         /// </summary>
         public const int MaxValueLength = 2000;
 
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// Feature name.

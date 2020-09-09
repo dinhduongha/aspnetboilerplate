@@ -39,7 +39,7 @@ namespace Abp.Organizations
         /// <summary>
         /// TenantId of this entity.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// Parent <see cref="OrganizationUnit"/>.
@@ -90,7 +90,7 @@ namespace Abp.Organizations
         /// <param name="tenantId">Tenant's Id or null for host.</param>
         /// <param name="displayName">Display name.</param>
         /// <param name="parentId">Parent's Id or null if OU is a root.</param>
-        public OrganizationUnit(int? tenantId, string displayName, long? parentId = null)
+        public OrganizationUnit(long? tenantId, string displayName, long? parentId = null)
         {
             TenantId = tenantId;
             DisplayName = displayName;

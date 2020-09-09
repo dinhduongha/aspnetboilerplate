@@ -6,7 +6,7 @@ namespace Abp.Authorization
 {
     internal static class AbpZeroClaimsIdentityHelper
     {
-        public static int? GetTenantId(ClaimsPrincipal principal)
+        public static long? GetTenantId(ClaimsPrincipal principal)
         {
             var tenantIdOrNull = principal?.FindFirstValue(AbpClaimTypes.TenantId);
             if (tenantIdOrNull == null)
@@ -14,7 +14,7 @@ namespace Abp.Authorization
                 return null;
             }
 
-            return Convert.ToInt32(tenantIdOrNull);
+            return Convert.ToInt64(tenantIdOrNull);
         }
     }
 }

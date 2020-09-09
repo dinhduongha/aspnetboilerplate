@@ -17,7 +17,7 @@ namespace Abp.EntityFrameworkCore.Tests.Domain
 
         public bool IsDeleted { get; set; }
 
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 

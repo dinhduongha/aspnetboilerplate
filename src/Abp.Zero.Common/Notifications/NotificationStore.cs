@@ -174,7 +174,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual async Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(int?[] tenantIds, string notificationName, string entityTypeName, string entityId)
+        public virtual async Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(long?[] tenantIds, string notificationName, string entityTypeName, string entityId)
         {
             var subscriptions = new List<NotificationSubscriptionInfo>();
 
@@ -187,7 +187,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual List<NotificationSubscriptionInfo> GetSubscriptions(int?[] tenantIds, string notificationName, string entityTypeName, string entityId)
+        public virtual List<NotificationSubscriptionInfo> GetSubscriptions(long?[] tenantIds, string notificationName, string entityTypeName, string entityId)
         {
             var subscriptions = new List<NotificationSubscriptionInfo>();
 
@@ -218,7 +218,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        protected virtual async Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(int? tenantId, string notificationName, string entityTypeName, string entityId)
+        protected virtual async Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(long? tenantId, string notificationName, string entityTypeName, string entityId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -231,7 +231,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        protected virtual List<NotificationSubscriptionInfo> GetSubscriptions(int? tenantId, string notificationName, string entityTypeName, string entityId)
+        protected virtual List<NotificationSubscriptionInfo> GetSubscriptions(long? tenantId, string notificationName, string entityTypeName, string entityId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -272,7 +272,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual async Task UpdateUserNotificationStateAsync(int? tenantId, Guid userNotificationId, UserNotificationState state)
+        public virtual async Task UpdateUserNotificationStateAsync(long? tenantId, Guid userNotificationId, UserNotificationState state)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -288,7 +288,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual void UpdateUserNotificationState(int? tenantId, Guid userNotificationId, UserNotificationState state)
+        public virtual void UpdateUserNotificationState(long? tenantId, Guid userNotificationId, UserNotificationState state)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -336,7 +336,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual async Task DeleteUserNotificationAsync(int? tenantId, Guid userNotificationId)
+        public virtual async Task DeleteUserNotificationAsync(long? tenantId, Guid userNotificationId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -346,7 +346,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual void DeleteUserNotification(int? tenantId, Guid userNotificationId)
+        public virtual void DeleteUserNotification(long? tenantId, Guid userNotificationId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -499,7 +499,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual Task<UserNotificationInfoWithNotificationInfo> GetUserNotificationWithNotificationOrNullAsync(int? tenantId, Guid userNotificationId)
+        public virtual Task<UserNotificationInfoWithNotificationInfo> GetUserNotificationWithNotificationOrNullAsync(long? tenantId, Guid userNotificationId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {
@@ -519,7 +519,7 @@ namespace Abp.Notifications
         }
 
         [UnitOfWork]
-        public virtual UserNotificationInfoWithNotificationInfo GetUserNotificationWithNotificationOrNull(int? tenantId, Guid userNotificationId)
+        public virtual UserNotificationInfoWithNotificationInfo GetUserNotificationWithNotificationOrNull(long? tenantId, Guid userNotificationId)
         {
             using (_unitOfWorkManager.Current.SetTenantId(tenantId))
             {

@@ -16,14 +16,14 @@ namespace Abp.DynamicEntityProperties
 
         public virtual DynamicEntityProperty DynamicEntityProperty { get; set; }
 
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public DynamicEntityPropertyValue()
         {
 
         }
 
-        public DynamicEntityPropertyValue(DynamicEntityProperty dynamicEntityProperty, string entityId, string value, int? tenantId)
+        public DynamicEntityPropertyValue(DynamicEntityProperty dynamicEntityProperty, string entityId, string value, long? tenantId)
         {
             DynamicEntityPropertyId = dynamicEntityProperty.Id;
             EntityId = entityId;

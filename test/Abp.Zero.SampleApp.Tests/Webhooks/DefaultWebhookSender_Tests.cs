@@ -18,8 +18,8 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             : base(Substitute.For<IWebhooksConfiguration>())
         {
             WebhookSendAttemptStore = Substitute.For<IWebhookSendAttemptStore>();
-            WebhookSendAttemptStore.GetSendAttemptCountAsync(Arg.Any<int?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(Task.FromResult(0));
-            WebhookSendAttemptStore.GetSendAttemptCount(Arg.Any<int?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(0);
+            WebhookSendAttemptStore.GetSendAttemptCountAsync(Arg.Any<long?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(Task.FromResult(0));
+            WebhookSendAttemptStore.GetSendAttemptCount(Arg.Any<long?>(), Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(0);
         }
 
         [Fact]

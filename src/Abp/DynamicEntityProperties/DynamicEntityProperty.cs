@@ -12,7 +12,7 @@ namespace Abp.DynamicEntityProperties
         [Required]
         public int DynamicPropertyId { get; set; }
 
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
         
         [ForeignKey("DynamicPropertyId")]
         public virtual DynamicProperty DynamicProperty { get; set; }

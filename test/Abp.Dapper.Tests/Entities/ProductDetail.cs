@@ -21,6 +21,6 @@ namespace Abp.Dapper.Tests.Entities
         [Required]
         public string Gender { get; set; }
 
-        public int TenantId { get; set; }
+        public long TenantId { get; set; }
     }
 }

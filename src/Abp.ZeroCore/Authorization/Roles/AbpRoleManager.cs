@@ -387,7 +387,7 @@ namespace Abp.Authorization.Roles
         }
 
         [UnitOfWork]
-        public virtual async Task<IdentityResult> CreateStaticRoles(int tenantId)
+        public virtual async Task<IdentityResult> CreateStaticRoles(long tenantId)
         {
             var staticRoleDefinitions = RoleManagementConfig.StaticRoles.Where(sr => sr.Side == MultiTenancySides.Tenant);
 
@@ -515,7 +515,7 @@ namespace Abp.Authorization.Roles
                    ) > 0;
         }
 
-        public virtual async Task AddToOrganizationUnitAsync(int roleId, long ouId, int? tenantId)
+        public virtual async Task AddToOrganizationUnitAsync(int roleId, long ouId, long? tenantId)
         {
             await AddToOrganizationUnitAsync(
                 await GetRoleByIdAsync(roleId),
@@ -658,7 +658,7 @@ namespace Abp.Authorization.Roles
             return LocalizationManager.GetString(LocalizationSourceName, name, cultureInfo);
         }
 
-        private int? GetCurrentTenantId()
+        private long? GetCurrentTenantId()
         {
             if (_unitOfWorkManager.Current != null)
             {

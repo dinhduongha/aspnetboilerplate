@@ -58,6 +58,6 @@ namespace Abp.EntityHistory
         /// <summary>
         /// TenantId.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
     }
 }

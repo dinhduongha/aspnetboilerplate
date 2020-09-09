@@ -13,7 +13,7 @@ namespace Abp.DynamicEntityProperties
         [Required(AllowEmptyStrings = false)]
         public string Value { get; set; }
 
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public int DynamicPropertyId { get; set; }
 
@@ -24,7 +24,7 @@ namespace Abp.DynamicEntityProperties
         {
         }
 
-        public DynamicPropertyValue(DynamicProperty dynamicProperty, string value, int? tenantId)
+        public DynamicPropertyValue(DynamicProperty dynamicProperty, string value, long? tenantId)
         {
             Value = value;
             TenantId = tenantId;

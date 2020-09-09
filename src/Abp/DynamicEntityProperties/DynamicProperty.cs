@@ -13,7 +13,7 @@ namespace Abp.DynamicEntityProperties
 
         public string Permission { get; set; }
         
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public virtual ICollection<DynamicPropertyValue> DynamicPropertyValues { get; set; }
     }

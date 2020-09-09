@@ -13,7 +13,7 @@ namespace Abp.Organizations
         /// <summary>
         /// TenantId of this entity.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// Id of the Role.
@@ -44,7 +44,7 @@ namespace Abp.Organizations
         /// <param name="tenantId">TenantId</param>
         /// <param name="roleId">Id of the User.</param>
         /// <param name="organizationUnitId">Id of the <see cref="OrganizationUnit"/>.</param>
-        public OrganizationUnitRole(int? tenantId, int roleId, long organizationUnitId)
+        public OrganizationUnitRole(long? tenantId, int roleId, long organizationUnitId)
         {
             TenantId = tenantId;
             RoleId = roleId;

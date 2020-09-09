@@ -24,7 +24,7 @@ namespace Abp.ZeroCore.SampleApp.EntityFramework.Seed.Host
             AddSettingIfNotExists(LocalizationSettingNames.DefaultLanguage, "en");
         }
 
-        private void AddSettingIfNotExists(string name, string value, int? tenantId = null)
+        private void AddSettingIfNotExists(string name, string value, long? tenantId = null)
         {
             if (_context.Settings.Any(s => s.Name == name && s.TenantId == tenantId && s.UserId == null))
             {

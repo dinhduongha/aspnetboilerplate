@@ -48,7 +48,7 @@ namespace Abp.Dapper.Filters.Action
             }
         }
 
-        protected virtual int? GetCurrentTenantIdOrNull()
+        protected virtual long? GetCurrentTenantIdOrNull()
         {
             if (CurrentUnitOfWorkProvider?.Current != null)
             {

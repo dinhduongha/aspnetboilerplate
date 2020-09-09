@@ -14,7 +14,7 @@ namespace Abp.Authorization.Users
         /// </summary>
         public const int MaxClaimTypeLength = 256;
 
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         public virtual long UserId { get; set; }
 

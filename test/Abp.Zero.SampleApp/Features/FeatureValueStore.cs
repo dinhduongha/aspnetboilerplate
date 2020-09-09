@@ -12,7 +12,7 @@ namespace Abp.Zero.SampleApp.Features
     {
         public FeatureValueStore(ICacheManager cacheManager,
             IRepository<TenantFeatureSetting, long> tenantFeatureRepository,
-            IRepository<Tenant> tenantRepository,
+            IRepository<Tenant, long> tenantRepository,
             IRepository<EditionFeatureSetting, long> editionFeatureRepository,
             IFeatureManager featureManager,
             IUnitOfWorkManager unitOfWorkManager)

@@ -15,7 +15,7 @@ namespace Abp.Web.MultiTenancy
             _multiTenancyConfig = multiTenancyConfig;
         }
 
-        public int? ResolveTenantId()
+        public long? ResolveTenantId()
         {
             var cookie = HttpContext.Current?.Request.Cookies[_multiTenancyConfig.TenantIdResolveKey];
             if (cookie == null || cookie.Value.IsNullOrEmpty())
@@ -23,7 +23,7 @@ namespace Abp.Web.MultiTenancy
                 return null;
             }
 
-            return int.TryParse(cookie.Value, out var tenantId) ? tenantId : (int?) null;
+            return long.TryParse(cookie.Value, out var tenantId) ? tenantId : (long?) null;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Abp.Zero.Tenants
         private readonly ICacheManager _cacheManager;
         private readonly FeatureValueStore _featureValueStore;
         private readonly IRepository<TenantFeatureSetting, long> _tenantFeatureRepository;
-        private readonly IRepository<Tenant> _tenantRepository;
+        private readonly IRepository<Tenant, long> _tenantRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public FeatureValueStoreTests()
@@ -23,7 +23,7 @@ namespace Abp.Zero.Tenants
             _cacheManager = Resolve<ICacheManager>();
             _featureValueStore = Resolve<FeatureValueStore>();
             _tenantFeatureRepository = Resolve<IRepository<TenantFeatureSetting, long>>();
-            _tenantRepository = Resolve<IRepository<Tenant>>();
+            _tenantRepository = Resolve<IRepository<Tenant, long>>();
             _unitOfWorkManager = Resolve<IUnitOfWorkManager>();
         }
 

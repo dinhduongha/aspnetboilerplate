@@ -23,7 +23,7 @@ namespace Abp.Zero.SampleApp.EntityHistory
 
         public bool IsDeleted { get; set; }
 
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public Post()
         {

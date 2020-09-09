@@ -208,7 +208,7 @@ namespace Abp.Zero.EntityHistory
             _entityHistoryStore.When(x => x.Save(Arg.Any<EntityChangeSet>()))
                 .Do(callback => entityHistoryStore.Save(callback.Arg<EntityChangeSet>()));
 
-            const int tenantId = 1;
+            const long tenantId = 1;
 
             UsingDbContext(tenantId, (context) =>
             {

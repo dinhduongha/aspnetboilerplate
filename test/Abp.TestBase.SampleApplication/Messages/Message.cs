@@ -7,7 +7,7 @@ namespace Abp.TestBase.SampleApplication.Messages
     [Table("Messages")]
     public class Message : FullAuditedEntity, IMayHaveTenant
     {
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         public string Text { get; set; }
 
@@ -16,7 +16,7 @@ namespace Abp.TestBase.SampleApplication.Messages
 
         }
 
-        public Message(int? tenantId, string text)
+        public Message(long? tenantId, string text)
         {
             TenantId = tenantId;
             Text = text;

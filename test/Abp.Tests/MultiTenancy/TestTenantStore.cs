@@ -11,7 +11,7 @@ namespace Abp.Tests.MultiTenancy
             new TenantInfo(1, "Default")
         };
 
-        public TenantInfo Find(int tenantId)
+        public TenantInfo Find(long tenantId)
         {
             return _tenants.FirstOrDefault(t => t.Id == tenantId);
         }

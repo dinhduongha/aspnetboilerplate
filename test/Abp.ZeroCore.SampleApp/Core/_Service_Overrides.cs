@@ -69,7 +69,7 @@ namespace Abp.ZeroCore.SampleApp.Core
     public class TenantManager : AbpTenantManager<Tenant, User>
     {
         public TenantManager(
-            IRepository<Tenant> tenantRepository,
+            IRepository<Tenant, long> tenantRepository,
             IRepository<TenantFeatureSetting, long> tenantFeatureRepository,
             EditionManager editionManager,
             IAbpZeroFeatureValueStore featureValueStore) :
@@ -131,7 +131,7 @@ namespace Abp.ZeroCore.SampleApp.Core
         public LogInManager(
             AbpUserManager<Role, User> userManager,
             IMultiTenancyConfig multiTenancyConfig,
-            IRepository<Tenant> tenantRepository,
+            IRepository<Tenant, long> tenantRepository,
             IUnitOfWorkManager unitOfWorkManager,
             ISettingManager settingManager,
             IRepository<UserLoginAttempt, long> userLoginAttemptRepository,
@@ -168,7 +168,7 @@ namespace Abp.ZeroCore.SampleApp.Core
     {
         public FeatureValueStore(ICacheManager cacheManager,
             IRepository<TenantFeatureSetting, long> tenantFeatureRepository,
-            IRepository<Tenant> tenantRepository,
+            IRepository<Tenant, long> tenantRepository,
             IRepository<EditionFeatureSetting, long> editionFeatureRepository,
             IFeatureManager featureManager,
             IUnitOfWorkManager unitOfWorkManager)

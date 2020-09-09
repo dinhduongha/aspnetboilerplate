@@ -13,7 +13,7 @@ namespace Abp.AspNetCore.App.MultiTenancy
             new TenantInfo(43, "vlsft")
         };
 
-        public TenantInfo Find(int tenantId)
+        public TenantInfo Find(long tenantId)
         {
             return _tenants.FirstOrDefault(t => t.Id == tenantId);
         }

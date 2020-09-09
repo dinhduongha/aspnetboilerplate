@@ -10,7 +10,7 @@ namespace Abp.Authorization.Users
     [Table("AbpUserRoles")]
     public class UserRole : CreationAuditedEntity<long>, IMayHaveTenant
     {
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// User id.
@@ -36,7 +36,7 @@ namespace Abp.Authorization.Users
         /// <param name="tenantId">Tenant id</param>
         /// <param name="userId">User id</param>
         /// <param name="roleId">Role id</param>
-        public UserRole(int? tenantId, long userId, int roleId)
+        public UserRole(long? tenantId, long userId, int roleId)
         {
             TenantId = tenantId;
             UserId = userId;

@@ -9,7 +9,7 @@ namespace Abp.Zero.NHibernate.EntityMappings
     /// </summary>
     /// <typeparam name="TTenant">Tenant type</typeparam>
     /// <typeparam name="TUser">User type</typeparam>
-    public abstract class AbpTenantMap<TTenant, TUser> : EntityMap<TTenant>
+    public abstract class AbpTenantMap<TTenant, TUser> : EntityMap<TTenant, long>
         where TTenant : AbpTenant<TUser>
         where TUser : AbpUser<TUser>
     {

@@ -21,7 +21,7 @@ namespace Abp.Tests.RealTime
         [Fact]
         public void Test_All()
         {
-            int tenantId = 1;
+            long tenantId = 1;
 
             Dictionary<string, int> connections = new Dictionary<string, int>();
 

@@ -9,7 +9,7 @@ namespace Abp.Zero.FluentMigrator.Migrations
         public override void Up()
         {
             Create.Table("AbpTenants")
-                .WithIdAsInt32()
+                .WithIdAsInt64()
                 .WithColumn("TenancyName").AsString(32).NotNullable()
                 .WithColumn("Name").AsString(128).NotNullable()
                 .WithCreationTimeColumn();

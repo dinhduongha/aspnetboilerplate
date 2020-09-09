@@ -61,7 +61,7 @@ namespace Abp.EntityHistory
         /// <summary>
         /// ImpersonatorTenantId.
         /// </summary>
-        public virtual int? ImpersonatorTenantId { get; set; }
+        public virtual long? ImpersonatorTenantId { get; set; }
 
         /// <summary>
         /// ImpersonatorUserId.
@@ -77,7 +77,7 @@ namespace Abp.EntityHistory
         /// <summary>
         /// TenantId.
         /// </summary>
-        public virtual int? TenantId { get; set; }
+        public virtual long? TenantId { get; set; }
 
         /// <summary>
         /// UserId.

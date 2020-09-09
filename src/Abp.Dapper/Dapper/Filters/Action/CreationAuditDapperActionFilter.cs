@@ -83,7 +83,7 @@ namespace Abp.Dapper.Filters.Action
                 return;
             }
 
-            int? currentTenantId = GetCurrentTenantIdOrNull();
+            long? currentTenantId = GetCurrentTenantIdOrNull();
 
             if (currentTenantId != null)
             {

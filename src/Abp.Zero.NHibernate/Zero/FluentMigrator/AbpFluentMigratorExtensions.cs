@@ -97,7 +97,7 @@ namespace Abp.Zero.FluentMigrator
         public static ICreateTableColumnOptionOrForeignKeyCascadeOrWithColumnSyntax WithTenantIdAsRequired(this ICreateTableWithColumnSyntax table)
         {
             return table
-                .WithColumn("TenantId").AsInt32().NotNullable().ForeignKey("AbpTenants", "Id");
+                .WithColumn("TenantId").AsInt64().NotNullable().ForeignKey("AbpTenants", "Id");
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Abp.Zero.FluentMigrator
         public static ICreateTableColumnOptionOrForeignKeyCascadeOrWithColumnSyntax WithTenantIdAsNullable(this ICreateTableWithColumnSyntax table)
         {
             return table
-                .WithColumn("TenantId").AsInt32().Nullable().ForeignKey("AbpTenants", "Id");
+                .WithColumn("TenantId").AsInt64().Nullable().ForeignKey("AbpTenants", "Id");
         }
 
         public static ICreateTableColumnOptionOrForeignKeyCascadeOrWithColumnSyntax WithUserId(this ICreateTableWithColumnSyntax table)
@@ -186,13 +186,13 @@ namespace Abp.Zero.FluentMigrator
         public static IAlterTableColumnOptionOrAddColumnOrAlterColumnSyntax AddTenantIdColumnAsRequired(this IAlterTableAddColumnOrAlterColumnSyntax table)
         {
             return table
-                .AddColumn("TenantId").AsInt32().NotNullable().ForeignKey("AbpTenants", "Id");
+                .AddColumn("TenantId").AsInt64().NotNullable().ForeignKey("AbpTenants", "Id");
         }
 
         public static IAlterTableColumnOptionOrAddColumnOrAlterColumnSyntax AddTenantIdColumnAsNullable(this IAlterTableAddColumnOrAlterColumnSyntax table)
         {
             return table
-                .AddColumn("TenantId").AsInt32().Nullable().ForeignKey("AbpTenants", "Id");
+                .AddColumn("TenantId").AsInt64().Nullable().ForeignKey("AbpTenants", "Id");
         }
 
         #endregion

@@ -9,12 +9,12 @@ namespace Abp.Zero.SampleApp.Tests.MultiTenancy
     public class TenantCache_Tests : SampleAppTestBase
     {
         private readonly ITenantCache _tenantCache;
-        private readonly IRepository<Tenant> _tenantRepository;
+        private readonly IRepository<Tenant, long> _tenantRepository;
 
         public TenantCache_Tests()
         {
             _tenantCache = Resolve<ITenantCache>();
-            _tenantRepository = Resolve<IRepository<Tenant>>();
+            _tenantRepository = Resolve<IRepository<Tenant, long>>();
         }
 
         [Fact]

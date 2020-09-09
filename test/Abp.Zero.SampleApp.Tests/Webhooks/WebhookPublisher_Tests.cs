@@ -320,7 +320,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var webhookSendAttemptStore = RegisterFake<IWebhookSendAttemptStore>();
             webhookSendAttemptStore
-                .HasXConsecutiveFail(Arg.Any<int?>(), Arg.Any<Guid>(), Arg.Any<int>())
+                .HasXConsecutiveFail(Arg.Any<long?>(), Arg.Any<Guid>(), Arg.Any<int>())
                 .Returns(true);
 
             var webhookSubscriptionManager = Resolve<IWebhookSubscriptionManager>();
@@ -605,7 +605,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 
             var webhookSendAttemptStore = RegisterFake<IWebhookSendAttemptStore>();
             webhookSendAttemptStore
-                .HasXConsecutiveFail(Arg.Any<int?>(), Arg.Any<Guid>(), Arg.Any<int>())
+                .HasXConsecutiveFail(Arg.Any<long?>(), Arg.Any<Guid>(), Arg.Any<int>())
                 .Returns(true);
 
             var webhookSubscriptionManager = Resolve<IWebhookSubscriptionManager>();

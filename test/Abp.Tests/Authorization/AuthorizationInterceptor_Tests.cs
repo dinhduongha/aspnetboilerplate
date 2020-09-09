@@ -149,8 +149,8 @@ namespace Abp.Tests.Authorization
 
         private void EmptySession()
         {
-            LocalIocManager.Resolve<IAbpSession>().TenantId.Returns((int?) null);
-            LocalIocManager.Resolve<IAbpSession>().UserId.Returns((int?) null);
+            LocalIocManager.Resolve<IAbpSession>().TenantId.Returns((long?) null);
+            LocalIocManager.Resolve<IAbpSession>().UserId.Returns((long?) null);
         }
 
         public class MyTestClassToBeAuthorized_Sync

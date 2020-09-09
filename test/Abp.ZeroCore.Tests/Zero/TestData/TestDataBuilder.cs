@@ -5,9 +5,9 @@ namespace Abp.Zero.TestData
     public class TestDataBuilder
     {
         private readonly SampleAppDbContext _context;
-        private readonly int _tenantId;
+        private readonly long _tenantId;
 
-        public TestDataBuilder(SampleAppDbContext context, int tenantId)
+        public TestDataBuilder(SampleAppDbContext context, long tenantId)
         {
             _context = context;
             _tenantId = tenantId;

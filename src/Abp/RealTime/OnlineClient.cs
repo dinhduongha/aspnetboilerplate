@@ -24,7 +24,7 @@ namespace Abp.RealTime
         /// <summary>
         /// Tenant Id.
         /// </summary>
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         /// <summary>
         /// User Id.
@@ -78,7 +78,7 @@ namespace Abp.RealTime
         /// <param name="ipAddress">The ip address.</param>
         /// <param name="tenantId">The tenant identifier.</param>
         /// <param name="userId">The user identifier.</param>
-        public OnlineClient(string connectionId, string ipAddress, int? tenantId, long? userId)
+        public OnlineClient(string connectionId, string ipAddress, long? tenantId, long? userId)
             : this()
         {
             ConnectionId = connectionId;

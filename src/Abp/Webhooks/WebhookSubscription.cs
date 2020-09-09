@@ -10,7 +10,7 @@ namespace Abp.Webhooks
         /// <summary>
         /// Tenant id of the subscribed.
         /// </summary>
-        public int? TenantId { get; set; }
+        public long? TenantId { get; set; }
 
         /// <summary>
         /// Subscription webhook endpoint

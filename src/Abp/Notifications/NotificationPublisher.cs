@@ -62,7 +62,7 @@ namespace Abp.Notifications
             NotificationSeverity severity = NotificationSeverity.Info,
             UserIdentifier[] userIds = null,
             UserIdentifier[] excludedUserIds = null,
-            int?[] tenantIds = null)
+            long?[] tenantIds = null)
         {
             if (notificationName.IsNullOrEmpty())
             {
@@ -128,7 +128,7 @@ namespace Abp.Notifications
             NotificationSeverity severity = NotificationSeverity.Info,
             UserIdentifier[] userIds = null,
             UserIdentifier[] excludedUserIds = null,
-            int?[] tenantIds = null)
+            long?[] tenantIds = null)
         {
             if (notificationName.IsNullOrEmpty())
             {
@@ -190,7 +190,7 @@ namespace Abp.Notifications
         /// </summary>
         /// <param name="tenantIds"></param>
         /// <seealso cref="DefaultNotificationDistributer.GetTenantIds"/>
-        private static string GetTenantIdsAsStr(int?[] tenantIds)
+        private static string GetTenantIdsAsStr(long?[] tenantIds)
         {
             if (tenantIds.IsNullOrEmpty())
             {

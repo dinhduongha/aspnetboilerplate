@@ -15,7 +15,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
 {
     public class WebhookSubscriptionManager_Tests : WebhookTestBase
     {
-        private WebhookSubscription NewWebhookSubscription(int? tenantId, params string[] webhookDefinitions)
+        private WebhookSubscription NewWebhookSubscription(long? tenantId, params string[] webhookDefinitions)
         {
             return new WebhookSubscription
             {
@@ -29,7 +29,7 @@ namespace Abp.Zero.SampleApp.Tests.Webhooks
             };
         }
 
-        private WebhookSubscription NewWebhookSubscription(string seed, int? tenantId, params string[] webhookDefinitions)
+        private WebhookSubscription NewWebhookSubscription(string seed, long? tenantId, params string[] webhookDefinitions)
         {
             return new WebhookSubscription
             {

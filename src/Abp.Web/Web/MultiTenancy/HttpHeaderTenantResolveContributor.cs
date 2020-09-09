@@ -20,7 +20,7 @@ namespace Abp.Web.MultiTenancy
             Logger = NullLogger.Instance;
         }
 
-        public int? ResolveTenantId()
+        public long? ResolveTenantId()
         {
             var httpContext = HttpContext.Current;
             if (httpContext == null)
@@ -34,7 +34,7 @@ namespace Abp.Web.MultiTenancy
                 return null;
             }
 
-            return int.TryParse(tenantIdHeader, out var tenantId) ? tenantId : (int?) null;
+            return long.TryParse(tenantIdHeader, out var tenantId) ? tenantId : (long?) null;
         }
     }
 }
