@@ -179,7 +179,7 @@ namespace Abp.TestBase.SampleApplication.Tests.People
                 {
                     eventData.Entity.Name.ShouldBe("halil");
                     eventData.Entity.CreatorUserId.ShouldNotBeNull();
-                    eventData.Entity.CreatorUserId.ShouldBe(new Guid("0171acb4-f54c-23a1-0983-3d39d5f98e00"));
+                    eventData.Entity.CreatorUserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042"));
                     triggerCount++;
                 });
 

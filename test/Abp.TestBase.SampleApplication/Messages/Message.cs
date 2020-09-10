@@ -14,12 +14,13 @@ namespace Abp.TestBase.SampleApplication.Messages
 
         public Message()
         {
-
+            Id = SequentialGuidGenerator.Instance.Create();
         }
 
         public Message(Guid? tenantId, string text)
         {
             TenantId = tenantId;
+            Id = SequentialGuidGenerator.Instance.Create();
             Text = text;
         }
     }

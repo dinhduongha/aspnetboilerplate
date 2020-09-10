@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Abp.Configuration.Startup;
 using Abp.TestBase;
 using Abp.Web.Configuration;
 using Shouldly;
@@ -69,6 +70,7 @@ namespace Abp.Web.Common.Tests.Configuration
 
         private void LoginAsDefaultTenantAdmin()
         {
+            Resolve<IMultiTenancyConfig>().IsEnabled = true;
             AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000002");
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
         }

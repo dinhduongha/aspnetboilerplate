@@ -27,6 +27,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Messages
                     context.Messages.Add(
                         new Message
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000001"),
                             TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                             Text = "tenant-1-message-1"
                         });
@@ -34,6 +35,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Messages
                     context.Messages.Add(
                         new Message
                         {
+                            Id = new Guid("00000000-0000-0000-0000-000000000002"),
                             TenantId = new Guid("00000000-0000-0000-0000-000000000001"),
                             Text = "tenant-1-message-2"
                         });
@@ -98,7 +100,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Messages
         [Fact]
         public async Task Should_Get_All_Messages_With_Filtering_Async()
         {
-            AbpSession.UserId = new Guid("0171acb0-bd2b-3b81-0bd0-1e5a1fb21300"); // 42
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000042"); // 42
 
             //Act
 
@@ -184,7 +186,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Messages
 
             //Assert
 
-            //createdMessage.Id.ShouldBeGreaterThan(0);
+            createdMessage.Id.ShouldNotBe(Guid.Empty);
             createdMessage.Text.ShouldBe(messageText);
 
             UsingDbContext(context =>

@@ -28,6 +28,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Uow
         public async Task Should_Uow_Not_Set_Tenant_Null_If_Completed_Outside_SetTenantId_Using()
         {
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
+
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
 
             var messageEntity = new Message() { Text = "Test Message" };

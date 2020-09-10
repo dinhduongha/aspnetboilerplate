@@ -30,7 +30,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
         public void EntityAuditProperty_Tests_Cross_Tenant_User()
         {
             AbpSession.TenantId = null;
-            AbpSession.UserId = new Guid("0171acb7-487d-0761-04e6-3c88f24409c0");
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000999");
 
             Message tenant1MessageNew;
 
@@ -88,7 +88,7 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
         public void EntityAuditProperty_Tests_Same_Tenant_User()
         {
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
-            AbpSession.UserId = new Guid("0171acaf-c9a8-0cc1-0549-a422266d2c00");
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000999");
 
             Message tenant1MessageNew;
 
@@ -120,11 +120,11 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
             //Creation audit check
             tenant1MessageNew.IsTransient().ShouldBeFalse(); //It should be saved to database
             tenant1MessageNew.CreationTime.ShouldBeGreaterThan(Clock.Now.Subtract(TimeSpan.FromMinutes(1)));
-            tenant1MessageNew.CreatorUserId.ShouldBe(new Guid("0171acaf-c9a8-0cc1-0549-a422266d2c00")); //It set since user in the AbpSession is tenant's user!
+            tenant1MessageNew.CreatorUserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000999")); //It set since user in the AbpSession is tenant's user!
 
             //Modification audit check
             tenant1Message1.LastModificationTime.ShouldNotBeNull(); //It's set since we modified Text
-            tenant1Message1.LastModifierUserId.ShouldBe(new Guid("0171acaf-c9a8-0cc1-0549-a422266d2c00")); //It set since user in the AbpSession is tenant's user!
+            tenant1Message1.LastModifierUserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000999")); //It set since user in the AbpSession is tenant's user!
 
             //Deletion audit check
             UsingDbContext(context =>
@@ -133,14 +133,14 @@ namespace Abp.TestBase.SampleApplication.Tests.ContactLists
                 tenant1Message2.ShouldNotBeNull();
                 tenant1Message2.IsDeleted.ShouldBeTrue();
                 tenant1Message2.DeletionTime.ShouldNotBeNull();
-                tenant1Message2.DeleterUserId.ShouldBe(new Guid("0171acaf-c9a8-0cc1-0549-a422266d2c00")); //It set since user in the AbpSession is tenant's user!
+                tenant1Message2.DeleterUserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000999")); //It set since user in the AbpSession is tenant's user!
             });
         }
 
         [Fact]
         public void MayHaveTenant_Filter_Tests()
         {
-            AbpSession.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000001");
 
             //A tenant can reach its own data
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");

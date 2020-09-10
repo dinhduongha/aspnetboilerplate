@@ -27,7 +27,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Auditing
             Resolve<IMultiTenancyConfig>().IsEnabled = true;
             //Arrange
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
-            AbpSession.UserId = new Guid("0171ac9f-3856-1611-0112-2edb41a5dab0");
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000002");
 
             //Act: Create a new entity
             var createdMessage = _messageRepository.Insert(new Message(AbpSession.TenantId, "test message 1"));
@@ -81,7 +81,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Auditing
 
             //Login as host
             AbpSession.TenantId = null;
-            AbpSession.UserId = new Guid("0171acad-e4f2-26c1-0296-b839e53b35e0");
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000042"); ;
 
             //Get a company to modify
             var company = _companyRepository.GetAllList().First();
@@ -92,16 +92,16 @@ namespace Abp.TestBase.SampleApplication.Tests.Auditing
             _companyRepository.Update(company);
 
             //LastModifierUserId should be set
-            company.LastModifierUserId.ShouldBe(new Guid("0171acad-e4f2-26c1-0296-b839e53b35e0"));
+            company.LastModifierUserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042"));
 
             //Login as a tenant
             AbpSession.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
-            AbpSession.UserId = new Guid("0171acae-503c-3391-00ac-658ee60229c0");
+            AbpSession.UserId = new Guid("00000000-0000-0000-0000-000000000043");
 
             //Get the same company to modify
             company = _companyRepository.FirstOrDefault(company.Id);
             company.ShouldNotBeNull();
-            company.LastModifierUserId.ShouldBe(new Guid("0171acad-e4f2-26c1-0296-b839e53b35e0")); //Previous user's id
+            company.LastModifierUserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042")); //Previous user's id
 
             //Modify the company
             company.Name = company.Name + "1";

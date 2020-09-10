@@ -30,8 +30,9 @@ namespace Abp.TestBase.Runtime.Session
                 if (!_multiTenancy.IsEnabled)
                 {
                     // TODO: DinhHa
-                    return null;
+                    //return null;
                     //return 1;
+                    return new Guid("00000000-0000-0000-0000-000000000001");
                 }
 
                 if (_sessionOverrideScopeProvider.GetValue(AbpSessionBase.SessionOverrideContextKey) != null)

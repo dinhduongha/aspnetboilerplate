@@ -33,20 +33,19 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
             _session.UserId.ShouldBeNull();
             _session.TenantId.ShouldBeNull();
 
-            //using (_session.Use(42, 571))
-            using (_session.Use(new Guid("00000000-0000-0000-0000-000000000042"), new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00")))
+            using (_session.Use(new Guid("00000000-0000-0000-0000-000000000042"), new Guid("00000000-0000-0000-0000-000000000571")))
             {
                 _session.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042"));
-                _session.UserId.ShouldBe(new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00"));
+                _session.UserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000571"));
 
-                using (_session.Use(null, new Guid("0171ac9f-b101-10d1-0417-1152a6897d40")))
+                using (_session.Use(null, new Guid("00000000-0000-0000-0000-000000000003")))
                 {
                     _session.TenantId.ShouldBeNull();
-                    _session.UserId.ShouldBe(new Guid("0171ac9f-b101-10d1-0417-1152a6897d40"));
+                    _session.UserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000003"));
                 }
 
                 _session.TenantId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000042"));
-                _session.UserId.ShouldBe(new Guid("0171acb2-7b7a-2a21-03eb-809f7caf0b00"));
+                _session.UserId.ShouldBe(new Guid("00000000-0000-0000-0000-000000000571"));
             }
 
             _session.UserId.ShouldBeNull();
@@ -62,7 +61,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
 
             using (var uow = _unitOfWorkManager.Begin())
             {
-                using (_session.Use(null, new Guid("0171ac9f-b101-10d1-0417-1152a6897d40")))
+                using (_session.Use(null, new Guid("00000000-0000-0000-0000-000000000003")))
                 {
                     await _messageRepository.InsertAsync(messageEntity);
                 }
@@ -86,7 +85,7 @@ namespace Abp.TestBase.SampleApplication.Tests.Session
 
             using (var uow = _unitOfWorkManager.Begin())
             {
-                using (_session.Use(null, new Guid("0171ac9f-b101-10d1-0417-1152a6897d40")))
+                using (_session.Use(null, new Guid("00000000-0000-0000-0000-000000000003")))
                 {
                     await _messageRepository.InsertAsync(messageEntity);
                     await uow.CompleteAsync();

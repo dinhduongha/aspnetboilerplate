@@ -173,15 +173,15 @@ namespace Abp.Tests.Configuration
             settingManager.AbpSession = session;
 
             session.TenantId = new Guid("00000000-0000-0000-0000-000000000001");
-            session.UserId = new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00");
+            session.UserId = new Guid("00000000-0000-0000-0000-000000000001");
 
             //We can get user's personal stored value
-            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldNotBe(null);
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting)).ShouldNotBe(null);
             (await settingManager.GetSettingValueAsync(MyAllLevelsSetting)).ShouldBe("user 1 stored value");
 
             //This will delete setting for the user since it's same as tenant's setting value
-            await settingManager.ChangeSettingForUserAsync(new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting, "tenant 1 stored value");
-            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
+            await settingManager.ChangeSettingForUserAsync(new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting, "tenant 1 stored value");
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting)).ShouldBe(null);
 
             //We can get tenant's setting value
             (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), null, MyAllLevelsSetting)).ShouldNotBe(null);
@@ -189,7 +189,7 @@ namespace Abp.Tests.Configuration
 
             //This will delete setting for tenant since it's same as application's setting value
             await settingManager.ChangeSettingForTenantAsync(new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting, "application level stored value");
-            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("0171ac9e-a5ec-0851-09c7-7a53338a7a00"), MyAllLevelsSetting)).ShouldBe(null);
+            (await store.GetSettingOrNullAsync(new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000001"), MyAllLevelsSetting)).ShouldBe(null);
 
             //We can get application's value
             (await store.GetSettingOrNullAsync(null, null, MyAllLevelsSetting)).ShouldNotBe(null);

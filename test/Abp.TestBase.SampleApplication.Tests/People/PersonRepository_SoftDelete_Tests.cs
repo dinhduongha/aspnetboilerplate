@@ -75,7 +75,7 @@ namespace Abp.TestBase.SampleApplication.Tests.People
         [Fact]
         public async Task Should_Set_Deletion_Audit_Informations()
         {
-            Guid userId = new Guid("0171acb4-f54c-23a1-0983-3d39d5f98e00"); // 42;
+            Guid userId = new Guid("00000000-0000-0000-0000-000000000042");
             AbpSession.UserId = userId;
 
             var uowManager = Resolve<IUnitOfWorkManager>();
