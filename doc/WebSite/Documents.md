@@ -26,7 +26,7 @@ Common Structures
 Domain Layer
 
 -   [Entities](Entities.md)
-    -   [Multi-Lingual Entities <label class="label label-success">NEW</label>](Multi-Lingual-Entities.md)
+    -   [Multi-Lingual Entities](Multi-Lingual-Entities.md)
 -   [Value Objects](Value-Objects.md)
 -   [Repositories](Repositories.md)
 -   [Domain Services](Domain-Services.md)
@@ -45,7 +45,7 @@ Application Layer
 -   [Authorization](Authorization.md)
 -   [Feature Management](Feature-Management.md)
 -   [Audit Logging](Audit-Logging.md)
--   [Entity History <label class="label label-success">NEW</label>](Entity-History.md)
+-   [Entity History](Entity-History.md)
 
 Distributed Service Layer
 
@@ -63,7 +63,7 @@ Presentation Layer
     -   [Handling Exceptions](Handling-Exceptions.md)
 -   ASP.NET Core
     -   [ASP.NET Core Integration](AspNet-Core.md)
-    -   [ASP.NET Core OData Integration <label class="label label-success">NEW</label>](OData-AspNetCore-Integration.md)
+    -   [ASP.NET Core OData Integration](OData-AspNetCore-Integration.md)
 -   [Localization](Localization.md)
 -   [Navigation](Navigation.md)
 -   [Embedded Resources](Embedded-Resource-Files.md)
@@ -113,6 +113,7 @@ Releases
     -   [Permission Management](/Pages/Documents/Zero/Permission-Management)
     -   [Language Management](/Pages/Documents/Zero/Language-Management)
     -   [Identity Server Integration](Zero/Identity-Server.md)
+    -   [Identity Server vNext Integration](Zero/Identity-Server-vNext.md)
 -   Releases
     -   [Nuget Packages](/Pages/Documents/Zero/Nuget-Packages)
     -   [Change Logs & Releases](https://github.com/aspnetboilerplate/module-zero/releases)

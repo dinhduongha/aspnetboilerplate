@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
+  <Import Project="..\..\configureawait.props" />
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
@@ -25,10 +26,6 @@
 
   <ItemGroup>
     <Content Include="Abp\**\*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

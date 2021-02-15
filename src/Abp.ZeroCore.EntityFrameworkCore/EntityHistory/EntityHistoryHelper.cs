@@ -33,7 +33,8 @@ namespace Abp.EntityHistory
 
                 // Fill "who did this change"
                 BrowserInfo = ClientInfoProvider.BrowserInfo.TruncateWithPostfix(EntityChangeSet.MaxBrowserInfoLength),
-                ClientIpAddress = ClientInfoProvider.ClientIpAddress.TruncateWithPostfix(EntityChangeSet.MaxClientIpAddressLength),
+                ClientIpAddress =
+                    ClientInfoProvider.ClientIpAddress.TruncateWithPostfix(EntityChangeSet.MaxClientIpAddressLength),
                 ClientName = ClientInfoProvider.ComputerName.TruncateWithPostfix(EntityChangeSet.MaxClientNameLength),
                 ImpersonatorTenantId = AbpSession.ImpersonatorTenantId,
                 ImpersonatorUserId = AbpSession.ImpersonatorUserId,
@@ -81,7 +82,7 @@ namespace Abp.EntityHistory
                     }
 
                     var ownerPropertyInfo = ownerForeignKey.PrincipalToDependent.PropertyInfo;
-                    shouldAuditOwnerProperty = IsAuditedPropertyInfo(ownerPropertyInfo);
+                    shouldAuditOwnerProperty = IsAuditedPropertyInfo(ownerEntityType, ownerPropertyInfo);
                     if (shouldAuditOwnerProperty.HasValue && !shouldAuditOwnerProperty.Value)
                     {
                         continue;
@@ -204,10 +205,12 @@ namespace Abp.EntityHistory
         /// <summary>
         /// Gets the property changes for this entry.
         /// </summary>
-        private ICollection<EntityPropertyChange> GetPropertyChanges(EntityEntry entityEntry, bool auditedPropertiesOnly)
+        private ICollection<EntityPropertyChange> GetPropertyChanges(EntityEntry entityEntry,
+            bool auditedPropertiesOnly)
         {
             var propertyChanges = new List<EntityPropertyChange>();
             var properties = entityEntry.Metadata.GetProperties();
+            var entityEntryType = entityEntry.Entity.GetType();
 
             foreach (var property in properties)
             {
@@ -245,7 +248,8 @@ namespace Abp.EntityHistory
             foreach (var entityChange in changeSet.EntityChanges)
             {
                 var entityEntry = entityChange.EntityEntry.As<EntityEntry>();
-                var isAuditedEntity = IsTypeOfAuditedEntity(entityEntry.Entity.GetType()) == true;
+                var entityEntryType = entityEntry.Entity.GetType();
+                var isAuditedEntity = IsTypeOfAuditedEntity(entityEntryType) == true;
 
                 /* Update change time */
                 entityChange.ChangeTime = GetChangeTime(entityChange.ChangeType, entityEntry.Entity);
@@ -254,33 +258,31 @@ namespace Abp.EntityHistory
                 entityChange.EntityId = GetEntityId(entityEntry);
 
                 /* Update property changes */
-                var trackedPropertyNames = entityChange.PropertyChanges.Select(pc => pc.PropertyName);
-                var trackedNavigationProperties = entityEntry.Navigations
-                                                    .Where(np => trackedPropertyNames.Contains(np.Metadata.Name))
+                var trackedPropertyNames = entityChange.PropertyChanges.Select(pc => pc.PropertyName).ToList();
+                
+                var additionalForeignKeys = entityEntry.Metadata.GetDeclaredReferencingForeignKeys()
+                                                    .Where(fk => trackedPropertyNames.Contains(fk.Properties[0].Name))
                                                     .ToList();
-                var additionalForeignKeys = trackedNavigationProperties
-                                                  .Where(np => !trackedPropertyNames.Contains(np.Metadata.Name))
-                                                  .Select(np => np.Metadata.ForeignKey)
-                                                  .Distinct()
-                                                  .ToList();
 
                 /* Add additional foreign keys from navigation properties */
                 foreach (var foreignKey in additionalForeignKeys)
                 {
                     foreach (var property in foreignKey.Properties)
                     {
-                        var shouldSaveProperty = property.IsShadowProperty() ?
-                                                   null :
-                                                   IsAuditedPropertyInfo(property.PropertyInfo);
+                        var shouldSaveProperty = property.IsShadowProperty()
+                            ? null
+                            : IsAuditedPropertyInfo(entityEntryType, property.PropertyInfo);
+
                         if (shouldSaveProperty.HasValue && !shouldSaveProperty.Value)
                         {
                             continue;
                         }
 
                         var propertyEntry = entityEntry.Property(property.Name);
-                        // TODO: fix new value comparison before truncation
-                        var newValue = propertyEntry.GetNewValue()?.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength);
-                        var oldValue = propertyEntry.GetOriginalValue()?.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength);
+                        
+                        var newValue = propertyEntry.GetNewValue()?.ToJsonString();
+                        var oldValue = propertyEntry.GetOriginalValue()?.ToJsonString();
+
                         // Add foreign key
                         entityChange.PropertyChanges.Add(CreateEntityPropertyChange(oldValue, newValue, property));
                     }
@@ -291,12 +293,21 @@ namespace Abp.EntityHistory
                 foreach (var propertyChange in entityChange.PropertyChanges)
                 {
                     var propertyEntry = entityEntry.Property(propertyChange.PropertyName);
-                    var isAuditedProperty = !propertyEntry.Metadata.IsShadowProperty() &&
-                                            IsAuditedPropertyInfo(propertyEntry.Metadata.PropertyInfo) == true;
 
-                    // TODO: fix new value comparison before truncation
-                    propertyChange.NewValue = propertyEntry.GetNewValue()?.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength);
-                    if (!isAuditedProperty && propertyChange.OriginalValue == propertyChange.NewValue)
+                    // Take owner entity type if this is an owned entity
+                    var propertyEntityType = entityEntryType;
+                    if (entityEntry.Metadata.IsOwned())
+                    {
+                        var ownerForeignKey = entityEntry.Metadata.GetForeignKeys().First(fk => fk.IsOwnership);
+                        propertyEntityType = ownerForeignKey.PrincipalEntityType.ClrType;
+                    }
+
+                    var isAuditedProperty = propertyEntry.Metadata.IsShadowProperty() ||
+                                            IsAuditedPropertyInfo(propertyEntityType,
+                                                propertyEntry.Metadata.PropertyInfo) == true;
+
+                    propertyChange.SetNewValue(propertyEntry.GetNewValue()?.ToJsonString());
+                    if (!isAuditedProperty || propertyChange.IsValuesEquals())
                     {
                         // No change
                         propertyChangesToRemove.Add(propertyChange);
@@ -322,14 +333,18 @@ namespace Abp.EntityHistory
 
         private EntityPropertyChange CreateEntityPropertyChange(object oldValue, object newValue, IProperty property)
         {
-            return new EntityPropertyChange()
+            var entityPropertyChange = new EntityPropertyChange()
             {
-                OriginalValue = oldValue?.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength),
-                NewValue = newValue?.ToJsonString().TruncateWithPostfix(EntityPropertyChange.MaxValueLength),
                 PropertyName = property.Name.TruncateWithPostfix(EntityPropertyChange.MaxPropertyNameLength),
-                PropertyTypeFullName = property.ClrType.FullName.TruncateWithPostfix(EntityPropertyChange.MaxPropertyTypeFullNameLength),
+                PropertyTypeFullName = property.ClrType.FullName.TruncateWithPostfix(
+                    EntityPropertyChange.MaxPropertyTypeFullNameLength
+                ),
                 TenantId = AbpSession.TenantId
             };
+
+            entityPropertyChange.SetNewValue(newValue?.ToJsonString());
+            entityPropertyChange.SetOriginalValue(oldValue?.ToJsonString());
+            return entityPropertyChange;
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
-
+  <Import Project="..\..\configureawait.props" />
+  
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Abp.Dapper</AssemblyName>
@@ -21,6 +22,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="DapperExtensions.DotnetCore" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.0-beta-20204-02" />
   </ItemGroup>
 
 </Project>
